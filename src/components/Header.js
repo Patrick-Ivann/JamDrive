@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
-
+import logo from '../image/jp_logo.png'
 class Header extends Component {
-  constructor(props){
-    super(props);
-
-  }
 
 
 render() {
   return (
     <header>
+    <h1 id="Title">JamDrive</h1>
+    <img id="logo" src={logo} alt="Jampops logo"/>
       <nav>
         <ul>
           <li>Rechercher un fichier</li>

@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 
 class Prosit_container extends Component {
-  constructor(props){
-    super(props);
-    
-  }
 
   Check(){
-    if(this.props.check == "mate"){
+    if(this.props.check === "mate"){
       return <span className="classmate">✔</span>
     }
-    else if(this.props.check == "ido"){
-      return <span className="tuteur">✔</span>
+    else if(this.props.check === "validated"){
+      return <span className="validated">✔</span>
     }
   }
 
