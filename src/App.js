@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-
+import Main from './components/Main';
 import Header from './components/Header';
-import UE_container from './components/UE_container';
+
 
 class App extends Component {
 
@@ -10,7 +10,7 @@ class App extends Component {
     return (
       <div>
         <Header/>
-        <UE_container UE_name="Web"/>
+        <Main />
       </div>
     );
   }
