@@ -133,7 +133,9 @@ background-color: white;
 width: 40%;
 height: 40vh;
 box-shadow: 0.5vh 0.5vh 5vh 0.5vh;
-opacity: 1;
+border-bottom-right-radius: 2vh;
+border-bottom-left-radius: 2vh;
+border-top-left-radius: 2vh;
 }
 #formulaire h1{
   font-size: 2.5vh;
@@ -156,8 +158,6 @@ float: right;
 width: 3%;
 margin: 0.5vh;
 }
-
-
 @media screen and (min-width: 350px) and (max-width: 530px), screen and (max-height: 580px) {
   h1{
     font-size: 2vh;
