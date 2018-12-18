@@ -1,10 +1,17 @@
-const express = require('express');
-const mongoose = require('mongoose');
+//const express = require('express');
 const mongoDB = require("./config/keys").mongoURI;
-const bodyParser = require("body-parser");
+import express from "express";
+import mongoose from 'mongoose'
+import bodyParser from 'body-parser'
+//const mongoose = require('mongoose');
+
+
+//const bodyParser = require("body-parser");
 
 /*********************************************Raccourcie URL **************************************/
 
+//const prosit = require("./routes/api/prosit");
+import prosit from './routes/api/prosit'
 
 /********************************************Routage express****************************************/
 const app = express();
@@ -13,14 +20,15 @@ app.use(bodyParser.urlencoded({
     extended: false
 }))
 
+
 app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
 
-    res.send("Le serveur node tourne" + Date.now);
+    res.send("Le serveur node tourne " + Date.now());
 });
 
-
+app.use("/api/prosit", prosit);
 
 
 /*****************************************BDD*********************************************** */
@@ -42,7 +50,7 @@ mongoose.Promise = global.Promise;
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
-    console.log(`Server started on ${port}`);
+    console.log(`Serveur demarré sur le port: ${port}`);
 });
 
 
