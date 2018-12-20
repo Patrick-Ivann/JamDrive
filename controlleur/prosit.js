@@ -252,3 +252,116 @@ export const televerserProsit = (req, res) => {
 
 
 };
+
+export const televerserRessource = (req, res) => {
+
+    var path = require("path")
+
+    const erreurs = {}
+
+
+
+
+
+
+    var form = new formidable.IncomingForm();
+    form.parse(req);
+
+    form.on('fileBegin', function (name, file) {
+        console.log(file)
+        console.log(path.join(__dirname, '../'))
+
+
+        if ((/^(\d{1,2})(_)(ressources)(_)(\w+)(\d{1,2})(\-)(\w+)/.test(file.name)) === false) {
+            erreurs.formatUnite = "Le titre du document ne respecte pas les convention xx_ressources_titre_x-ue."
+            return res.status(404).json(erreurs);
+        }
+
+        let unite = file.name.split("_")[file.name.split('_').length - 1]
+        unite = unite.split(".")[0]
+        let nomRessource = file.name.split("_")[2]
+        file.path = path.join(__dirname, '../fichiers/ressources/') + file.name;
+
+
+
+        Prosit.findOne({
+            "unite": unite
+
+        }).then((result) => {
+
+            if (!result) {
+
+                console.log("on a pas trouvé")
+                
+            }
+
+            console.log(result)
+
+           result.ressources.forEach(ressource =>{
+               console.log(nomRessource + ressource.nomRessource +  ressource + "ggsdg")
+            if (ressource.nomRessource === nomRessource) {
+                erreurs.ressourceExiste = "cette ressource existe déjà"
+                return res.status(404).json(erreurs);
+            }
+           })
+
+            const nouvelleRessource = {
+                nomRessource: nomRessource,
+                urlRessource: file.path,
+            }
+            result.ressources.unshift(nouvelleRessource)
+
+            result.save()
+                .then(result => console.log(result) )//res.json(result))
+                .catch(err => console.log(err))  //res.status(404).json(err));
+        
+        }).catch((err) => {
+            console.log(err)
+            //return res.status(404).json(err);
+        });
+        console.log(file.path)
+    });
+
+    if (erreurs === {}) {
+   
+         form.on('file', function (name, file) {
+             console.log('Uploaded ' + file.name);
+             return res.json(file.name);
+
+         });
+    }
+   
+
+
+};
+
+
+
+export const supprimerRessource = (req,res) => {
+
+    Prosit.findOne(req.params.id)
+        .then(prosit => {
+
+            if (prosit.ressources.filter(comment => comment._id.toString() === req.params.comment_id).lenght === 0) {
+
+                res.status(404).json({
+                    commentnotexists: "Le commentaire n'existe pas."
+                })
+            }
+
+            const removeIndex = prosit.ressources
+                .map(item => item.user.toString)
+                .indexOf(req.user.id);
+
+            prosit.like.splice(removeIndex, 1);
+
+            prosit.save()
+                .then(prosit => res.json(prosit))
+                .catch(err => res.status(404).json(err));
+
+
+        })
+
+        .catch(err => res.status(404).json(err));
+  
+}

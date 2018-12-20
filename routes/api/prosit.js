@@ -6,11 +6,15 @@ import {
     recupererParNom,
     recupererParId,
     checkerPrositParId,
-    televerserProsit
+    televerserProsit,
+    televerserRessource
 } from "../../controlleur/prosit";
+import {
+    telechargementProsit,
+    telechargementRessource
+} from '../../controlleur/telechargement';
 
 
-const validatePrositInput = require('../../validation/prosit')
 
 const router = express.Router();
 
@@ -31,8 +35,17 @@ router.route('/test')
     .post(ajouterProsit)
 
 
+router.route('/testtelechargement/:id')
+    .get(telechargementProsit)
+
+router.route('/testtelechargementRessources/:id')
+    .get(telechargementRessource)
+
 router.route('/testfichier')
-.post(televerserProsit)
+    .post(televerserProsit)
+
+router.route('/testressource')
+    .post(televerserRessource)
 
 router.route('/test/:nom')
     .get(recupererParNom)

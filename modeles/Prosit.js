@@ -12,42 +12,64 @@ const PrositSchema = new Schema({
 
     urlFichier: { // adresse du fichier sur le serveur
 
-        type:String,
-        required:true
+        type: String,
+        required: true
     },
 
 
 
-    nomProsit:{
+    nomProsit: {
 
-        type:String,
-        required:true
+        type: String,
+        required: true
 
     },
 
 
-     unite: { // unité d'enseignement  1-nom 
+    unite: { // unité d'enseignement  1-nom 
 
-         type: String,
-         required: true
+        type: String,
+        required: true
 
-     },
+    },
 
-    certification:{ // si le prosit est cerifié par idotruc
-        type: Number,  // 0 non certif (pour les allers) 1 certif classe 2 certif idotruc 
+    certification: { // si le prosit est cerifié par idotruc
+        type: Number, // 0 non certif (pour les allers) 1 certif classe 2 certif idotruc 
         default: 0,
     },
 
-    type:{
+    type: {
         type: Number,
         required: true
     }, // si il est aller ou retour
 
-    nomScribe:{
+    nomScribe: {
 
         type: String,
         required: true
-    }
+    },
+
+    dateUpload: {
+        type: Date,
+        default: Date.now
+    },
+
+    ressources: [{
+
+        nomRessource: {
+            type: String
+        },
+        urlRessource: {
+            type: String,
+        },
+        dateRessource: {
+            type: Date,
+            default: Date.now
+        }
+
+    }]
+
+
 
 
 

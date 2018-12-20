@@ -33,13 +33,19 @@ app.use("/api/prosit", prosit);
 
 /*****************************************BDD*********************************************** */
 //Mise en place de la connexion mongoDB
+
 mongoose
     .connect(mongoDB, {
-        useNewUrlParser: true
+        useNewUrlParser: true,
+        poolSize: 20,
+        socketTimeoutMS: 480000,
+        keepAlive: 300000,
+
     })
     .then(() => console.log(" connexion mongoDB"))
     .catch(err => console.log(err));
 // permet à mongoose d'utiliser le systeme de promise via la dépendance globale Promise
+
 mongoose.Promise = global.Promise;
 
 
@@ -52,6 +58,3 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(`Serveur demarré sur le port: ${port}`);
 });
-
-
-
