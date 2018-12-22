@@ -45,15 +45,17 @@ export const telechargementRessource = (req, res) => {
 export const telechargementProsit = (req, res) => {
 
 
-    var id = req.params.id
+    var nomProsit = req.params.nomProsit
+    var type = req.params.type
+
 
     var fichier = {}
-    Prosit.findById({
-        "_id": id
+    Prosit.findOne({
+        "nomProsit": nomProsit
     }).then((result) => {
         console.log(result)
-        fichier.urlFichier = result.urlFichier
-        var fichierTelechargment = path.join(__dirname, `../fichiers/${fichier.urlFichier}`);
+        fichier.urlFichier = result[type]
+        var fichierTelechargment = fichier.urlFichier;
         res.download(fichierTelechargment)
     }).catch((err) => {
 

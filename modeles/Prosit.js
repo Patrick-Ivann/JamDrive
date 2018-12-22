@@ -10,18 +10,19 @@ const Schema = mongoose.Schema;
 
 const PrositSchema = new Schema({
 
-    urlFichier: { // adresse du fichier sur le serveur
+    // urlFichier: { // adresse du fichier sur le serveur
 
-        type: String,
-        required: true
-    },
+    //     type: String,
+    //     required: true
+    // },
 
 
 
     nomProsit: {
 
         type: String,
-        required: true
+        required: true,
+        unique: true
 
     },
 
@@ -38,11 +39,14 @@ const PrositSchema = new Schema({
         default: 0,
     },
 
-    type: {
-        type: Number,
-        required: true
-    }, // si il est aller ou retour
 
+    retour: {
+        type: String,
+    }, // si il est aller ou retour
+    
+    aller: {
+        type: String,
+    }, // si il est aller ou retour
     nomScribe: {
 
         type: String,
@@ -74,6 +78,11 @@ const PrositSchema = new Schema({
 
 
 });
+
+PrositSchema.virtual('nomShort')
+    .get(function () {
+        return this.nomProsit.split("_")[2];
+    });
 
 const prosit = mongoose.model('prosit', PrositSchema)
 //module.exports = prosit = mongoose.model('prosit', PrositSchema);

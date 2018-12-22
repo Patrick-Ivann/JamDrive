@@ -21,10 +21,10 @@ class PrositItem extends Component {
         return (
             <article className="prosit" >
                 <h2>Prosit - {this.props.prosit.nomProsit}</h2>
-                <div className="file"><a href={`http://localhost:5000/api/prosit/testtelechargement/${prosit._id}`}>
+                <div className="file"><a href={`http://localhost:5000/api/prosit/testtelechargement/${prosit.nomProsit}/aller`}>
                     Aller </a>
                 </div>
-                <div className="file"><a href={`http://localhost:5000/api/prosit/testtelechargement/${prosit._id}`}>
+                <div className="file"><a href={`http://localhost:5000/api/prosit/testtelechargement/${prosit.nomProsit}/retour`}>
                     Retour {this.Check()} </a>
                 </div>
             </article>

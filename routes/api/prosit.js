@@ -35,7 +35,7 @@ router.route('/test')
     .post(ajouterProsit)
 
 
-router.route('/testtelechargement/:id')
+router.route('/testtelechargement/:nomProsit/:type')
     .get(telechargementProsit)
 
 router.route('/testtelechargementRessources/:id')

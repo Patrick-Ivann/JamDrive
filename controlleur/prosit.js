@@ -21,7 +21,6 @@ export const recupererProsit = (req, res) => {
                 return res.status(404).json(erreurs);
             }
 
-            console.log(prosit)
 
             res.json(prosit);
 
@@ -117,14 +116,12 @@ export const ajouterProsit = (req, res) => {
             }
         }
 
-        let url_fichierCreation = "jbfvkjs"
-
-        prositChamps.urlFichier = url_fichierCreation
+ 
 
 
 
         Prosit.findOne({
-                "urlFichier": url_fichierCreation
+                "nomProsit": req.body.nomProsit
 
             })
             .then(prosit => {
@@ -229,7 +226,7 @@ export const televerserProsit = (req, res) => {
     var path = require("path")
 
 
-    console.log('req :', req.body);
+    console.log('req :', );
 
 
 
@@ -246,12 +243,41 @@ export const televerserProsit = (req, res) => {
 
     form.on('file', function (name, file) {
         console.log('Uploaded ' + file.name);
-        return res.json(file.name);
+     return  rajouterFicherAprosit(file,res)
+       // return res.json(file.name);
 
     });
 
 
 };
+
+export const rajouterFicherAprosit = (file,res) =>{
+
+        const erreurs = {}
+
+        const titreProsit = file.name.split("_")[0] + "_" + file.name.split("_")[1] + "_" + file.name.split("_")[2] 
+        const typeFichier = file.name.split("_")[3].split(".")[0]
+        const addressFichier = file.path
+    Prosit.findOneAndUpdate({
+        "nomProsit" : titreProsit
+    }, {
+        $set: {
+            [typeFichier]: addressFichier
+        }
+    }, {
+        new: true
+    }).then((prosit) => {
+        return  res.json(prosit)
+         //res.json(prosit);
+        
+    }).catch((err) => {
+        console.log(err)
+        erreurs.insertionFichier ="impossible de mettre à jour la BDD" + err
+       return res.status(400).json(err);
+    });
+
+}
+
 
 export const televerserRessource = (req, res) => {
 

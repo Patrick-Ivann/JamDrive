@@ -42,11 +42,18 @@ export default function (state = intialState, action) {
                 chargement: true
             }
 
+        // case AJOUTER_PROSIT:
+        //     return {
+        //         ...state,
+        //         prosits: [action.payload, ...state.prosits]
+        //     }
+
         case AJOUTER_PROSIT:
-            return {
-                ...state,
-                prosits: [action.payload, ...state.prosits]
-            }
+             return {
+                 ...state,
+                 prosit: action.payload
+             }
+
 
             case TELEVERSEMENT_PROSIT:
             return{
