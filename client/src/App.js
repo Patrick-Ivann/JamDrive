@@ -1,17 +1,34 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import Header from './components/Header';
-import UE_container from './components/UE_container';
+
+
+import { Provider } from "react-redux";
+import store from './store';
+
+
+
+
+import Header from './components/layout/Header';
+import Main from './components/Main';
 
 class App extends Component {
 
 
-  render() {
+   render() {
     return (
-      <div>
-        <Header/>
-        <UE_container UE_name="Web"/>
-      </div>
+      <Provider store={store} >
+        
+        <Router>
+
+          <div>
+            <Header/>
+            <Main />
+          </div>
+        </Router>
+      
+      </Provider>
+
     );
   }
 }
