@@ -11,6 +11,7 @@ import store from './store';
 
 import Header from './components/layout/Header';
 import Main from './components/Main';
+import ErreurApp from './components/common/ErreurApp';
 
 class App extends Component {
 
@@ -23,6 +24,7 @@ class App extends Component {
 
           <div>
             <Header/>
+            <ErreurApp></ErreurApp>
             <Main />
           </div>
         </Router>

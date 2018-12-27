@@ -36,6 +36,4 @@
     "babel-preset-env": "^1.7.0",
     "nodemon": "^1.18.9"
   }
-  
-
 }

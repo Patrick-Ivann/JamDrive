@@ -15,10 +15,16 @@ import prosit from './routes/api/prosit'
 
 /********************************************Routage express****************************************/
 const app = express();
+const helmet = require('helmet')
+
+
+
+ app.use(helmet())
 
 app.use(bodyParser.urlencoded({
     extended: false
 }))
+
 
 
 app.use(bodyParser.json())

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios,{post} from 'axios';
 
 import {
     GET_ERRORS,
@@ -22,7 +22,6 @@ export const ajouterProsit = (prositData) => dispatch => {
            
 
         }).catch((err) => {
-
 
             dispatch({
                 type: GET_ERRORS,
@@ -114,19 +113,30 @@ export const checkerProsit = (id) => dispatch => {
 }
 
 
-export const televerserProsit = (prosit) => dispatch => {
+export const televerserProsit = (prosit,history) => dispatch => {
     dispatch(mettrePrositaCharger())
-    axios.put(`/api/prosit/testfichier/`, prosit)
+
+     const formData = new FormData(); //peremt d'envoyer des fichiers au backend sans pt le parser de json 
+     formData.append('file', prosit)
+     const config = {
+         headers: {
+             'content-type': 'multipart/form-data'
+         }
+     }
+    axios.post(`/api/prosit/testfichier/`, formData, config)
         .then((result) => {
+
             dispatch({
                 type: TELEVERSEMENT_PROSIT,
                 payload: result.data,
             })
 
+            console.log("gjhjshdjhddsf");
+
         }).catch((err) => {
 
             dispatch({
-                type: TELEVERSEMENT_PROSIT,
+                type: GET_ERRORS,
                 payload: err.response.data
             })
         });

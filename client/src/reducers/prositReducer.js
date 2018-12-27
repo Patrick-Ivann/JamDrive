@@ -13,7 +13,7 @@ const intialState = {
     //prosit: {},
     prosits: [],
     prosit: {},
-    televerse:null,
+    televerse:{},
     chargement: false
 }
 
@@ -51,7 +51,8 @@ export default function (state = intialState, action) {
         case AJOUTER_PROSIT:
              return {
                  ...state,
-                 prosit: action.payload
+                 prosit: action.payload,
+                 prosits: [...state.prosits,action.payload ]
              }
 
 

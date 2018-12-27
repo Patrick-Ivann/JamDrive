@@ -148,7 +148,7 @@ export const ajouterProsit = (req, res) => {
 
             })
 
-            .catch(err => console.log(err));
+            .catch(err => {console.log(err); erreurs.erreurAjout =err.toString(); res.status(404).json(erreurs);});
 
     }
 
@@ -224,9 +224,12 @@ export const checkerPrositParId = (req, res) => {
 export const televerserProsit = (req, res) => {
 
     var path = require("path")
+    const erreurs = {}
 
-
-    console.log('req :', );
+    /*console.log(
+        req
+    );*/
+//console.log(req.headers)
 
 
 
@@ -235,16 +238,23 @@ export const televerserProsit = (req, res) => {
     form.parse(req);
 
     form.on('fileBegin', function (name, file) {
-        console.log(file)
-        console.log(path.join(__dirname, '../'))
-        file.path = path.join(__dirname, '../fichiers/') + file.name;
+       file.path = path.join(__dirname, '../fichiers/') + file.name;
         console.log(file.path)
     });
 
+    form.on('err',function (err) {
+
+        console.log(err);
+
+        erreurs.erreurTransfertFichier = "erreur lors du transfert de fichier, veuillez reéssayer ultérieurement.   "
+        res.status(404).json(erreurs);
+        
+    })
+
     form.on('file', function (name, file) {
         console.log('Uploaded ' + file.name);
-     return  rajouterFicherAprosit(file,res)
-       // return res.json(file.name);
+       // rajouterFicherAprosit(file,res)
+       return res.json("hoisefohiviomhy");
 
     });
 
@@ -253,6 +263,7 @@ export const televerserProsit = (req, res) => {
 
 export const rajouterFicherAprosit = (file,res) =>{
 
+    console.log("rajouter prosit");
         const erreurs = {}
 
         const titreProsit = file.name.split("_")[0] + "_" + file.name.split("_")[1] + "_" + file.name.split("_")[2] 
@@ -267,13 +278,13 @@ export const rajouterFicherAprosit = (file,res) =>{
     }, {
         new: true
     }).then((prosit) => {
-        return  res.json(prosit)
+        //return  res.json(prosit)
          //res.json(prosit);
         
     }).catch((err) => {
         console.log(err)
         erreurs.insertionFichier ="impossible de mettre à jour la BDD" + err
-       return res.status(400).json(err);
+     return res.status(400).json(err);
     });
 
 }

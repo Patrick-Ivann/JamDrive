@@ -7,16 +7,16 @@ export function validatePrositInput(data) {
 
     
 
-    if (Validator.isEmpty(data.nomProsit)) {
+    if (Validator.isEmpty(data.nomProsit) || !data.nomProsit) {
         erreurs.nomProsit = "Il faut obligatoirement un nom de prosit";
     }
-    if (Validator.isEmpty(data.unite)) {
+    if (Validator.isEmpty(data.unite)|| !data.unite) {
         erreurs.unite = "Il faut obligatoirement un nom de prosit";
     }
     // if (Validator.isEmpty(data.type)) {
     //     erreurs.type = "Il faut obligatoirement un nom de prosit";
     // }
-    if (Validator.isEmpty(data.nomScribe)) {
+    if (!data.nomScribe) {
         erreurs.nomScribe = "Il faut obligatoirement un nom de prosit";
     }
 
@@ -56,7 +56,7 @@ export function validatePrositInput(data) {
 
      if (RegExp(/^(\d{1,2})(\_)(prosit)(\_)(\w+)/gm).test(data.nomProsit) === false) { // 22_prosit_gggyujujf_aller
 
-         erreurs.foramtNomProsit = "le titre du fichier est mauvais et ne respecte pas la convention de nommage (XX_prosit_titreprosit_aller."
+         erreurs.foramtNomProsit = "le titre du fichier est mauvais et ne respecte pas la convention de nommage (XX_prosit_titreprosit)."
      }
 
 

@@ -8,7 +8,6 @@ class UniteItem extends Component {
         super(props);
         this.state = { isButtonToggleOn: false };
 
-        // This binding is necessary to make `this` work in the callback
         this.arrowClick = this.arrowClick.bind(this);
     }
 
@@ -34,8 +33,6 @@ class UniteItem extends Component {
 
     const ueTitle = this.props[ue]
     console.log(this.props[ue])
-    console.log(ueTitle)
-console.log(this.props)
 
     
     
