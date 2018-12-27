@@ -113,6 +113,11 @@ export const checkerProsit = (id) => dispatch => {
 }
 
 
+/**
+ * ! BUG dés qu'on verse un prosit, il y a un changement de page pour aller sur le fichier (url qui prend /?file=le fichier)
+ * @param {*} prosit 
+ * @param {*} history 
+ */
 export const televerserProsit = (prosit,history) => dispatch => {
     dispatch(mettrePrositaCharger())
 
