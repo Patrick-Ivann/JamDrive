@@ -1,6 +1,8 @@
 export const GET_ERRORS = 'GET_ERRORS'
 
 
+export const CONNEXION = 'CONNEXION'
+
 
 export const RECUPERER_AUTOCOMPLETION = 'RECUPERER_AUTOCOMPLETION'
 

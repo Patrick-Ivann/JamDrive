@@ -24,45 +24,15 @@ class PrositFlux extends Component {
 
 
         const { prosits } = this.props
-           var rechercheStringFiltre = ''
-
-         var  rechercheString = this.props.rechercheString.rechercheString
-
         
-        console.log(this.props.rechercheString)
-
-        console.log(prosits.sort((a, b) => (a.nomProsit > b.nomProsit) ? 1 : ((b.nomProsit > a.nomProsit) ? -1 : 0))) 
-
-
-
-        console.log(prosits.sort((a, b) => a.nomProsit.localeCompare(b.nomProsit)))
-
-         let prositFiltree = prosits.filter((prosit) => {
-             return prosit.nomProsit.toLowerCase().indexOf(this.props.rechercheString.rechercheString) !== -1
-         }) 
-
-
-        let infoFiltre = prosits.filter(
-            (row) => {
-
-                return row.nomProsit.toLowerCase().indexOf(this.props.rechercheString.rechercheString) !== -1;
-            }
-        )
 
         return(
             
 
-            // infoFiltre.map((prosit) => {
-            //    return <PrositItemGODMODE key={prosit._id} prosit={prosit} />
-            // })
 
-        //    (rechercheString) ? prosits.sort((a, b) => a.nomProsit.localeCompare(b.nomProsit)).map(prosit => <PrositItemGODMODE key={prosit._id} prosit={prosit} />) :  prosits.filter(prositfiltre => prositfiltre.nomProsit.toLowerCase().indexOf(rechercheString) !== -1).map(prosit => <PrositItemGODMODE key={prosit._id} prosit={prosit} />)
         
-        //prosits.filter(prositfiltre => prositfiltre.nomProsit.toLowerCase().indexOf(this.props.rechercheString.rechercheString) !== -1).map(prosit => <PrositItemGODMODE key={prosit._id} prosit={prosit} />)
-          prosits.filter(prosit => prosit.nomProsit.toLowerCase().indexOf(this.props.rechercheString) !== -1).map(prosit => <PrositItemGODMODE key={prosit._id} prosit={prosit} />)
+            prosits.filter(prosit => prosit.nomProsit.toLowerCase().indexOf(this.props.rechercheString) !== -1).map(prosit => (!this.props.auth.godMode ) ? <PrositItem key={prosit._id} prosit={prosit}></PrositItem> : <PrositItemGODMODE key={prosit._id} prosit={prosit} />)
 
-        //prosits.map(prosit => <PrositItemGODMODE key={prosit._id} prosit={prosit} /> )
-         //prosits.sort((a, b) => a.nomProsit.localeCompare(b.nomProsit)).map(prosit => <PrositItemGODMODE key={prosit._id} prosit={prosit} />)
         )}
 
 
@@ -74,7 +44,8 @@ PrositFlux.propTypes = {
 
 const mapStateToProps = (state) => ({
   
-    rechercheString : state.prosit.rechercheString
+    rechercheString : state.prosit.rechercheString,
+    auth : state.auth
 })
 
 

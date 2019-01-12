@@ -3,7 +3,12 @@ const mongoDB = require("./config/keys").mongoURI;
 import express from "express";
 import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
+import helmet from 'helmet'
+import compression from 'compression'
+import morgan from 'morgan';
+import fs from 'fs'
 //const mongoose = require('mongoose');
+
 
 
 //const bodyParser = require("body-parser");
@@ -15,7 +20,7 @@ import prosit from './routes/api/prosit'
 
 /********************************************Routage express****************************************/
 const app = express();
-const helmet = require('helmet')
+
 
 
 
@@ -28,7 +33,13 @@ app.use(bodyParser.urlencoded({
 
 
 app.use(bodyParser.json())
-
+app.use(morgan('dev'));
+app.use(morgan('common', {
+    stream: fs.createWriteStream('./access.log', {
+        flags: 'a'
+    })
+}));
+app.use(compression());
 
 /*app.all("*", (req,res) =>{
 

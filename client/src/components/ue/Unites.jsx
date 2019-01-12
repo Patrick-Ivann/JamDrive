@@ -20,9 +20,6 @@ class Unite extends Component {
     componentDidMount() {
 
         
-
-
-
         this.props.recupererProsits()
 
         console.log(this.props)
@@ -75,43 +72,11 @@ class Unite extends Component {
             Object.getOwnPropertyNames(uniteObj).forEach(key => {
                 let value = uniteObj[key];
 
-                //use key and value here
             });
             
             console.log(uniteSansDoublon)
 
-          /*  let objetA = {}
-           let objetB = {}
-           let objetC = {}
-           let objetD = {}
-
-            prosits.map(prosit=>{
-                console.log(prosit)
-                if (prosit.utie === "") {
-                    objetA.push(prosit)
-                }
-
-                if (prosit.utie === "") {
-                    objetB.push(prosit)
-                }
-
-                if (prosit.utie === "") {
-
-                    objetC.push(prosit)
-                }
-
-                if (prosit.utie === "") {
-                    objetD.push(prosit)
-
-                }
-            }) */
-
-            /* 
-                fiches.map(row => {
-                    console.log(row)
-                    return (
-            ueContenu = <FicheListe fiches={row}></FicheListe>
-                    )}); */
+        
 
             return (
                 ueContenu = <UniteListe ue={uniteObj}></UniteListe>

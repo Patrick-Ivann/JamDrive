@@ -6,31 +6,45 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from './store';
 
-
+import PrivateRoute from './components/common/PrivateRoute'
 
 
 import Header from './components/layout/Header';
 import Main from './components/Main';
 import ErreurApp from './components/common/ErreurApp';
+import  Login  from './components/auth/Login';
 
 class App extends Component {
 
 
-   render() {
+  
+  
+  render() {
     return (
       <Provider store={store} >
-        
-        <Router>
+      
+      <Router>
+      
+      <div>
+      
+      <Header/>
+      <ErreurApp></ErreurApp>
 
-          <div>
-            <Header/>
-            <ErreurApp></ErreurApp>
-            <Main />
-          </div>
-        </Router>
+      <Route exact path="/" component={Login} />
+
+      <Route exact path='/prosits' component={Main} />
+      <Switch>
+
+      <PrivateRoute exact path='/prositsGod'  component={Main}/>}/>
+   
+
+      </Switch>
+
+      </div>
+      </Router>
       
       </Provider>
-
+      
     );
   }
 }
