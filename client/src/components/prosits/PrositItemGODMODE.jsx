@@ -28,6 +28,13 @@ class PrositItemGODMODE extends Component {
         return (
             <article className="prosit" >
                 <h2>Prosit - {this.props.prosit.nomProsit}  GOD MODE <button onClick={this.handleSuppr(prosit._id)}> surpppp</button></h2>
+                
+                 <ul className="list__item" >
+        
+        {prosit.motsClef.slice(0,4).map((motsClef, index) => (<li key={index} className="">{motsClef}</li>))}
+    
+    </ul> 
+                
                 <div className="file"><a href={`http://localhost:5000/api/prosit/testtelechargement/${prosit.nomProsit}/aller`}>
                     Aller </a>
                 </div>

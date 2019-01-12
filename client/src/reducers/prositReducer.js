@@ -4,7 +4,8 @@ import {
     PROSIT_CHARGEMENT,
     AJOUTER_PROSIT,
     PROSIT_SUPPRESSION,
-    TELEVERSEMENT_PROSIT
+    TELEVERSEMENT_PROSIT,
+    METTRE_A_JOUR_RECHERCHE
 } from "../actions/types";
 
 const intialState = {
@@ -14,8 +15,15 @@ const intialState = {
     prosits: [],
     prosit: {},
     televerse:{},
-    chargement: false
+    recherche:[],
+    valeurSelect:[],
+    chargement: false,
+    rechercheString:'',
 }
+
+let uniteSansDoublon
+let prositUnite = []
+
 
 export default function (state = intialState, action) {
 
@@ -33,6 +41,11 @@ export default function (state = intialState, action) {
                 return {
                     ...state,
                     prosits: action.payload,
+                    valeurSelect: action.payload.forEach(element => {
+                        prositUnite.push(element.unite)
+
+                    }), 
+                    uniteSansDoublon : [...new Set(prositUnite)],
                     chargement: false
                 }
 
@@ -59,7 +72,8 @@ export default function (state = intialState, action) {
             case TELEVERSEMENT_PROSIT:
             return{
                 ...state,
-                televerse: action.payload 
+                televerse: action.payload,
+                chargement: false 
             }
 
 
@@ -69,6 +83,20 @@ export default function (state = intialState, action) {
                     prosits: state.prosits.filter(prosit => prosit._id !== action.payload)
                 }
 
+                /*case METTRE_A_JOUR_RECHERCHE:{
+                    return{
+                        ...state,
+                        prosits: state.prosits.filter(prosit => prosit.nomProsit.toLowerCase().indexOf(action.payload.toLocaleLowerCase()) !== -1)
+                    }
+                }*/
+
+
+                 case METTRE_A_JOUR_RECHERCHE: {
+                     return {
+                         ...state,
+                        rechercheString: action.payload
+                        }
+                 }
         default:
             return state;
     }

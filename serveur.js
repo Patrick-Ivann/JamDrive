@@ -1,4 +1,4 @@
-//const express = require('express');
+﻿//const express = require('express');
 const mongoDB = require("./config/keys").mongoURI;
 import express from "express";
 import mongoose from 'mongoose'
@@ -28,6 +28,12 @@ app.use(bodyParser.urlencoded({
 
 
 app.use(bodyParser.json())
+
+
+/*app.all("*", (req,res) =>{
+
+console.log('nsm native');
+})*/
 
 app.get('/', (req, res) => {
 

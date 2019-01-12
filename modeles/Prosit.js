@@ -34,7 +34,7 @@ const PrositSchema = new Schema({
 
     },
 
-    certification: { // si le prosit est cerifié par idotruc
+    validation: { // si le prosit est cerifié par idotruc
         type: Number, // 0 non certif (pour les allers) 1 certif classe 2 certif idotruc 
         default: 0,
     },
@@ -52,6 +52,10 @@ const PrositSchema = new Schema({
         type: String,
         required: true
     },
+
+      motsClef: {
+          type: [String],
+      },
 
     dateUpload: {
         type: Date,

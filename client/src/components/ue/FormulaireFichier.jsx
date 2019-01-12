@@ -20,15 +20,16 @@ class FormulaireFichier extends Component {
     this.getFileName = this.getFileName.bind(this)
   }
 
-  handleSubmit() {
+  handleSubmit(event) {
 
 
+    event.preventDefault();
 
-    this.props.televerserProsit(this.state.file,this.props.history)
+    this.props.televerserProsit(this.state.file)
   }
 
-  getFileName(file) {
-    this.setState({ file: file });
+  getFileName(event) {
+    this.setState({ file: event.target.files[0] });
   }
 
 
@@ -36,9 +37,9 @@ class FormulaireFichier extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <form enctype="multipart/form-data" onSubmit={this.handleSubmit}>
           <label id="lblFile" htmlFor="file"> Ajouter le fichier <br /> <img id="addFileHere" src={addFileHereImg} alt="add file here !" /> </label>
-          <input type="file" onChange={e => this.getFileName(e.target.files[0])} name="file" ref="getFile" id="file" accept=".doc,.docx,.txt,.pdf" />
+          <input type="file"  onChange={this.getFileName} name="file" ref="getFile" id="file" accept=".doc,.docx,.txt,.pdf" />
           <input type="submit" />
         </form>
 

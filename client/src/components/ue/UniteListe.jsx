@@ -18,13 +18,13 @@ class UniteListe extends Component {
 
     const { ue } = this.props
     console.log(ue)
-    const uniteListe = Object.getOwnPropertyNames(ue).map(row => {
-     console.log(ue[row])
+    const uniteListe = Object.getOwnPropertyNames(ue).sort().map(row => {
+  
      
       return (
 
 
-        <UniteItem unite={row} prosit={ue[row]} key={row} ></UniteItem>
+        <UniteItem unite={row} prosit={ue[row].sort()} key={row} ></UniteItem>
       )
     });
     return (

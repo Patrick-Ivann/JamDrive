@@ -8,6 +8,7 @@ import {
     PROSIT_CHARGEMENT,
     RECUPERER_PROSITS,
     TELEVERSEMENT_PROSIT,
+    METTRE_A_JOUR_RECHERCHE,
     
 } from "./types";
 
@@ -94,6 +95,14 @@ export const recupererFicheID = (id) => dispatch => {
 }
 
 
+export const mettreAjourRecherche = (recherche) => dispatch =>{
+    dispatch({
+        type: METTRE_A_JOUR_RECHERCHE,
+        payload: recherche
+    })
+}
+
+
 export const checkerProsit = (id) => dispatch => {
     dispatch(mettrePrositaCharger())
     axios.put(`/api/prosit/test/${id}`)
@@ -114,21 +123,15 @@ export const checkerProsit = (id) => dispatch => {
 
 
 /**
- * ! BUG dés qu'on verse un prosit, il y a un changement de page pour aller sur le fichier (url qui prend /?file=le fichier)
  * @param {*} prosit 
- * @param {*} history 
  */
-export const televerserProsit = (prosit,history) => dispatch => {
-    dispatch(mettrePrositaCharger())
+export const televerserProsit = (prosit) => dispatch => {
+    //dispatch(mettrePrositaCharger())
 
      const formData = new FormData(); //peremt d'envoyer des fichiers au backend sans pt le parser de json 
      formData.append('file', prosit)
-     const config = {
-         headers: {
-             'content-type': 'multipart/form-data'
-         }
-     }
-    axios.post(`/api/prosit/testfichier/`, formData, config)
+     
+    axios.post(`/api/prosit/testfichier/`, formData)
         .then((result) => {
 
             dispatch({
@@ -136,9 +139,9 @@ export const televerserProsit = (prosit,history) => dispatch => {
                 payload: result.data,
             })
 
-            console.log("gjhjshdjhddsf");
 
         }).catch((err) => {
+
 
             dispatch({
                 type: GET_ERRORS,
