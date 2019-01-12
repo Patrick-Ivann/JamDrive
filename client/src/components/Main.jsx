@@ -32,14 +32,10 @@ render() {
 
             {/* <UniteListe></UniteListe> */}
 
-            <Unites></Unites>
 
-{/* //Données du HOC pour décider quel prosit est envoyé dans quel conteneur dans quel tableau
-            <UE_container UE_name="Web" dataUE={this.dataWeb[]} />
-            <UE_container UE_name="Thermodynamique" dataUE={this.dataThermo[]} />
-            <UE_container UE_name="Sciences Humaine" dataUE={this.dataHumain[]} />
-            <UE_container UE_name="Mécanique" dataUE={this.dataMeca[]} />
-            <UE_container UE_name="Architectures Réseaux" dataUE={this.dataReseau[]} /> */}
+
+      {this.props.estConnectee ? <Unites estConnectee={this.props.estConnectee}></Unites> : <Unites></Unites> }
+
         </main>
     );
   }

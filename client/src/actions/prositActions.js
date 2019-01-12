@@ -34,7 +34,7 @@ export const ajouterProsit = (prositData) => dispatch => {
 
 
 export const supprimerProsit = id => dispatch => {
-    if (window.confirm('Vous allez supprimer le travailleur et la fiche ')) {
+    if (window.confirm('Vous allez supprimer le prosit ')) {
     axios.delete(`/api/prosit/test/${id}`, )
         .then(() => {
             dispatch({

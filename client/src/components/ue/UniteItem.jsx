@@ -23,7 +23,7 @@ class UniteItem extends Component {
        var ue
         Object.getOwnPropertyNames(this.props).forEach(element => {
 
-        if (element !== "key"  && element!== "prosit" ) {
+            if (element !== "key" && element !== "prosit" ) {
             console.log(element)   
             ue = element 
         }
