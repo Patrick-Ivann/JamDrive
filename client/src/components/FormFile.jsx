@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { ajouterProsit } from "../actions/prositActions";
     import FormulaireFichier from './ue/FormulaireFichier';
 import InputAutoSuggest from './common/InputAutoSuggest';
+import { AutoPredictInput } from './experiment/AutoPredictInput';
 
 class FormFile extends Component {
     
@@ -139,6 +140,16 @@ class FormFile extends Component {
                     <hr />
                     <form onSubmit={this.handleSubmit}>
                         <label id="formUE">  UE</label>
+
+                        <AutoPredictInput
+                            value={this.state.unite}
+                            handleChange={this.handleChange}
+                            name="unite"
+                            options={this.props.selectOption}  >
+                            <input type="text" />
+                        </AutoPredictInput>
+
+
                         {/* <input type="radio" name="UE" value="Science" /> Sciences de base
             <input type="radio" name="UE" value="Wen" /> Développement Web
             <input type="radio" name="UE" value="Humain" /> Sciences humaines <br />
@@ -153,7 +164,7 @@ class FormFile extends Component {
                         })}
                         </select>  */}
 
-                         <InputAutoSuggest handleChange={this.handleChange} ref={this.input}  value={this.state.unite} name="unite"   array={this.props.selectOption}  placeholder={"selectionner ue"}  />
+                         {/* <InputAutoSuggest handleChange={this.handleChange} ref={this.input}  value={this.state.unite} name="unite"   array={this.props.selectOption}  placeholder={"selectionner ue"}  /> */}
                          {/* <CreatableSelect
                             isClearable
                             onChange={this.handleChange}

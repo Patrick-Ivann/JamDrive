@@ -13,6 +13,7 @@ import Header from './components/layout/Header';
 import Main from './components/Main';
 import ErreurApp from './components/common/ErreurApp';
 import  Login  from './components/auth/Login';
+import testInput from './components/experiment/testInput';
 
 class App extends Component {
 
@@ -36,6 +37,8 @@ class App extends Component {
       <Switch>
 
       <PrivateRoute exact path='/prositsGod'  component={Main}/>}/>
+
+      <Route exact path="/input" component={testInput} />
    
 
       </Switch>
