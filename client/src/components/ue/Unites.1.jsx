@@ -21,11 +21,8 @@ class Unite extends Component {
         super(props)
 
         this.state = {
-            prevPath: '',
-            offline:[]
+            prevPath: ''
         }
-        
-
     }
 
 
@@ -57,24 +54,20 @@ class Unite extends Component {
 
         if (this.props.navigation.lastPath === "") {
 
+            const prositsOffline = []
 
             /*db.table('prositsOffline')
                 .toArray()
                 .then((prosit) => {
                    console.log(prosit);alert("tooou")
                 });   */
-
             db.table('prositsOffline')
                 .toArray()
                 .then((prosit) => {
                     console.log(prosit);
                     console.log(prosit[prosit.length - 1]);
-                    //prositsOffline = prosit[prosit.length - 1]
-                    //prositsOffline.push(prosit[prosit.length])
-                    this.setState({
-                        offline: prosit[prosit.length - 1]
-                    })
-                    
+                    prositsOffline = prosit[prosit.length - 1]
+                    alert("tooou")
                 });
 
         }
@@ -105,7 +98,7 @@ class Unite extends Component {
         } else {
 
             if (this.props.prosits.prosits !== {} && this.props.navigation.lastPath === "/") {
-
+                
 
                 let prositUnite = []
 
@@ -148,13 +141,13 @@ class Unite extends Component {
 
                 )
 
-            } else {
+            } else{
 
                 console.log("dans le offline");
 
                 let prositUnite = []
 
-                this.state.offline.forEach(element => {
+                this.prositsOffline.forEach(element => {
                     prositUnite.push(element.unite)
 
                 });
@@ -169,7 +162,7 @@ class Unite extends Component {
                     uniteObj[sansDoublon] = []
                 });
 
-                this.state.offline.forEach(element => {
+                this.prositsOffline.forEach(element => {
                     uniteSansDoublon.forEach(sansDoublon => {
                         if (element.unite === sansDoublon) {
                             uniteObj[sansDoublon].push(element)
@@ -197,7 +190,7 @@ class Unite extends Component {
             }
 
 
-
+            
         }
 
         return (

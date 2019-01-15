@@ -17,6 +17,7 @@ import fs from 'fs'
 
 //const prosit = require("./routes/api/prosit");
 import prosit from './routes/api/prosit'
+import  log from "./routes/api/log";
 
 /********************************************Routage express****************************************/
 const app = express();
@@ -35,7 +36,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 app.use(morgan('dev'));
 app.use(morgan('common', {
-    stream: fs.createWriteStream('./access.log', {
+    stream: fs.createWriteStream('./logs/access.log', {
         flags: 'a'
     })
 }));
@@ -52,6 +53,7 @@ app.get('/', (req, res) => {
 });
 
 app.use("/api/prosit", prosit);
+app.use("/logs", log);
 
 
 /*****************************************BDD*********************************************** */

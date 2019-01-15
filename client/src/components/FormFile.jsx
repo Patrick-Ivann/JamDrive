@@ -5,16 +5,16 @@ import CreatableSelect from 'react-select/lib/Creatable';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { ajouterProsit } from "../actions/prositActions";
-    import FormulaireFichier from './ue/FormulaireFichier';
+import FormulaireFichier from './ue/FormulaireFichier';
 import InputAutoSuggest from './common/InputAutoSuggest';
 
 class FormFile extends Component {
-    
+
     constructor(props) {
         super(props)
 
 
-        
+
 
         this.state = {
             unite: "",
@@ -24,7 +24,7 @@ class FormFile extends Component {
             retourAjoutProsit: "",
             motsClef: ""
             // errors : null
-        
+
         }
         this.input = React.createRef();
 
@@ -44,7 +44,7 @@ class FormFile extends Component {
         });
 
 
-        
+
 
     }
 
@@ -63,15 +63,19 @@ class FormFile extends Component {
             prositData[element] = this.state[element]
         });
 
-        if (this.input.current.inputSugg.current.state.value) {
-        this.setState({
-            unite: this.input.current.inputSugg.current.state.value
-        })
-
-            prositData["unite"] = this.state["unite"]
+       /* if (this.input) {
 
 
-    }
+            if (this.input.current.inputSugg.current.state.value) {
+                this.setState({
+                    unite: this.input.current.inputSugg.current.state.value
+                })
+
+                prositData["unite"] = this.state["unite"]
+
+
+            }
+        }*/
 
 
 
@@ -82,16 +86,16 @@ class FormFile extends Component {
         this.props.ajouterProsit(prositData)
 
         Object.keys(this.state).forEach(element => {
-            
+
             this.setState({
-                [element]:""
+                [element]: ""
             })
-        });        
+        });
 
     }
 
 
-    
+
 
 
     componentDidUpdate(prevProps, prevState) {
@@ -103,21 +107,14 @@ class FormFile extends Component {
             console.log(this.props.prosit.prosit._id)
 
             let id = this.props.prosit.prosit._id
-          
+
             this.setState({
-               retourAjoutProsit: this.props.prosit.prosit
-           },console.log(this.state.retourAjoutProsit))
-
-
-
-
-
-
-            
+                retourAjoutProsit: this.props.prosit.prosit
+            }, console.log(this.state.retourAjoutProsit))
 
         }
 
-        
+
     }
 
 
@@ -126,8 +123,8 @@ class FormFile extends Component {
 
     render() {
 
-        
-       
+
+
 
 
         return (
@@ -144,8 +141,8 @@ class FormFile extends Component {
             <input type="radio" name="UE" value="Humain" /> Sciences humaines <br />
                             <input type="radio" name="UE" value="Meca" /> Mécanique
             <input type="radio" name="UE" value="Reseaux" /> Architectures réseaux<br /> </label> */}
-    
-                       {/*  <select name="unite" onChange={this.handleChange}  id="unite">
+
+                        {/*  <select name="unite" onChange={this.handleChange}  id="unite">
                         {this.props.selectOption.map((option) =>{
                             return(
                                 <option value={option}>{option}</option>
@@ -153,8 +150,26 @@ class FormFile extends Component {
                         })}
                         </select>  */}
 
-                         <InputAutoSuggest handleChange={this.handleChange} ref={this.input}  value={this.state.unite} name="unite"   array={this.props.selectOption}  placeholder={"selectionner ue"}  />
-                         {/* <CreatableSelect
+                        {(this.props.selectOption) ? <InputAutoSuggest
+                            handleChange={this.handleChange}
+                            ref={this.input}
+                            value={this.state.unite}
+                            name="unite"
+                            array={this.props.selectOption}
+                            placeholder={"selectionner ue"} /> : (
+                                <select
+                                    value={this.state.unite}
+                                    name="unite"
+                                    onChange={this.handleChange}
+                                >
+                                    <option value="1-Science" defaultValue>Sciences de base</option>
+                                    <option value="2-Mécanique">Mécanique</option>
+                                    <option value="3-Web">Web</option>
+                                    <option value="4-Humain">Humain</option>
+                                    <option value="5-Reseau">Reseau</option>
+                                </select>
+                            )}
+                        {/* <CreatableSelect
                             isClearable
                             onChange={this.handleChange}
                             onInputChange={this.handleInputChange}
@@ -218,7 +233,7 @@ class FormFile extends Component {
                         Tuteur
 
                         {
-                            (this.state.retourAjoutProsit=== "") && <button type="submit" onSubmit={this.handleSubmit}>gsdg</button>
+                            (this.state.retourAjoutProsit === "") && <button type="submit" onSubmit={this.handleSubmit}>gsdg</button>
 
                         }
 
@@ -229,20 +244,20 @@ class FormFile extends Component {
 
 
 
-                       
-                            {/* {(this.state.retourAjoutProsit !== "dddd") ? <button type="submit" onSubmit={this.handleSubmit}>gsdg</button> : <FormulaireFichier></FormulaireFichier> } */}
 
-                      
+                        {/* {(this.state.retourAjoutProsit !== "dddd") ? <button type="submit" onSubmit={this.handleSubmit}>gsdg</button> : <FormulaireFichier></FormulaireFichier> } */}
+
+
 
                     </form>
                     {
 
-                            (this.state.retourAjoutProsit !== "") && <FormulaireFichier></FormulaireFichier>
-                            // <label id="lblFile" htmlFor="file"> Ajouter le fichier <br /> <img id="addFileHere" src={addFileHere} alt="add file here !" /> </label>
-                            // <input type="file" onChange={this.getFileName} name="file" ref="getFile" id="file" accept=".doc,.docx" />
-                        }
+                        (this.state.retourAjoutProsit !== "") && <FormulaireFichier></FormulaireFichier>
+                        // <label id="lblFile" htmlFor="file"> Ajouter le fichier <br /> <img id="addFileHere" src={addFileHere} alt="add file here !" /> </label>
+                        // <input type="file" onChange={this.getFileName} name="file" ref="getFile" id="file" accept=".doc,.docx" />
+                    }
 
-                
+
                 </div>
             </div>
         );
@@ -261,7 +276,7 @@ const mapStateToProps = state => ({
     prosit: state.prosit,
     selectOption: state.prosit.uniteSansDoublon
     // errors: state.errors
-    
+
 })
 
 

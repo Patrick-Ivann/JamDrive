@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
 import { godModeActivation } from '../../actions/authAction';
+import { changementDePage } from "../../actions/navigationAction";
 
 
 
@@ -27,7 +28,6 @@ import { godModeActivation } from '../../actions/authAction';
       
          event.preventDefault();
 
-         console.log(this);
 
         this.props.godModeActivation(this.state.loginText)
     }
@@ -53,10 +53,24 @@ import { godModeActivation } from '../../actions/authAction';
             
 
             if (this.props.auth.godMode) {
-                this.props.history.push('/prositsGod')
-            }else{
+                this.props.changementDePage(this.props.location.pathname)
+                this.props.history.push({
+                    pathname: '/prositsGod',
+                    state: {
+                        from: this.props.location.pathname
+                    }
+                })
                 
-                this.props.history.push("/prosits")
+            }else{
+                this.props.changementDePage(this.props.location.pathname)
+
+                this.props.history.push({
+                    
+                    pathname: '/prosits',
+                    state: {
+                        from: this.props.location.pathname
+                    }
+                })
             }
 
 
@@ -71,9 +85,35 @@ import { godModeActivation } from '../../actions/authAction';
 
 
     componentDidMount() {
+
         
-        if (this.props.auth.godMode) {
-            this.props.history.push('/prositsGod')
+        
+        if (this.props.auth.godMode === true) {
+            this.props.history.push({
+                pathname: '/prositsGod',
+                state: {
+                    from: this.props.location.pathname
+                }
+            })
+        }
+
+        if(localStorage.getItem("godMode") === false){
+            this.props.history.push({
+                pathname: '/prosits',
+                state: {
+                    from: this.props.location.pathname
+                }
+            })
+        }
+
+        if (localStorage.getItem("godMode") === true) {
+
+            this.props.history.push({
+                pathname: '/prositsGod',
+                state: {
+                    from: this.props.location.pathname
+                }
+            })
         }
     }
 
@@ -105,8 +145,9 @@ Login.propTypes = {
 const mapStateToProps = (state) => ({
 
     auth: state.auth,
+    navigation:state.navigation
 })
 
 
 
-export default connect(mapStateToProps, { godModeActivation })(Login)
+export default connect(mapStateToProps, { godModeActivation, changementDePage })(Login)
