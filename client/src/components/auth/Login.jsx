@@ -123,14 +123,20 @@ import { changementDePage } from "../../actions/navigationAction";
 
   render() {
     return (
-        <div>
-        
-            <h1>formulaire</h1>
-            <form onSubmit={this.handleSubmit}>
-            
-            <input autoFocus autoComplete="false" value={this.state.loginText} name="loginText" onChange={this.handleUpdate} type="text" />
-            
-            </form>
+        <div className="container">
+            <div className="row">
+                <div className="col-md-4"></div>
+                <div className="col-md-4">
+                    <form onSubmit={this.handleSubmit}>
+                        <div className="form-group mt-4">
+                            <h1>Connexion</h1>
+                            <input className="form-control" autoFocus placeholder="Entrez le mot de passe" autoComplete="false" value={this.state.loginText} name="loginText" onChange={this.handleUpdate} type="password" />
+                            <small id="emailHelp" className="form-text text-muted">Merci de ne pas partager le mot de passe dans un cadre autre que professionnel.
+                            </small>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     )
 }

@@ -3,8 +3,6 @@ import fs from 'fs';
 import util from 'util';
 import Axios from "axios";
 
-
-
 export const sleep = milliseconds => {
     var start = new Date().getTime();
     for (var i = 0; i < 1e7; i++) {
@@ -42,7 +40,18 @@ export const concatValeurObjetAlt = obj => {
 
 }
 
+export const concatValeurObjetToHTML = obj => {
 
+    var concatString =""
+    Object.keys(obj).forEach(element => {
+
+        concatString += obj[element] + '\n'
+
+    });
+
+    return (concatString);
+
+}
 
 
 
@@ -57,7 +66,7 @@ export const logToTxt = (texte) => {
     });
 
     log_file.write(util.format(texte) +
-        moment().format('LTS') + " " + // hh:min:ss 
+        moment().format('LTS') + " " + // hh:min:ss
         moment().format('L') + '\n'); // dd/mm/yyyy
 
     //var log_stdout = process.stdout
@@ -65,8 +74,8 @@ export const logToTxt = (texte) => {
 */
 
 
-   Axios.post("/logs/log", concatValeurObjet(texte)) 
-   
+   Axios.post("/logs/log", concatValeurObjet(texte))
+
    .then((result) => {
        console.log(result);
    }).catch((err) => {
