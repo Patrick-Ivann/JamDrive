@@ -9,6 +9,8 @@ export const godModeActivation = (connexionData) => dispatch =>  {
             type: CONNEXION ,
             payload: true
         })
+
+        localStorage.setItem('godMode', true)
         
     }else{
 
@@ -17,6 +19,7 @@ export const godModeActivation = (connexionData) => dispatch =>  {
             payload:0
         })
 
+        localStorage.setItem('godMode', false)
         
     } 
 }

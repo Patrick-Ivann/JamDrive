@@ -10,13 +10,15 @@ import { InputValuesHc } from '../HOC/InputValues';
 
 class PrositFlux extends Component {
 
-    componentDidUpdate = (prevProps, prevState) => {
-      if (prevProps.rechercheString !== this.props.rechercheString) {
-          
-        var rechercheTest = this.props.rechercheString.rechercheString
-      }
-    }
     
+
+    componentDidUpdate = (prevProps, prevState) => {
+        if (prevProps.rechercheString !== this.props.rechercheString) {
+
+            var rechercheTest = this.props.rechercheString.rechercheString
+        }
+    }
+
 
     render() {
 
@@ -24,16 +26,20 @@ class PrositFlux extends Component {
 
 
         const { prosits } = this.props
-        
-
-        return(
-            
 
 
-        
-            prosits.filter(prosit => prosit.nomProsit.toLowerCase().indexOf(this.props.rechercheString) !== -1).map(prosit => (!this.props.auth.godMode ) ? <PrositItem key={prosit._id} prosit={prosit}></PrositItem> : <PrositItemGODMODE key={prosit._id} prosit={prosit} />)
+        return (
 
-        )}
+
+            prosits.filter(prosit => prosit.nomProsit.toString().toLowerCase().indexOf(this.props.rechercheString) > -1 ||
+                prosit.motsClef.toString().toLowerCase().indexOf(this.props.rechercheString) > -1)
+                .map(prosit => (!this.props.auth.godMode) ?
+                    <PrositItem key={prosit._id} prosit={prosit}></PrositItem> :
+                    <PrositItemGODMODE key={prosit._id} prosit={prosit} />)
+
+
+        )
+    }
 
 
 }
@@ -43,11 +49,11 @@ PrositFlux.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  
-    rechercheString : state.prosit.rechercheString,
-    auth : state.auth
+
+    rechercheString: state.prosit.rechercheString,
+    auth: state.auth
 })
 
 
 
-export default compose(connect(mapStateToProps),InputValuesHc)(PrositFlux)
+export default compose(connect(mapStateToProps), InputValuesHc)(PrositFlux)

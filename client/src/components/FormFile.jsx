@@ -8,7 +8,7 @@ import FormulaireFichier from './ue/FormulaireFichier';
 import InputAutoSuggest from './common/InputAutoSuggest';
 
 class FormFile extends Component {
-    
+
     constructor(props) {
         super(props)
 
@@ -21,6 +21,7 @@ class FormFile extends Component {
             motsClef: "",
             selectOption: []
             // errors : null
+
         }
 
         this.input = React.createRef();
@@ -61,9 +62,9 @@ class FormFile extends Component {
         this.props.ajouterProsit(prositData)
 
         Object.keys(this.state).forEach(element => {
-            
+
             this.setState({
-                [element]:""
+                [element]: ""
             })
         });
     }

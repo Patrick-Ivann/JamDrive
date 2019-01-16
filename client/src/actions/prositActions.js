@@ -1,5 +1,6 @@
 import axios,{post} from 'axios';
 
+
 import {
     GET_ERRORS,
     RECUPERER_PROSIT,
@@ -12,14 +13,20 @@ import {
     
 } from "./types";
 
+import db from '../indexDB2';
+
+
 export const ajouterProsit = (prositData) => dispatch => {
     axios.post('api/prosit/test', prositData)
 
         .then((result) => {
+           
+
             dispatch({
                 type: AJOUTER_PROSIT,
                 payload: result.data,
             })
+
            
 
         }).catch((err) => {
@@ -60,17 +67,41 @@ export const recupererProsits = () => dispatch => {
     dispatch(mettrePrositaCharger())
     axios.get('/api/prosit/test')
         .then((result) => {
-            console.log(result)
+
+             localStorage.setItem("prosits", JSON.stringify(result.data))
+
+             localStorage.setItem("chevree" ,1)
+
+
+             let res = result.data
+             const todoToAdd = {
+                 res,
+                 done: false
+             };
+
+             db.table('prositsOffline')
+                 .add(res)
+                 .then((id) => {
+                     console.log("DB");
+                 });
+
+
             dispatch({
                 type: RECUPERER_PROSITS,
                 payload: result.data,
             })
+
 
         }).catch((err) => {
 
             dispatch({
                 type: RECUPERER_PROSITS,
                 payload: null
+            })
+
+            dispatch({
+                type: GET_ERRORS,
+                payload: "Impossible de récuperer les prosit depuis le serveur."
             })
         });
 }
@@ -118,6 +149,11 @@ export const checkerProsit = (id) => dispatch => {
                 type: RECUPERER_PROSIT,
                 payload: null
             })
+
+             dispatch({
+                 type: GET_ERRORS,
+                 payload: "Impossible de mettre à jour le prosit sur le serveur"
+             })
         });
 }
 
