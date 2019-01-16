@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import {mettreAjourRecherche} from '../../actions/prositActions';
 
 import logo from '../../static/image/jp_logo.png'
+import jampops from '../../static/image/jampops.png'
 import { Exportation } from '../common/InputSearch';
 class Header extends Component {
 
@@ -49,23 +50,41 @@ render() {
   
   
   return (
+      <header className={"mb-4"}>
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+          <img className="logo mr-2" src={jampops} alt="Logo" width="100px" />
+          <a className="navbar-brand" href="#">JAMDRIVE</a>
+          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+                  aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
 
-
-    <header>
-    <h1 id="Title">JamDrive</h1>
-    <img id="logo" src={logo} alt="Jampops logo"/>
-      <nav>
-        <ul>
-          <li>Rechercher un fichier</li>
-         <input name='recherche' value={this.state.recherche} onChange={this.handleChange} type="text"/>
-   {/*<Exportation></Exportation>
-  */}
-         </ul>
-      </nav>
-    </header>
+          <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+            </ul>
+            <form className="form-inline my-2 my-lg-0">
+              <input className="form-control mr-sm-2" name='recherche' value={this.state.recherche}
+                     onChange={this.handleChange} type="search" placeholder="Recherche.."/>
+            </form>
+            <button className="btn btn-primary my-2 my-sm-0" data-toggle="modal" data-target="#fileModal">Nouveau fichier</button>
+          </div>
+        </nav>
+      </header>
     );
   }
 }
+/*
+
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabIndex="-1" aria-disabled="true">Disabled</a>
+              </li>
+ */
 
 const mapStateToProps = state => ({
 

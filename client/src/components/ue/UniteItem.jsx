@@ -38,15 +38,32 @@ class UniteItem extends Component {
     
 
         return (
+            <div className="container">
+                <div className={"row"}>
+                    <div className={"col-md-2"}></div>
+                    <div className={"col-md-8"}>
+                        <div className="card mb-4">
+                            <div className="card-header bg-dark text-white">
+                                <h3>UE-{ueTitle}</h3>
+                            </div>
+
+                            <div className="card-body">
+                                <PrositFlux prosits={this.props.prosit}></PrositFlux>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+/*
+
              <article className={[this.state.isButtonToggleOn ? 'rolled_out' : 'rolled_up', 'ue'].join(" ")}>
                 <h1 className="UE_title" onClick={this.arrowClick}>UE - {ueTitle}</h1>
                 <img className='arrow' onClick={this.arrowClick} src={arrow} alt="Down arrow" />
                 <PrositFlux prosits={this.props.prosit}></PrositFlux>
-            </article> 
-
-
-        );
-    }
-}
+            </article>
+ */
 
 export default UniteItem;

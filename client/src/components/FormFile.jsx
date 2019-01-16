@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import cross from '../static/image/cross.png'
 import CreatableSelect from 'react-select/lib/Creatable';
 
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { ajouterProsit } from "../actions/prositActions";
-    import FormulaireFichier from './ue/FormulaireFichier';
+import FormulaireFichier from './ue/FormulaireFichier';
 import InputAutoSuggest from './common/InputAutoSuggest';
 
 class FormFile extends Component {
@@ -13,28 +12,24 @@ class FormFile extends Component {
     constructor(props) {
         super(props)
 
-
-        
-
         this.state = {
             unite: "",
             nomProsit: "",
             nomScribe: "",
             validation: "",
             retourAjoutProsit: "",
-            motsClef: ""
+            motsClef: "",
+            selectOption: []
             // errors : null
-        
         }
-        this.input = React.createRef();
 
+        this.input = React.createRef();
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(event) {
         event.preventDefault();
-
         const target = event.target;
         const value = target.type === "checkbox" ? target.checked : target.value;
         const name = target.name;
@@ -42,39 +37,23 @@ class FormFile extends Component {
         this.setState({
             [name]: value
         });
-
-
-        
-
     }
-
-
 
     handleSubmit(event) {
         event.preventDefault();
 
-
-
-
         const prositData = {}
-
-
         Object.keys(this.state).forEach(element => {
             prositData[element] = this.state[element]
         });
 
-        if (this.input.current.inputSugg.current.state.value) {
-        this.setState({
-            unite: this.input.current.inputSugg.current.state.value
-        })
+        /*if (this.input.current.inputSugg.current.state.value) {
+            this.setState({
+                unite: this.input.current.inputSugg.current.state.value
+            })
 
             prositData["unite"] = this.state["unite"]
-
-
-    }
-
-
-
+        }*/
 
 
         console.error(prositData)
@@ -86,163 +65,104 @@ class FormFile extends Component {
             this.setState({
                 [element]:""
             })
-        });        
-
+        });
     }
-
-
-    
-
 
     componentDidUpdate(prevProps, prevState) {
 
-
-
+        if (this.props.prosit.prosit !== prevProps.prosit.prosit) {
+            this.setState({
+                retourAjoutProsit: this.props.prosit.prosit
+            },console.log(this.state.retourAjoutProsit))
+        }
         if (prevProps.prosit !== this.props.prosit) {
-
             console.log(this.props.prosit.prosit._id)
 
             let id = this.props.prosit.prosit._id
-          
-            this.setState({
-               retourAjoutProsit: this.props.prosit.prosit
-           },console.log(this.state.retourAjoutProsit))
 
-
-
-
-
-
-            
-
+            if (prevProps.selectedOption != this.props.selectOption) {
+                this.setState({
+                    selectOption: this.props.selectOption
+                })
+                //alert(this.props.selectOption)
+            }
         }
 
-        
+
     }
 
-
-
-
-
     render() {
-
-        
-       
-
-
         return (
-            <div id="opacity">
-                <div id="formulaire">
+            <div className="modal fade" id="fileModal" tabIndex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">Ajouter un nouveau fichier</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form onSubmit={this.handleSubmit}>
+                            <div className="modal-body">
+                                <label>Unité d'enseignement</label>
+                                <div className="input-group mb-3">
+                                    {(this.props.prosit == null) ? <select name="unite" className="custom-select" id="unite" onChange={this.handleChange}>
+                                        {this.state.selectOption.map((option) =>{
+                                            return(
+                                                <option value={option}>{option}</option>
+                                            )
+                                        })}
+                                    </select> : <select name="unite" className="custom-select" id="unite" onChange={this.handleChange}>
+                                        <option>Bancal</option>
+                                    </select>}
 
-                    <img id="closeButton" src={cross} onClick={this.props.function} alt="close button" />
-                    <h1>Nouveau Fichier</h1>
-                    <hr />
-                    <form onSubmit={this.handleSubmit}>
-                        <label id="formUE">  UE</label>
-                        {/* <input type="radio" name="UE" value="Science" /> Sciences de base
-            <input type="radio" name="UE" value="Wen" /> Développement Web
-            <input type="radio" name="UE" value="Humain" /> Sciences humaines <br />
-                            <input type="radio" name="UE" value="Meca" /> Mécanique
-            <input type="radio" name="UE" value="Reseaux" /> Architectures réseaux<br /> </label> */}
-    
-                       {/*  <select name="unite" onChange={this.handleChange}  id="unite">
-                        {this.props.selectOption.map((option) =>{
-                            return(
-                                <option value={option}>{option}</option>
-                            )
-                        })}
-                        </select>  */}
+                                </div>
 
-                         <InputAutoSuggest handleChange={this.handleChange} ref={this.input}  value={this.state.unite} name="unite"   array={this.props.selectOption}  placeholder={"selectionner ue"}  />
-                         {/* <CreatableSelect
-                            isClearable
-                            onChange={this.handleChange}
-                            onInputChange={this.handleInputChange}
-                            options={this.props.selectOption}
-                        /> */}
+                                <label>Nom du prosit</label>
+                                <div className="input-group mb-3">
+                                    <input type="text" name="nomProsit" className="form-control" placeholder=""
+                                           aria-label="Username" aria-describedby="basic-addon1" onChange={this.handleChange} value={this.state.nomProsit} />
+                                </div>
 
+                                <label>Nom du scribe</label>
+                                <div className="input-group mb-3">
+                                    <input type="text" name="nomScribe" className="form-control" placeholder=""
+                                           aria-label="Username" aria-describedby="basic-addon1" onChange={this.handleChange} value={this.state.nomScribe} />
+                                </div>
 
-                        {/* <select
-                            value={this.state.unite}
-                            name="unite"
-                            onChange={this.handleChange}
-                        >
-                            <option value="1-Science" defaultValue>Sciences de base</option>
-                            <option value="2-Mécanique">Mécanique</option>
-                            <option value="3-Web">Web</option>
-                            <option value="4-Humain">Humain</option>
-                            <option value="5-Reseau">Reseau</option>
-                        </select> */}
+                                <label>Mot(s)-clé(s)</label>
+                                <div className="input-group">
+                                    <textarea name="motsClef" className="form-control" aria-label="With textarea" onChange={this.handleChange} value={this.state.motsClef}></textarea>
+                                </div>
 
+                                <label class="mt-2">Document validé par :</label><br />
+                                <input
+                                    type="radio"
+                                    name="validation"
+                                    onChange={this.handleChange}
+                                    value="1    "
+                                    checked={this.state.validation === "1"}
+                                /> La classe<br />
+                                <input
+                                    type="radio"
+                                    name="validation"
+                                    onChange={this.handleChange}
+                                    value="2"
+                                    checked={this.state.validation === "2"}
+                                /> Le tuteur
 
-
-
-
-
-
-                        <label id="formProsit">  Nom du prosit
-                            <input type="text" name="nomProsit" onChange={this.handleChange} value={this.state.nomProsit} /> </label>
-                        <br />
-                        <label id="formProsit">  Nom du scribe
-                            <input type="text" name="nomScribe" onChange={this.handleChange} value={this.state.nomScribe} /> </label>
-                        <br />
-
-                        <label id="formProsit">  Liste de mot clef
-                            <input type="text" name="motsClef" onChange={this.handleChange} value={this.state.motsClef} /> </label>
-                        <br />
-
-                        {/* <label>  Allez <input  type="radio" name="fileType" checked={this.state.type} value="Aller" /><br /> </label>
-                            <label>  Retour <input type="radio" name="fileType" value="Retour" /><br /> </label> 
-
-                        <label>  Validé par la classe
-            <input type="checkbox" name="checkType" value="Classe" /><br /> </label>
-                        <label>  Validé par le tuteur
-            <input type="checkbox" name="checkType" value="Tuteur" /> </label>
-*/}
-
-                        <input
-                            type="radio"
-                            name="validation"
-                            onChange={this.handleChange}
-                            value="1    "
-                            checked={this.state.validation === "1"}
-                        />
-                        Classe
-                        <input
-                            type="radio"
-                            name="validation"
-                            onChange={this.handleChange}
-                            value="2"
-                            checked={this.state.validation === "2"}
-                        />
-                        Tuteur
-
-                        {
-                            (this.state.retourAjoutProsit=== "") && <button type="submit" onSubmit={this.handleSubmit}>gsdg</button>
-
-                        }
-
-
-                        {/* {
-                            (this.state.retourAjoutProsit !== "") ?  <FormulaireFichier></FormulaireFichier> : <button type="submit" onSubmit={this.handleSubmit}>gsdg</button> 
-                        } */}
-
-
-
-                       
-                            {/* {(this.state.retourAjoutProsit !== "dddd") ? <button type="submit" onSubmit={this.handleSubmit}>gsdg</button> : <FormulaireFichier></FormulaireFichier> } */}
-
-                      
-
-                    </form>
-                    {
-
-                            (this.state.retourAjoutProsit !== "") && <FormulaireFichier></FormulaireFichier>
-                            // <label id="lblFile" htmlFor="file"> Ajouter le fichier <br /> <img id="addFileHere" src={addFileHere} alt="add file here !" /> </label>
-                            // <input type="file" onChange={this.getFileName} name="file" ref="getFile" id="file" accept=".doc,.docx" />
-                        }
-
-                
+                                {/*
+                                    (this.state.retourAjoutProsit === "") && <button type="submit" onSubmit={this.handleSubmit}>gsdg</button>
+                                */}
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                <button type="submit" onSubmit={this.handleSubmit} className="btn btn-primary">Ajouter</button>
+                            </div>
+                        </form>
+                        {(this.state.retourAjoutProsit !== "") && <FormulaireFichier></FormulaireFichier>}
+                    </div>
                 </div>
             </div>
         );
@@ -252,17 +172,12 @@ class FormFile extends Component {
 FormFile.propTypes = {
     ajouterProsit: PropTypes.func.isRequired,
     prosit: PropTypes.object.isRequired,
-
-
 }
 
 const mapStateToProps = state => ({
-
     prosit: state.prosit,
     selectOption: state.prosit.uniteSansDoublon
     // errors: state.errors
-    
 })
-
 
 export default connect(mapStateToProps, { ajouterProsit })(FormFile);

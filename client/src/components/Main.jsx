@@ -27,8 +27,9 @@ class Main extends Component {
 render() {
   return (
         <main>
-            <img className='addFile' onClick={this.addFileClick} src={addFile} alt="Add a file here" />
-            {this.state.isAddFileClicked? <FormFile function={this.addFileClick.bind(this)} /> : null}
+
+            <FormFile function={this.addFileClick.bind(this)} />
+            {/*this.state.isAddFileClicked? <FormFile function={this.addFileClick.bind(this)} /> : null*/}
 
             {/* <UniteListe></UniteListe> */}
 
@@ -40,5 +41,7 @@ render() {
     );
   }
 }
+
+//<img className='addFile' onClick={this.addFileClick} src={addFile} alt="Add a file here" />
 
 export default Main;

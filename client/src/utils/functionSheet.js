@@ -36,6 +36,20 @@ export const concatValeurObjetAlt = obj => {
 
 }
 
+export const concatValeurObjetToHTML = obj => {
 
+
+
+
+    var concatString =""
+    Object.keys(obj).forEach(element => {
+
+        concatString += obj[element] + '\n'
+
+    });
+
+    return (concatString);
+
+}
 
 

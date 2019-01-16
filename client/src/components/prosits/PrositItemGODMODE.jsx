@@ -26,15 +26,31 @@ class PrositItemGODMODE extends Component {
     render() {
         const { prosit } = this.props
         return (
-            <article className="prosit" >
-                <h2>Prosit - {this.props.prosit.nomProsit}  GOD MODE <button onClick={this.handleSuppr(prosit._id)}> surpppp</button></h2>
-                
+            <div className="card mt-2">
+                <div className="card-body prosit">
+                    <button className="btn btn-outline-danger float-right" onClick={this.handleSuppr(prosit._id)}>Supprimer</button>
+                    <h2>Prosit - {this.props.prosit.nomProsit}</h2>
+                    <ul className="list__item" >
+                        {prosit.motsClef.slice(0,4).map((motsClef, index) => (<li key={index} className="">{motsClef}</li>))}
+                    </ul>
+                    <a href={`http://localhost:5000/api/prosit/testtelechargement/${prosit.nomProsit}/aller`}>
+                        <button type="button" className="btn btn-primary btn-lg btn-block mb-2 mt-2 text-left">Aller</button></a>
+                    <a href={`http://localhost:5000/api/prosit/testtelechargement/${prosit.nomProsit}/retour`}>
+                        <button type="button" className="btn btn-primary btn-lg btn-block text-left">Retour</button></a>
+                </div>
+            </div>
+        );
+    }
+/*
+<article className="prosit" >
+
+
                  <ul className="list__item" >
-        
+
         {prosit.motsClef.slice(0,4).map((motsClef, index) => (<li key={index} className="">{motsClef}</li>))}
-    
-    </ul> 
-                
+
+    </ul>
+
                 <div className="file"><a href={`http://localhost:5000/api/prosit/testtelechargement/${prosit.nomProsit}/aller`}>
                     Aller </a>
                 </div>
@@ -42,9 +58,7 @@ class PrositItemGODMODE extends Component {
                     Retour {this.Check()} </a>
                 </div>
             </article>
-        );
-    }
-
+ */
 
 }
 
