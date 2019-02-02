@@ -59,6 +59,31 @@ export const recupererParId = (req, res) => {
 
 };
 
+
+export const recupererParPromo = (req, res) => {
+
+    const erreurs = {}
+    Prosit.findOne({
+            promo: req.user.promo
+        })
+        .then((prosit) => {
+
+            if (!prosit) {
+                erreurs.pasDePrositPromo = "il n'existe pas de prosit pour cette promo"
+                return res.status(404).json(erreurs);
+            }
+
+            res.json(prosit);
+
+        }).catch((err) => {
+
+            return res.status(404).json(err);
+
+        });
+
+
+};
+
 export const recupererParNom = (req, res) => {
 
     const erreurs = {}
@@ -117,6 +142,8 @@ export const ajouterProsit = (req, res) => {
 
             }
         }
+
+       prositChamps['promo'] =  req.user.promo
 
 
 

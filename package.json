@@ -10,7 +10,9 @@
     "server": "nodemon serveur.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run serveur\" \"npm run client\"",
-    "serveur": "nodemon ./cluster.js --exec babel-node --presets babel-preset-env"
+    "devSansCluster": "concurrently \"npm run serveurSansCluster\" \"npm run client\"",
+    "serveur": "nodemon ./cluster.js --exec babel-node --presets babel-preset-env  --ignore logs/ --ignore fichiers/",
+    "serveurSansCluster": "nodemon ./serveur.js --exec babel-node --presets babel-preset-env --ignore logs/ --ignore fichiers/"
   },
   "repository": {
     "type": "git",
@@ -23,18 +25,28 @@
   },
   "homepage": "https://github.com/ShinobuFormula/JamDrive#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "busboy": "^0.3.0",
+    "chokidar": "^2.0.4",
     "compression": "^1.7.3",
     "concurrently": "^4.1.0",
     "dexie": "^2.0.4",
+    "docx-pdf": "0.0.1",
     "express": "^4.16.4",
     "formidable": "^1.2.1",
     "helmet": "^3.15.0",
+    "jsonwebtoken": "^8.4.0",
+    "jwt-decode": "^2.2.0",
     "moment": "^2.23.0",
     "mongoose": "^5.4.0",
+    "node-fetch": "^2.3.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
     "recompose": "^0.30.0",
-    "validator": "^10.9.0"
+    "save": "^2.3.3",
+    "validator": "^10.9.0",
+    "word2pdf": "^1.0.7"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

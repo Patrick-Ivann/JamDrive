@@ -1,4 +1,4 @@
-import { CONNEXION } from "../actions/types";
+import { CONNEXION, SET_CURRENT_USER } from "../actions/types";
 
 const intialState = {
 
@@ -14,6 +14,12 @@ export default function (state = intialState, action) {
     return { 
         ...state, 
         godMode : action.payload
+     }
+
+     case SET_CURRENT_USER:
+     return{
+       ...state,
+       utilisateur : action.payload
      }
 
   default:

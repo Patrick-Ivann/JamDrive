@@ -10,6 +10,7 @@ import {
     RECUPERER_PROSITS,
     TELEVERSEMENT_PROSIT,
     METTRE_A_JOUR_RECHERCHE,
+    RECUPERER_PROSIT_NULL,
     
 } from "./types";
 
@@ -123,6 +124,45 @@ export const recupererFicheID = (id) => dispatch => {
                 payload: null
             })
         });
+}
+
+export const recupererPrositsParPromo = () => dispatch =>{
+
+    dispatch(mettrePrositaCharger())
+
+    axios.get('/api/prosit/recuperer')
+
+    .then((result) => {
+
+        if (Array.isArray(result.data)) {
+
+            dispatch({
+                type:RECUPERER_PROSITS,
+                payload: result.data
+            })
+
+        }else{
+            dispatch({
+                type: RECUPERER_PROSIT,
+                payload : result.data
+            })
+        }
+    
+
+        console.log(result);
+
+    }).catch((err) => {
+        
+        // dispatch({
+        //     type:RECUPERER_PROSIT_NULL,
+        //     payload: null
+        // })
+
+        dispatch({
+            type:GET_ERRORS,
+            payload: err.response.data
+        })
+    });
 }
 
 

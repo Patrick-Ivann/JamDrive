@@ -47,6 +47,7 @@ export const concatValeurObjetToHTML = obj => {
 
         concatString += obj[element] + '\n'
 
+        console.log(obj);
     });
 
     return (concatString);

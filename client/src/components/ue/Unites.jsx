@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 
-import { recupererProsits } from "../../actions/prositActions";
+import { recupererProsits,recupererPrositsParPromo } from "../../actions/prositActions";
 import Chargement from "../common/loading";
 
 import UniteListe from "./UniteListe";
@@ -45,12 +45,17 @@ class Unite extends Component {
 
 
         if (this.props.navigation.lastPath !== this.props) {
-            console.log("object");
-
             if (this.props.navigation.lastPath === "/") {
-                this.props.recupererProsits()
+                
+                if (this.props.utilisateur.utilisateur) {
+                    this.props.recupererPrositsParPromo()
+                }else{
+                    
+                    this.props.recupererProsits()
+                }
 
             }
+            
 
 
         }
@@ -222,8 +227,9 @@ const mapStateToProps = state => ({
 
     prosits: state.prosit,
     navigation: state.navigation,
+    utilisateur: state.auth,
     errors: state.errors
 
 })
 
-export default connect(mapStateToProps, { recupererProsits })(Unite)
+export default connect(mapStateToProps, { recupererProsits,recupererPrositsParPromo })(Unite)

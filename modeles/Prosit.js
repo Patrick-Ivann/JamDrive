@@ -43,7 +43,7 @@ const PrositSchema = new Schema({
     retour: {
         type: String,
     }, // si il est aller ou retour
-    
+
     aller: {
         type: String,
     }, // si il est aller ou retour
@@ -52,10 +52,22 @@ const PrositSchema = new Schema({
         type: String,
         required: true
     },
+    annee: {
 
-      motsClef: {
-          type: [String],
-      },
+        type: String,
+        required: true
+    },
+
+
+    motDePasse: {
+
+        type: String,
+        required: true
+    },
+
+    motsClef: {
+        type: [String],
+    },
 
     dateUpload: {
         type: Date,

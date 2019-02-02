@@ -2,3 +2,7 @@
 package-lock.js
 /fichiers
 /config
+logs/access.log
+*.log
+/logs
+/motDePasse

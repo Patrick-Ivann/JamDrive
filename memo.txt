@@ -1,0 +1,5 @@
+-DARK THEME (css in js)
+-gestion des années et du mdp (pour les promos)
+-finir pdf viewer sur la native
+-sercuritser l'api via token
+-
