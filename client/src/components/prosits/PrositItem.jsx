@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { checkerProsit } from "../../actions/prositActions";
 import { connect } from 'react-redux'
 
+import PrositStyled from '../../styles/PrositStyled';
+
 
 /**
  * TODO il faut trouver un moyen(un bouton) pour lancer la fonction de check et lui passer l'id à la fonction check
@@ -34,16 +36,16 @@ class PrositItem extends Component {
         const {prosit} = this.props
         return (
             <div className="card mt-2">
-                <div className="card-body prosit">
+                <PrositStyled className="card-body ">
                     <h4>Prosit - {this.props.prosit.nomProsit}</h4>
                     <ul className="list__item" >
                         {prosit.motsClef.slice(0,4).map((motsClef, index) => (<li key={index} className="">{motsClef}</li>))}
                     </ul>
-                    <a href={`http://localhost:5000/api/prosit/testtelechargement/${prosit.nomProsit}/aller`}>
-                        <button type="button" className="btn btn-primary btn-lg btn-block mb-2 mt-2 text-left">Aller</button></a>
-                    <a href={`http://localhost:5000/api/prosit/testtelechargement/${prosit.nomProsit}/retour`}>
-                        <button type="button" className="btn btn-primary btn-lg btn-block text-left">Retour</button></a>
-                </div>
+                   {(prosit.aller) ? <a href={`http://localhost:5000/api/prosit/testtelechargement/${prosit.nomProsit}/aller`}>
+                        <button type="button" className="btn btn-primary btn-lg btn-block mb-2 mt-2 text-left">Aller</button></a> :null}
+                    {(prosit.retour) ? <a href={`http://localhost:5000/api/prosit/testtelechargement/${prosit.nomProsit}/retour`}>
+                        <button type="button" className="btn btn-primary btn-lg btn-block text-left">Retour</button></a> : null}
+                </PrositStyled>
             </div>
         );
     }

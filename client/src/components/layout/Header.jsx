@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import {mettreAjourRecherche} from '../../actions/prositActions';
+import { changerTheme } from "../../actions/themeAction";
 
 import logo from '../../static/image/jp_logo.png'
 import jampops from '../../static/image/jampops.png'
@@ -62,6 +63,7 @@ render() {
           <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
             </ul>
+            <button className="btn btn-primary my-2 my-sm-0" onClick={  this.props.changerTheme}> changer vers le theme {(this.props.theme.theme) ? "qui pete la vue" : "sombre"} </button>
             <form className="form-inline my-2 my-lg-0">
               <input className="form-control mr-sm-2" name='recherche' value={this.state.recherche}
                      onChange={this.handleChange} type="search" placeholder="Recherche.."/>
@@ -89,7 +91,9 @@ render() {
 const mapStateToProps = state => ({
 
   prosit: state.prosit,
+  theme: state.theme
+
 })
 
 
-export default connect(mapStateToProps,{mettreAjourRecherche}) (Header);
+export default connect(mapStateToProps,{mettreAjourRecherche, changerTheme}) (Header);

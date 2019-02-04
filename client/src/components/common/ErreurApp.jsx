@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 
 import {concatValeurObjet, concatValeurObjetAlt, concatValeurObjetToHTML} from "../../utils/functionSheet";
 
+import {AlertFixed} from '../../styles/ModalStyled';
+
 class ErreurApp extends Component {
 
     constructor(props){
@@ -34,7 +36,7 @@ class ErreurApp extends Component {
         return (
             (concatValeurObjet(this.props.errors) !== "") ? <div className={"container float-right"}>
                 <div className={"row"}>
-                    <div className="alert alert-danger alert-fixed alert-dismissible fade show col-sm-3" role="alert">
+                    <AlertFixed className="alert alert-danger alert-dismissible fade show col-sm-3" role="alert">
                         <h4 className="alert-heading">Erreur !</h4>
                         <p>{concatValeurObjetToHTML(this.props.errors)}</p>
                         <hr />
@@ -42,7 +44,7 @@ class ErreurApp extends Component {
                         <button type="button" className="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                    </div>
+                    </AlertFixed>
                 </div>
             </div> : <div></div>
         )

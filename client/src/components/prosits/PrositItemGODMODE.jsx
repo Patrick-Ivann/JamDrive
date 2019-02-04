@@ -4,6 +4,10 @@ import { connect } from 'react-redux'
 
 import { supprimerProsit } from "../../actions/prositActions";
 
+
+import PrositStyled from '../../styles/PrositStyled';
+
+
 class PrositItemGODMODE extends Component {
     constructor(props) {
         super(props)
@@ -27,17 +31,17 @@ class PrositItemGODMODE extends Component {
         const { prosit } = this.props
         return (
             <div className="card mt-2">
-                <div className="card-body prosit">
+                <PrositStyled className="card-body ">
                     <button className="btn btn-outline-danger float-right" onClick={this.handleSuppr(prosit._id)}>Supprimer</button>
                     <h2>Prosit - {this.props.prosit.nomProsit}</h2>
                     <ul className="list__item" >
                         {prosit.motsClef.slice(0,4).map((motsClef, index) => (<li key={index} className="">{motsClef}</li>))}
                     </ul>
-                    <a href={`http://localhost:5000/api/prosit/testtelechargement/${prosit.nomProsit}/aller`}>
-                        <button type="button" className="btn btn-primary btn-lg btn-block mb-2 mt-2 text-left">Aller</button></a>
-                    <a href={`http://localhost:5000/api/prosit/testtelechargement/${prosit.nomProsit}/retour`}>
-                        <button type="button" className="btn btn-primary btn-lg btn-block text-left">Retour</button></a>
-                </div>
+                    {(prosit.aller) ? <a href={`http://localhost:5000/api/prosit/testtelechargement/${prosit.nomProsit}/aller`}>
+                        <button type="button" className="btn btn-primary btn-lg btn-block mb-2 mt-2 text-left">Aller</button></a> : null}
+                    {(prosit.retour) ? <a href={`http://localhost:5000/api/prosit/testtelechargement/${prosit.nomProsit}/retour`}>
+                        <button type="button" className="btn btn-primary btn-lg btn-block text-left">Retour</button></a> : null}
+                </PrositStyled>
             </div>
         );
     }

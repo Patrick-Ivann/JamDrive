@@ -16,6 +16,7 @@ import ErreurApp from './components/common/ErreurApp';
 import  Login  from './components/auth/Login';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authAction';
+import Wrapper from './styles/Wrapper';
 
 class App extends Component {
 
@@ -56,7 +57,7 @@ class App extends Component {
       
       <Router>
       
-      <div>
+      <Wrapper black >
       
       <Header/>
       <ErreurApp></ErreurApp>
@@ -71,7 +72,7 @@ class App extends Component {
 
       </Switch>
 
-      </div>
+      </Wrapper>
       </Router>
       
       </Provider>

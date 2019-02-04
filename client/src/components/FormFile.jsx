@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { ajouterProsit } from "../actions/prositActions";
 import FormulaireFichier from './ue/FormulaireFichier';
+import {ModalContent, ModalHeader} from '../styles/formStyled';
 import InputAutoSuggest from './common/InputAutoSuggest';
 
 class FormFile extends Component {
@@ -97,13 +98,14 @@ class FormFile extends Component {
             <div className="modal fade" id="fileModal" tabIndex="-1" role="dialog"
                  aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header">
+                    <ModalContent >
+
+                        <ModalHeader>
                             <h5 className="modal-title" id="exampleModalLabel">Ajouter un nouveau fichier</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                        </div>
+                        </ModalHeader>
                         <form onSubmit={this.handleSubmit}>
                             <div className="modal-body">
                                 <label>Unité d'enseignement</label>
@@ -163,7 +165,7 @@ class FormFile extends Component {
                             </div>
                         </form>
                         {(this.state.retourAjoutProsit !== "") && <FormulaireFichier></FormulaireFichier>}
-                    </div>
+                    </ModalContent>
                 </div>
             </div>
         );

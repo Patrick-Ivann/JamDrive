@@ -3,6 +3,8 @@ import arrow from '../../static/image/down-arrow.png'
 // import Prosit_container from '../Prosit_container';
 import PrositFlux from '../prosits/PrositsFeed';
 
+import {CardStyled, UeStyled} from '../../styles/UeStyled';
+
 class UniteItem extends Component {
     constructor(props) {
         super(props);
@@ -42,15 +44,15 @@ class UniteItem extends Component {
                 <div className={"row"}>
                     <div className={"col-md-2"}></div>
                     <div className={"col-md-8"}>
-                        <div className="card mb-4">
+                        <CardStyled className=" mb-4">
                             <div className="card-header bg-dark text-white">
                                 <h3>UE-{ueTitle}</h3>
                             </div>
 
-                            <div className="card-body">
+                            <UeStyled className="card-body">
                                 <PrositFlux prosits={this.props.prosit}></PrositFlux>
-                            </div>
-                        </div>
+                            </UeStyled>
+                        </CardStyled>
                     </div>
                 </div>
             </div>
