@@ -6,3 +6,5 @@ logs/access.log
 *.log
 /logs
 /motDePasse
+*.bat
+
