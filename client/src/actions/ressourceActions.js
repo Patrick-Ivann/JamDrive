@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { TELEVERSEMENT_RESSOURCE, RESSOURCE_CHARGEMENT } from './types';
 
-export const televerserProsit = (prosit,id) => dispatch => {
+export const televerserRessource = (prosit,id) => dispatch => {
     dispatch(mettreRessourceaCharger())
-    axios.put(`/api/prosit/testressource/${id}`, prosit)
+    axios.put(`https://api.jampops.online/api/prosit/testressource/${id}`, prosit)
         .then((result) => {
             dispatch({
                 type: TELEVERSEMENT_RESSOURCE,

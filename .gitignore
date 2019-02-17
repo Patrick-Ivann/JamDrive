@@ -8,3 +8,5 @@ logs/access.log
 /motDePasse
 *.bat
 
+.vscode/settings.json
+client/.prettierrc

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { televerserProsit } from "../../actions/prositActions";
-
+import {televerserRessource} from '../../actions/ressourceActions';
 
 import addFileHereImg from '../../static/image/addFileHere.png'
 
@@ -25,7 +25,17 @@ class FormulaireFichier extends Component {
 
     event.preventDefault();
 
-    this.props.televerserProsit(this.state.file)
+    if (this.props.prositID) {
+
+      this.props.televerserRessource(this.state.file)
+      
+
+    }else{
+
+
+      this.props.televerserProsit(this.state.file)
+    }
+
   }
 
   getFileName(event) {
@@ -62,4 +72,4 @@ const mapStateToProps = state => ({
 
 
 
-export default connect(mapStateToProps,{televerserProsit})(FormulaireFichier)   
+export default connect(mapStateToProps,{televerserProsit, televerserRessource})(FormulaireFichier)   

@@ -75,7 +75,7 @@ export const logToTxt = (texte) => {
 */
 
 
-   Axios.post("/logs/log", concatValeurObjet(texte))
+   Axios.post("https://api.jampops.online/logs/log", concatValeurObjet(texte))
 
    .then((result) => {
        console.log(result);
@@ -85,6 +85,7 @@ export const logToTxt = (texte) => {
 
 
 };
+
 
 
 

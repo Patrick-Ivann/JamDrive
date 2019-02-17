@@ -7,6 +7,7 @@ import Chargement from "../common/loading";
 
 import UniteListe from "./UniteListe";
 import db from '../../indexDB2';
+import ErrorUe from './ErrorUe';
 
 
 
@@ -103,11 +104,23 @@ class Unite extends Component {
 
         let ueContenu;
 
-        if (prosits === null || chargement) {
+        if (prosits === null || chargement || this.props.prosits.prosit === null) {
 
             ueContenu = <Chargement></Chargement>
 
+            setTimeout(() => {
+                ueContenu = <ErrorUe></ErrorUe>
+            }, 6000);
+            
+
+            if ( (this.props.errors["pasDePrositPromo"]) ) {
+
+                ueContenu = <ErrorUe></ErrorUe>
+
+                
+            }
         } else {
+
 
             if (this.props.prosits.prosits !== {} && this.props.navigation.lastPath === "/") {
 

@@ -24,7 +24,7 @@ export const godModeActivation = (input) => dispatch => {
 
     } else {
 
-        axios.post(`/magic/utilisateur/connexion`, connexionData)
+        axios.post(`https://api.jampops.online/magic/utilisateur/connexion`, connexionData)
 
             .then((res) => {
 

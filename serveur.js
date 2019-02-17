@@ -23,6 +23,8 @@ import  log from "./routes/api/log";
 import utilisateur from './routes/api/utilisateur';
 import { logToTxt } from "./functionSheet";
 /********************************************Routage express****************************************/
+require('dotenv').config()
+
 const app = express();
 
 
@@ -47,10 +49,7 @@ app.use(morgan('common', {
 }));
 app.use(compression());
 
-/*app.all("*", (req,res) =>{
 
-console.log('nsm native');
-})*/
 
 app.get('/', (req, res) => {
 

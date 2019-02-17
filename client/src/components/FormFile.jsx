@@ -78,16 +78,24 @@ class FormFile extends Component {
             },console.log(this.state.retourAjoutProsit))
         }
         if (prevProps.prosit !== this.props.prosit) {
+
+            console.error(this.props.prosit.prosit);
+
+            if (this.props.prosit.prosit !== [] && this.props.prosit.prosit !== {} && this.props.prosit.prosit !== null) {
+                
+            
             console.log(this.props.prosit.prosit._id)
 
             let id = this.props.prosit.prosit._id
 
-            if (prevProps.selectedOption != this.props.selectOption) {
+            if (prevProps.selectedOption !== this.props.selectOption) {
                 this.setState({
                     selectOption: this.props.selectOption
                 })
                 //alert(this.props.selectOption)
             }
+
+        }
         }
 
 
@@ -116,9 +124,8 @@ class FormFile extends Component {
                                                 <option value={option}>{option}</option>
                                             )
                                         })}
-                                    </select> : <select name="unite" className="custom-select" id="unite" onChange={this.handleChange}>
-                                        <option>Bancal</option>
-                                    </select>}
+                                    </select> : <input type="text" name="unite" className="form-control" placeholder=""
+                                        aria-label="Unite" aria-describedby="basic-addon1" onChange={this.handleChange} value={this.state.unite} />}
 
                                 </div>
 

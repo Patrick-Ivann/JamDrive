@@ -4,6 +4,7 @@ import { checkerProsit } from "../../actions/prositActions";
 import { connect } from 'react-redux'
 
 import PrositStyled from '../../styles/PrositStyled';
+import FormulaireFichier from '../ue/FormulaireFichier';
 
 
 /**
@@ -38,12 +39,13 @@ class PrositItem extends Component {
             <div className="card mt-2">
                 <PrositStyled className="card-body ">
                     <h4>Prosit - {this.props.prosit.nomProsit}</h4>
+                    <FormulaireFichier prositID={this.props.prosit.nomProsit} ></FormulaireFichier>
                     <ul className="list__item" >
                         {prosit.motsClef.slice(0,4).map((motsClef, index) => (<li key={index} className="">{motsClef}</li>))}
                     </ul>
-                   {(prosit.aller) ? <a href={`http://localhost:5000/api/prosit/testtelechargement/${prosit.nomProsit}/aller`}>
+                   {(prosit.aller) ? <a href={`https://api.jampops.online/api/prosit/testtelechargement/${prosit.nomProsit}/aller`}>
                         <button type="button" className="btn btn-primary btn-lg btn-block mb-2 mt-2 text-left">Aller</button></a> :null}
-                    {(prosit.retour) ? <a href={`http://localhost:5000/api/prosit/testtelechargement/${prosit.nomProsit}/retour`}>
+                    {(prosit.retour) ? <a href={`https://api.jampops.online/api/prosit/testtelechargement/${prosit.nomProsit}/retour`}>
                         <button type="button" className="btn btn-primary btn-lg btn-block text-left">Retour</button></a> : null}
                 </PrositStyled>
             </div>

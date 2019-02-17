@@ -17,6 +17,7 @@ import  Login  from './components/auth/Login';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authAction';
 import Wrapper from './styles/Wrapper';
+import PopUpSmartphone from './components/common/PopUpSmartphone';
 
 class App extends Component {
 
@@ -61,6 +62,7 @@ class App extends Component {
       
       <Header/>
       <ErreurApp></ErreurApp>
+      <PopUpSmartphone></PopUpSmartphone>
 
       <Route exact path="/" component={Login} />
 
