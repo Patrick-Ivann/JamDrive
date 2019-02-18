@@ -1,4 +1,4 @@
-import axios,{post} from 'axios';
+import axios from 'axios';
 
 
 import {
@@ -78,10 +78,7 @@ export const recupererProsits = () => dispatch => {
 
 
              let res = result.data
-             const todoToAdd = {
-                 res,
-                 done: false
-             };
+             
 
              db.table('prositsOffline')
                  .add(res)

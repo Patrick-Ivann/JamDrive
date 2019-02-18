@@ -3,9 +3,7 @@ import { connect } from 'react-redux'
 import {mettreAjourRecherche} from '../../actions/prositActions';
 import { changerTheme } from "../../actions/themeAction";
 
-import logo from '../../static/image/jp_logo.png'
 import jampops from '../../static/image/jampops.png'
-import { Exportation } from '../common/InputSearch';
 class Header extends Component {
 
   constructor(props) {
@@ -54,7 +52,7 @@ render() {
       <header className={"mb-4"}>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
           <img className="logo mr-2" src={jampops} alt="Logo" width="100px" />
-          <a className="navbar-brand" href="#">JAMDRIVE</a>
+          <div className="navbar-brand">JAMDRIVE</div>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
                   aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>

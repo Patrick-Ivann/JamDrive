@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 
 
+
 const Wrapper = styled.div `
 
  background-color: ${props=> props.themeR.theme ? "rgb(35,35,35)": null};

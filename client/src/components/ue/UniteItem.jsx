@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import arrow from '../../static/image/down-arrow.png'
 // import Prosit_container from '../Prosit_container';
 import PrositFlux from '../prosits/PrositsFeed';
 

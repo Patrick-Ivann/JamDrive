@@ -15,7 +15,6 @@ class PrositFlux extends Component {
     componentDidUpdate = (prevProps, prevState) => {
         if (prevProps.rechercheString !== this.props.rechercheString) {
 
-            var rechercheTest = this.props.rechercheString.rechercheString
         }
     }
 

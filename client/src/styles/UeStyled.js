@@ -1,13 +1,12 @@
 import styled from 'styled-components'
-import className from 'classname'
 import {
     connect
 } from 'react-redux'
 
 
 
-
-const ueStyled = styled.div.attrs({
+// eslint-disable-next-line 
+const ueStyled=styled.div.attrs({
     className: 'card-body '
 })
 `
@@ -19,7 +18,7 @@ const ueStyled = styled.div.attrs({
    }
  `;
 
-
+// eslint-disable-next-line 
 const cardStyled = styled.div.attrs({
     className: 'card '
 })

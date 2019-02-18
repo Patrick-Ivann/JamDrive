@@ -1,10 +1,10 @@
 import styled from 'styled-components'
-import className from 'classname'
 import {
     connect
 } from 'react-redux'
 
 
+// eslint-disable-next-line
 const modalHeader = styled.div.attrs({
     className: 'modal-header close'
 })
@@ -15,6 +15,7 @@ const modalHeader = styled.div.attrs({
 }
 `
 
+// eslint-disable-next-line
 const modalContent = styled.div.attrs({
     className: 'modal-content '
 })

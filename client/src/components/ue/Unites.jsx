@@ -152,11 +152,7 @@ class Unite extends Component {
 
                 });
 
-                Object.getOwnPropertyNames(uniteObj).forEach(key => {
-                    let value = uniteObj[key];
-
-                });
-
+                
                 console.log(uniteSansDoublon)
 
 
@@ -197,11 +193,7 @@ class Unite extends Component {
 
                 });
 
-                Object.getOwnPropertyNames(uniteObj).forEach(key => {
-                    let value = uniteObj[key];
-
-                });
-
+             
                 console.log(uniteSansDoublon)
 
 

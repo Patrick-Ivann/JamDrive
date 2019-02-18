@@ -1,12 +1,11 @@
 import styled from 'styled-components'
-import className from 'classname'
 import {
     connect
 } from 'react-redux'
 
 
 
-
+// eslint-disable-next-line
 const ModalStyled = styled.div.attrs({
     className: 'alert-fixed '
 })

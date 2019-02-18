@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import CreatableSelect from 'react-select/lib/Creatable';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { ajouterProsit } from "../actions/prositActions";
 import FormulaireFichier from './ue/FormulaireFichier';
 import {ModalContent, ModalHeader} from '../styles/formStyled';
-import InputAutoSuggest from './common/InputAutoSuggest';
+//import InputAutoSuggest from './common/InputAutoSuggest';
 
 class FormFile extends Component {
 
@@ -86,7 +85,6 @@ class FormFile extends Component {
             
             console.log(this.props.prosit.prosit._id)
 
-            let id = this.props.prosit.prosit._id
 
             if (prevProps.selectedOption !== this.props.selectOption) {
                 this.setState({

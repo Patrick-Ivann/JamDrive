@@ -13,7 +13,7 @@ export const godModeActivation = (input) => dispatch => {
    connexionData.motDePasse = input
     
 
-    if (connexionData.motDePasse === "JamDrive") {
+    if (connexionData.motDePasse === "roadToUneThune") {
 
         dispatch({
             type: CONNEXION,

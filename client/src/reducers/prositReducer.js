@@ -23,7 +23,6 @@ const intialState = {
     rechercheString: '',
 }
 
-let uniteSansDoublon
 let prositUnite = []
 
 
