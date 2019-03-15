@@ -1,15 +1,36 @@
 {
   "short_name": "JamDrive",
   "name": "JamDrive by JamPops",
-  "icons": [
+  "icons": [{
+    "src": "web-hi_res_512.ico",
+    "sizes": "64x64 32x32 24x24 16x16",
+    "type": "image/x-icon"
+  },
+
+  {
+    "src": "web-hi_res_192.png",
+    "type": "image/png",
+    "sizes": "192x192"
+  },
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "web-hi_res_512.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
-  ],
+  
+],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#13003d",
+  "background_color": "#13003d",
+  "description": "Gestionnaire de fichier pour les prosits des sections EXIA du Cesi",
+
+  "author": {
+    "name": "FLAVVVN",
+
+    "github": "https://github.com/Patrick-Ivann",
+    "source-repo": "https://github.com/ShinobuFormula/JamDrive"
+
+  }
+
 }

@@ -1,4 +1,4 @@
-import { GET_ERRORS } from "../actions/types";
+import { GET_ERRORS,RESET_ERRORS } from "../actions/types";
 import { logToTxt } from "../utils/functionSheet";
 const initialState = {}
 
@@ -9,10 +9,15 @@ export default function (state = initialState, action) {
         case GET_ERRORS:
 
 
-        logToTxt(action.payload, "AllErrors");
+        logToTxt(action.payload);
 
 
             return action.payload;
+
+        case RESET_ERRORS:
+
+            return null;
+
        
 
         default: return state;

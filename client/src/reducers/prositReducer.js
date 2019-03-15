@@ -82,8 +82,9 @@ export default function (state = intialState, action) {
         case AJOUTER_PROSIT:
             return {
                 ...state,
+                chargement:false,
+                prosits: [action.payload,...state.prosits],
                 prosit: action.payload,
-                prosits: [...state.prosits, action.payload]
             }
 
 
@@ -91,7 +92,7 @@ export default function (state = intialState, action) {
             return {
                 ...state,
                 televerse: action.payload,
-                chargement: false
+                prosits: [...state.prosits,action.payload]
             }
 
 

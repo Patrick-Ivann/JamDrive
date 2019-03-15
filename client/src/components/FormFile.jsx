@@ -57,7 +57,6 @@ class FormFile extends Component {
         }*/
 
 
-        console.error(prositData)
 
         this.props.ajouterProsit(prositData)
 
@@ -69,6 +68,7 @@ class FormFile extends Component {
         });
     }
 
+ 
     componentDidUpdate(prevProps, prevState) {
 
         if (this.props.prosit.prosit !== prevProps.prosit.prosit) {
@@ -78,14 +78,31 @@ class FormFile extends Component {
         }
         if (prevProps.prosit !== this.props.prosit) {
 
-            console.error(this.props.prosit.prosit);
 
             if (this.props.prosit.prosit !== [] && this.props.prosit.prosit !== {} && this.props.prosit.prosit !== null) {
                 
             
-            console.log(this.props.prosit.prosit._id)
+            console.log(this.props.prosit.prosit)
+                const modal = document.getElementById("fileModal");
+
+                if (modal.classList.contains("show")) {
+                    
+                    const modalBackdrops = document.getElementsByClassName('modal-backdrop');
+                    modalBackdrops.item(0).parentNode.removeChild(modalBackdrops.item(0));
 
 
+                } 
+                // change state like in hidden modal
+                modal.classList.remove('show');
+                modal.setAttribute('aria-hidden', 'true');
+                modal.setAttribute('style', 'display: none');
+
+
+
+
+
+
+                document.getElementById('fileModal');
             if (prevProps.selectedOption !== this.props.selectOption) {
                 this.setState({
                     selectOption: this.props.selectOption
@@ -144,7 +161,7 @@ class FormFile extends Component {
                                     <textarea name="motsClef" className="form-control" aria-label="With textarea" onChange={this.handleChange} value={this.state.motsClef}></textarea>
                                 </div>
 
-                                <label class="mt-2">Document validé par :</label><br />
+                                <label className="mt-2">Document validé par :</label><br />
                                 <input
                                     type="radio"
                                     name="validation"
@@ -169,7 +186,7 @@ class FormFile extends Component {
                                 <button type="submit" onSubmit={this.handleSubmit} className="btn btn-primary">Ajouter</button>
                             </div>
                         </form>
-                        {(this.state.retourAjoutProsit !== "") && <FormulaireFichier></FormulaireFichier>}
+                        {(this.state.retourAjoutProsit !== "") && <FormulaireFichier  prositType="aller" ></FormulaireFichier>}
                     </ModalContent>
                 </div>
             </div>

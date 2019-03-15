@@ -14,7 +14,8 @@ import {
 } from "../../controlleur/prosit";
 import {
     telechargementProsit,
-    telechargementRessource
+    telechargementRessource,
+    telechargementUe
 } from '../../controlleur/telechargement';
 
 
@@ -36,10 +37,12 @@ const router = express.Router();
 router.route('/test')
     .get(recupererProsit)
 
-router.route("ajouter", passport.authenticate('jwt', {
+router.route("/ajouter", passport.authenticate('jwt', {
         session: false
     }))
-    .post(ajouterProsit)
+    .post(passport.authenticate('jwt', {
+        session: false
+    }) ,ajouterProsit)
 
 router.route("/recuperer")
     .get(passport.authenticate('jwt', {
@@ -52,19 +55,32 @@ router.route('/testtelechargement/:nomProsit/:type')
 router.route('/testtelechargementRessources/:id')
     .get(telechargementRessource)
 
-router.route('/testfichier')
-    .post(televerserProsit)
+router.route('/telechargementue/:unite/:promo')
+    .get(telechargementUe)
 
-router.route('/testressource')
-    .post(televerserRessource)
+router.route('/ajouterFichier')
+    .post(passport.authenticate('jwt', {
+        session: false
+    }) ,televerserProsit)
+
+router.route('/ajouterFichier')
+    .post(passport.authenticate('jwt', {
+        session: false
+    }) ,televerserRessource)
 
 router.route('/test/:nom')
     .get(recupererParNom)
 
 router.route('/test/:id')
-    .get(recupererParId)
-    .put(checkerPrositParId)
-    .delete(supprimerProsit)
+    .get(passport.authenticate('jwt', {
+        session: false
+    }) ,recupererParId)
+    .put(passport.authenticate('jwt', {
+        session: false
+    }) ,checkerPrositParId)
+    .delete(passport.authenticate('jwt', {
+        session: false
+    }) ,supprimerProsit)
 
 
 

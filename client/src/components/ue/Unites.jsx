@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 
-import { recupererProsits,recupererPrositsParPromo } from "../../actions/prositActions";
+import { recupererProsits, recupererPrositsParPromo, setErreur } from "../../actions/prositActions";
+import { ping } from "../../actions/authAction";
 import Chargement from "../common/loading";
 
 import UniteListe from "./UniteListe";
@@ -23,9 +24,10 @@ class Unite extends Component {
 
         this.state = {
             prevPath: '',
-            offline:[]
+            prosits: [],
+            offline: []
         }
-        
+
 
     }
 
@@ -39,6 +41,14 @@ class Unite extends Component {
             alert(prevProps.location);
         }
 
+
+        if (prevProps.prosits.prosits !== this.props.prosits.prosits) {
+
+            this.setState({
+                prosits: this.props.prosits.prosits
+            })
+        }
+
     }
 
 
@@ -47,16 +57,28 @@ class Unite extends Component {
 
         if (this.props.navigation.lastPath !== this.props) {
             if (this.props.navigation.lastPath === "/") {
-                
+
                 if (this.props.utilisateur.utilisateur) {
-                    this.props.recupererPrositsParPromo()
-                }else{
-                    
-                    this.props.recupererProsits()
+
+                    console.log("object");
+
+                    this.props.ping(() => this.props.recupererPrositsParPromo())
+
+                } else {
+
+                    console.log(localStorage.getItem('godMode') + typeof localStorage.getItem('godMode'));
+
+                    if (localStorage.getItem('godMode') === "true") {
+                        console.log("o  t");
+
+                        this.props.recupererProsits()
+                    }
                 }
 
+
+
             }
-            
+
 
 
         }
@@ -70,17 +92,25 @@ class Unite extends Component {
                    console.log(prosit);alert("tooou")
                 });   */
 
+             
+                
+            
             db.table('prositsOffline')
                 .toArray()
                 .then((prosit) => {
-                    console.log(prosit);
-                    console.log(prosit[prosit.length - 1]);
-                    //prositsOffline = prosit[prosit.length - 1]
-                    //prositsOffline.push(prosit[prosit.length])
-                    this.setState({
-                        offline: prosit[prosit.length - 1]
-                    })
-                    
+                    if (prosit.length === 0) {
+                        this.props.setErreur("Aucun prosit en cache")
+                    }else{
+
+                        console.log(prosit);
+                        console.log(prosit[prosit.length - 1]);
+                        //prositsOffline = prosit[prosit.length - 1]
+                        //prositsOffline.push(prosit[prosit.length])
+                        this.setState({
+                            offline: prosit[prosit.length - 1]
+                        })
+                    }
+
                 });
 
         }
@@ -99,33 +129,34 @@ class Unite extends Component {
 
     render() {
 
-        const { prosits, chargement } = this.props.prosits;
+        const { chargement } = this.props.prosits;
 
+        const prosits = this.state.prosits
 
         let ueContenu;
 
-        if (prosits === null || chargement || this.props.prosits.prosit === null) {
-
+        if (((!prosits || prosits.length === 0) && chargement)) {
             ueContenu = <Chargement></Chargement>
 
             setTimeout(() => {
                 ueContenu = <ErrorUe></ErrorUe>
             }, 6000);
-            
 
-            if ( (this.props.errors["pasDePrositPromo"]) ) {
 
-                ueContenu = <ErrorUe></ErrorUe>
 
-                
+            if (((this.props.errors["pasDeProsit"]) || (this.props.errors["pasDePrositPromo"])) && prosits.length === 0) {
+
+            return    ueContenu = <ErrorUe></ErrorUe>
+
+
             }
         } else {
 
 
-            if (this.props.prosits.prosits !== {} && this.props.navigation.lastPath === "/") {
-
+            if ((prosits.length !== 0 || this.props.prosits.prosits !== {}) && this.props.navigation.lastPath === "/") {
 
                 let prositUnite = []
+
 
                 prosits.forEach(element => {
                     prositUnite.push(element.unite)
@@ -152,7 +183,7 @@ class Unite extends Component {
 
                 });
 
-                
+
                 console.log(uniteSansDoublon)
 
 
@@ -164,45 +195,64 @@ class Unite extends Component {
 
             } else {
 
-                console.log("dans le offline");
 
-                let prositUnite = []
+                if (this.state.offline.length === 0 || !this.state.offline) {
+                    this.props.setErreur("Mode Hors ligne et sans Prosit")
 
-                this.state.offline.forEach(element => {
-                    prositUnite.push(element.unite)
+                    return (
+                        ueContenu = <ErrorUe></ErrorUe>
 
-                });
+                    )
+
+                } else {
 
 
 
-                let uniteSansDoublon = [...new Set(prositUnite)]; //contient toutes les valeurs d'ue possible 
+                    console.log("dans le offline");
 
-                const uniteObj = {}
+                    this.props.setErreur("Mode Hors ligne")
 
-                uniteSansDoublon.forEach(sansDoublon => {
-                    uniteObj[sansDoublon] = []
-                });
+                    let prositUnite = []
 
-                this.state.offline.forEach(element => {
-                    uniteSansDoublon.forEach(sansDoublon => {
-                        if (element.unite === sansDoublon) {
-                            uniteObj[sansDoublon].push(element)
-                            console.log(uniteObj[sansDoublon])
-                        }
+                    console.log(this.state.offline);
+
+                    this.state.offline.forEach(element => {
+                        prositUnite.push(element.unite)
+
                     });
 
-                });
-
-             
-                console.log(uniteSansDoublon)
+                    console.log(prositUnite);
 
 
+                    let uniteSansDoublon = [...new Set(prositUnite)]; //contient toutes les valeurs d'ue possible 
 
-                return (
-                    ueContenu = <UniteListe ue={uniteObj}></UniteListe>
+                    const uniteObj = {}
 
-                )
+                    uniteSansDoublon.forEach(sansDoublon => {
+                        uniteObj[sansDoublon] = []
+                    });
 
+                    this.state.offline.forEach(element => {
+                        uniteSansDoublon.forEach(sansDoublon => {
+                            if (element.unite === sansDoublon) {
+                                uniteObj[sansDoublon].push(element)
+                                console.log(uniteObj[sansDoublon])
+                            }
+                        });
+
+                    });
+
+
+                    console.log(uniteSansDoublon)
+
+
+
+                    return (
+                        ueContenu = <UniteListe ue={uniteObj}></UniteListe>
+
+                    )
+
+                }
 
             }
 
@@ -237,4 +287,4 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps, { recupererProsits,recupererPrositsParPromo })(Unite)
+export default connect(mapStateToProps, { recupererProsits, recupererPrositsParPromo, ping, setErreur })(Unite)

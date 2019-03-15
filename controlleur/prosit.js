@@ -63,7 +63,7 @@ export const recupererParId = (req, res) => {
 export const recupererParPromo = (req, res) => {
 
     const erreurs = {}
-    Prosit.findOne({
+    Prosit.find({
             promo: req.user.promo
         })
         .then((prosit) => {
@@ -143,7 +143,12 @@ export const ajouterProsit = (req, res) => {
             }
         }
 
-       prositChamps['promo'] =  req.user.promo
+        if (!req.user) {
+            return res.status(403).json("pas d'utilisateur")
+        } else {
+
+            prositChamps['promo'] = req.user.promo
+        }
 
 
 
@@ -156,7 +161,7 @@ export const ajouterProsit = (req, res) => {
             .then(prosit => {
                 if (prosit) {
 
-                    erreurs.PrositExiste = "Le prosit existe déjà"
+                    erreurs.PrositExiste = "Le prosit existe dÃ©jÃ "
                     return res.status(404).json(erreurs);
 
                 } else {
@@ -260,43 +265,87 @@ export const televerserProsit = (req, res) => {
     var path = require("path")
     const erreurs = {}
 
-
-
-
-
     var form = new formidable.IncomingForm();
     form.parse(req);
 
     form.on('fileBegin', function (name, file) {
-        file.path = path.join(__dirname, '../fichiers/') + file.name;
-        console.log(file.path)
-    });
 
-    form.on('aborted', function () {
 
-        console.log("erreur");
 
-        req.resume()
-    });
+        var titreProsit = ""
+        if (fields !== "files") {
 
-    form.on('error', function (err) {
+            const regex = /(_aller|_retour)/
+            nomProsit = fields.split(regex)[0].toString()
 
-        console.log(err);
+            titreProsit = fields.split("_")[0] + "_" + fields.split("_")[1] + "_" + fields.split("_")[2]
+        }
 
-        erreurs.erreurTransfertFichier = "erreur lors du transfert de fichier, veuillez reéssayer ultérieurement.   "
-        return res.status(404).json(erreurs);
+
+
+
+
+
+
+        Prosit.findOne({
+            "nomProsit": titreProsit
+
+        }).then((result) => {
+
+
+            if (!result || result.length === 0 || result === {}) {
+                erreurs.insertionFichier = "aucun prosit associé, vérifiez nom du fichier" + err
+
+                return res.status(404).json(erreurs);
+            } else {
+
+
+                console.log("hhgjgjdsghgd")
+
+
+                file.name = file.name.split(".")[0] + result._id + file.name.split(".")[1]
+                file.path = path.join(__dirname, '../fichiers/') + file.name;
+                form.on('aborted', function () {
+
+                    console.log("erreur");
+
+                });
+
+                form.on('error', function (err) {
+
+                    console.log(err);
+
+                    erreurs.erreurTransfertFichier = "erreur lors du transfert de fichier, veuillez reÃ©ssayer ultÃ©rieurement.   "
+                    return res.status(404).json(erreurs);
+
+                })
+
+                form.on('file', function (name, file) {
+                    console.log('Uploaded ' + file.name);
+                    rajouterFicherAprosit(file, res)
+                    //return res.send();
+
+                });
+            }
+
+
+        }).catch((err) => {
+
+            console.log(err)
+
+            erreurs.erreurTransfertFichier = "erreur lors du transfert de fichier, impossible de lui associer un prosit, veuillez reÃ©ssayer ultÃ©rieurement.   "
+
+            return res.status(400).json(erreurs);
+
+        });
+
+
+
+
+
 
     })
-
-    form.on('file', function (name, file) {
-        console.log('Uploaded ' + file.name);
-        rajouterFicherAprosit(file, res)
-        //return res.send();
-
-    });
-
-
-};
+}
 
 export const rajouterFicherAprosit = (file, res) => {
 
@@ -348,19 +397,20 @@ export const rajouterFicherAprosit = (file, res) => {
         new: true
     }).then((prosit) => {
         //return  res.json(prosit)
-        return res.status(200).json(prosit);
-
         if (!prosit) {
-            erreurs.insertionFichier = "le fichier du prosit n'est pas intégré"
+            erreurs.insertionFichier = "le fichier du prosit n'est pas intÃ©grÃ©"
             return res.status(400).json(erreurs)
+        } else {
+
+            return res.status(200).json(prosit);
         }
 
-        return;
+
 
 
     }).catch((err) => {
         console.log(err)
-        erreurs.insertionFichier = "impossible de mettre à jour la BDD" + err
+        erreurs.insertionFichier = "impossible de mettre Ã  jour la BDD" + err
         return res.status(400).json(erreurs);
     });
 
@@ -405,7 +455,7 @@ export const televerserRessource = (req, res) => {
 
             if (!result) {
 
-                console.log("on a pas trouvé")
+                console.log("on a pas trouvÃ©")
 
             }
 
@@ -414,7 +464,7 @@ export const televerserRessource = (req, res) => {
             result.ressources.forEach(ressource => {
                 console.log(nomRessource + ressource.nomRessource + ressource + "ggsdg")
                 if (ressource.nomRessource === nomRessource) {
-                    erreurs.ressourceExiste = "cette ressource existe déjà"
+                    erreurs.ressourceExiste = "cette ressource existe dÃ©jÃ "
                     return res.status(404).json(erreurs);
                 }
             })
@@ -453,13 +503,15 @@ export const televerserRessource = (req, res) => {
 
 export const supprimerRessource = (req, res) => {
 
+    /*
+
     Prosit.findOne(req.params.id)
         .then(prosit => {
 
             if (prosit.ressources.filter(comment => comment._id.toString() === req.params.comment_id).lenght === 0) {
 
                 res.status(404).json({
-                    commentnotexists: "Le commentaire n'existe pas."
+                    ressourceExist: "La ressource n'existre pas."
                 })
             }
 
@@ -476,6 +528,36 @@ export const supprimerRessource = (req, res) => {
 
         })
 
-        .catch(err => res.status(404).json(err));
+        .catch(err => res.status(404).json(err));*/
+
+
+    const erreurs = {}
+
+
+    let id = req.params.id.split("_")[0]
+    let typeFichier = req.params.id.split("_")[1]
+
+
+    Prosit.findOneAndUpdate({
+        "_id": id
+
+    }, {
+        $unset: {
+            [typeFichier]: ""
+        }
+    }, {
+        new: true
+    }).then((result) => {
+
+        if (!result) {
+            erreurs.PasDePrositId = "il n'y a pas de prosit avec cet ID"
+            return res.status(404).json(erreurs);
+        }
+
+        res.json(result);
+    }).catch((err) => {
+        res.status(404).json(err);
+    });
+
 
 }

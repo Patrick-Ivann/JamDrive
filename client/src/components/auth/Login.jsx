@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
-import { godModeActivation } from '../../actions/authAction';
+import { godModeActivation,ping } from '../../actions/authAction';
 import { changementDePage } from "../../actions/navigationAction";
 
 
@@ -29,7 +29,7 @@ import { changementDePage } from "../../actions/navigationAction";
          event.preventDefault();
 
 
-        this.props.godModeActivation(this.state.loginText)
+      this.props.ping(()=>  this.props.godModeActivation(this.state.loginText))
     }
     
 
@@ -130,9 +130,11 @@ import { changementDePage } from "../../actions/navigationAction";
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-group mt-4">
                             <h1>Connexion</h1>
-                            <input className="form-control" autoFocus placeholder="Entrez le mot de passe" autoComplete="false" value={this.state.loginText} name="loginText" onChange={this.handleUpdate} type="password" />
+                            <input className="form-control" id="connexion" autoFocus placeholder="Entrez le mot de passe" autoComplete="false" value={this.state.loginText} name="loginText" onChange={this.handleUpdate} type="password" />
                             <small id="emailHelp" className="form-text text-muted">Merci de ne pas partager le mot de passe dans un cadre autre que professionnel.
                             </small>
+                            <label aria-label="connexion" id="lblConnexion"htmlFor="connexion"> &nbsp;</label>
+                            {(navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/Android/i) ||navigator.userAgent.match(/iPad/i)) ? (<button className="btn btn-primary my-8 my-sm-7 btn-block" onClick={this.handleSubmit}> Connexion </button>) :null}
                         </div>
                     </form>
                 </div>
@@ -156,4 +158,4 @@ const mapStateToProps = (state) => ({
 
 
 
-export default connect(mapStateToProps, { godModeActivation, changementDePage })(Login)
+export default connect(mapStateToProps, { godModeActivation, changementDePage,ping })(Login)

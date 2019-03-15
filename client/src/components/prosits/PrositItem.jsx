@@ -18,6 +18,14 @@ class PrositItem extends Component {
         this.Check = this.Check.bind(this)
     }
 
+    componentDidUpdate = (prevProps, prevState) => {
+      
+        if(prevProps.prosit !== this.props.prosit){
+
+        }
+    }
+    
+
 
 
     Check(event) {
@@ -40,13 +48,14 @@ class PrositItem extends Component {
                 <PrositStyled className="card-body ">
                     <h4>Prosit - {this.props.prosit.nomProsit}</h4>
                     <FormulaireFichier prositID={this.props.prosit.nomProsit} ></FormulaireFichier>
+
                     <ul className="list__item" >
                         {prosit.motsClef.slice(0,4).map((motsClef, index) => (<li key={index} className="">{motsClef}</li>))}
                     </ul>
                    {(prosit.aller) ? <a href={`https://api.jampops.online/api/prosit/testtelechargement/${prosit.nomProsit}/aller`}>
-                        <button type="button" className="btn btn-primary btn-lg btn-block mb-2 mt-2 text-left">Aller</button></a> :null}
+                        <button type="button" className="btn btn-primary btn-lg btn-block mb-2 mt-2 text-left">Aller</button></a> : <FormulaireFichier prositType="aller" ></FormulaireFichier>}
                     {(prosit.retour) ? <a href={`https://api.jampops.online/api/prosit/testtelechargement/${prosit.nomProsit}/retour`}>
-                        <button type="button" className="btn btn-primary btn-lg btn-block text-left">Retour</button></a> : null}
+                        <button type="button" className="btn btn-primary btn-lg btn-block text-left">Retour</button></a> : <FormulaireFichier prositType="retour" ></FormulaireFichier>}
                 </PrositStyled>
             </div>
         );

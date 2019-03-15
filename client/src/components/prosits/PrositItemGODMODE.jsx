@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { supprimerProsit } from "../../actions/prositActions";
+import { supprimerProsit, supprimerAllerRetourRessource } from "../../actions/prositActions";
 
 
 import PrositStyled from '../../styles/PrositStyled';
-import FormulaireFichier from '../ue/FormulaireFichier';
 
 
 class PrositItemGODMODE extends Component {
@@ -28,22 +27,28 @@ class PrositItemGODMODE extends Component {
         event.preventDefault();
         this.props.supprimerProsit(id)
     }
+
+    handleSupprRessource = id => event => {
+        event.preventDefault();
+        this.props.supprimerAllerRetourRessource(id)
+    }
     render() {
         const { prosit } = this.props
         return (
             <div className="card mt-2">
                 <PrositStyled className="card-body ">
-                    <FormulaireFichier prositID={this.props.prosit.nomProsit} ></FormulaireFichier>
 
                     <button className="btn btn-outline-danger float-right" onClick={this.handleSuppr(prosit._id)}>Supprimer</button>
                     <h2>Prosit - {this.props.prosit.nomProsit}</h2>
                     <ul className="list__item" >
                         {prosit.motsClef.slice(0,4).map((motsClef, index) => (<li key={index} className="">{motsClef}</li>))}
                     </ul>
-                    {(prosit.aller) ? <a href={`https://api.jampops.online/api/prosit/testtelechargement/${prosit.nomProsit}/aller`}>
-                        <button type="button" className="btn btn-primary btn-lg btn-block mb-2 mt-2 text-left">Aller</button></a> : null}
-                    {(prosit.retour) ? <a href={`https://api.jampops.online/api/prosit/testtelechargement/${prosit.nomProsit}/retour`}>
-                        <button type="button" className="btn btn-primary btn-lg btn-block text-left">Retour</button></a> : null}
+                    {(prosit.aller) ?(<div> <a href={`https://api.jampops.online/api/prosit/testtelechargement/${prosit.nomProsit}/aller`}>
+        <button type="button" className="btn btn-primary btn-lg btn-block mb-2 mt-2 text-left">Aller</button></a> <button className="btn btn-outline-danger float-right" onClick={this.handleSupprRessource(prosit._id+"_aller")}>Supprimer fichier Prosit aller</button> </div>) : null}
+
+
+                    {(prosit.retour) ?   (<div> <a href={`https://api.jampops.online/api/prosit/testtelechargement/${prosit.nomProsit}/retour`}>
+                        <button type="button" className="btn btn-primary btn-lg btn-block text-left">Retour</button></a> <button className="btn btn-outline-danger float-right" onClick={this.handleSupprRessource(prosit._id+"_retour")}>Supprimer fichier prosit retour</button> </div>): null}
                 </PrositStyled>
             </div>
         );
@@ -78,4 +83,4 @@ const mapStateToProps = state => ({
 
     ressource: state.ressources
 })
-export default connect(mapStateToProps,{supprimerProsit}) (PrositItemGODMODE) 
+export default connect(mapStateToProps,{supprimerProsit, supprimerAllerRetourRessource}) (PrositItemGODMODE) 

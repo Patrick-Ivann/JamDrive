@@ -9,10 +9,27 @@
     " start": "node serveur",
     "server": "nodemon serveur.js",
     "client": "npm start --prefix client",
+    "client-build": "npm run build --prefix client",
+    "client-postBuildDebug": "npm run gulp-debug --prefix client ",
+    "client-postBuildUglify": "npm run gulp-scripts --prefix client",
+    "client-publish": "npm run client-build",
     "dev": "concurrently \"npm run serveur\" \"npm run client\"",
     "devSansCluster": "concurrently \"npm run serveurSansCluster\" \"npm run client\"",
     "serveur": "nodemon ./cluster.js --exec babel-node --presets babel-preset-env  --ignore logs/ --ignore fichiers/",
+    "serveurProd": "  babel-node ./serveur.js ",
     "serveurSansCluster": "nodemon ./serveur.js --exec babel-node --presets babel-preset-env --ignore logs/ --ignore fichiers/"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": true
+          }
+        }
+      ]
+    ]
   },
   "repository": {
     "type": "git",
@@ -25,6 +42,11 @@
   },
   "homepage": "https://github.com/ShinobuFormula/JamDrive#readme",
   "dependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.3",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "archiver": "^3.0.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "busboy": "^0.3.0",
@@ -46,6 +68,7 @@
     "passport-jwt": "^4.0.0",
     "recompose": "^0.30.0",
     "save": "^2.3.3",
+    "urldecode": "^1.0.1",
     "validator": "^10.9.0",
     "word2pdf": "^1.0.7"
   },

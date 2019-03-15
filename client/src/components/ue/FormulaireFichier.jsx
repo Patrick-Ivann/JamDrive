@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { televerserProsit } from "../../actions/prositActions";
-import {televerserRessource} from '../../actions/ressourceActions';
+import { televerserRessource } from '../../actions/ressourceActions';
 
-import addFileHereImg from '../../static/image/addFileHere.png'
+
 
 class FormulaireFichier extends Component {
 
@@ -12,8 +12,11 @@ class FormulaireFichier extends Component {
   constructor(props) {
     super(props)
 
+
+
     this.state = {
-      file: ""
+      file: "",
+      id: Math.random().toString(36).substring(7)
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -28,9 +31,9 @@ class FormulaireFichier extends Component {
     if (this.props.prositID) {
 
       this.props.televerserRessource(this.state.file)
-      
 
-    }else{
+
+    } else {
 
 
       this.props.televerserProsit(this.state.file)
@@ -45,22 +48,42 @@ class FormulaireFichier extends Component {
 
 
   render() {
+
+
+
     return (
       <div>
-        <form enctype="multipart/form-data" onSubmit={this.handleSubmit}>
-          <label id="lblFile" htmlFor="file"> Ajouter le fichier <br /> <img id="addFileHere" src={addFileHereImg} alt="add file here !" /> </label>
-          <input type="file"  onChange={this.getFileName} name="file" ref="getFile" id="file" accept=".doc,.docx,.txt,.pdf" />
-          <input type="submit" />
+        <form encType="multipart/form-data" onSubmit={this.handleSubmit}>
+          {(this.state.file !== "") ? (
+            <div className="row mb-2">
+              <div className="col col-lg-9  ">
+                <label as="label" id={`lblFile${this.state.id}`} htmlFor={`fileInput${this.state.id}`} className=" btn btn-primary my-2  btn-block text-truncate " >Ajouter  {(this.props.prositID) ? "une nouvelle ressource" : " un fichier de prosit " + this.props.prositType} </label>
+                <input type="file" style={{ display: "none" }} onChange={(event) => this.getFileName(event)} name="file" ref="getFile" id={`fileInput${this.state.id}`} accept=".doc,.docx,.txt,.pdf" />
+              </div>
+              <div className="col-md-auto">
+
+                <input className="btn bg-dark text-white my-2 text-truncate" type="submit" />
+
+              </div>
+            </div>) :
+
+            (<div className="row mb-2">
+              <div className="col col-lg-9  ">
+                <label as="label" id={`lblFile${this.state.id}`} htmlFor={`fileInput${this.state.id}`} className=" btn btn-primary my-2  btn-block text-truncate " >Ajouter  {(this.props.prositID) ? "une nouvelle ressource" : " un fichier de prosit " + this.props.prositType} </label>
+                <input type="file" style={{ display: "none" }} onChange={(event) => this.getFileName(event)} name="file" ref="getFile" id={`fileInput${this.state.id}`} accept=".doc,.docx,.txt,.pdf" />
+              </div>
+            </div>)}
+
         </form>
 
-      </div> 
+      </div>
     )
   }
 }
 
 
 FormulaireFichier.propTypes = {
-  televerserProsit : PropTypes.func.isRequired
+  televerserProsit: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -72,4 +95,4 @@ const mapStateToProps = state => ({
 
 
 
-export default connect(mapStateToProps,{televerserProsit, televerserRessource})(FormulaireFichier)   
+export default connect(mapStateToProps, { televerserProsit, televerserRessource })(FormulaireFichier)   
