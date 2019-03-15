@@ -93,7 +93,6 @@ render() {
           <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
             </ul>
-            <button className="btn btn-primary my-2 my-sm-0" onClick={  this.props.changerTheme}> changer vers le theme {(this.props.theme.theme) ? "qui pete la vue" : "sombre"} </button>
             <form className="form-inline my-2 my-lg-0">
             <label aria-label="recherche" id="lblRecherche"htmlFor="recherche"> &nbsp;</label>
 
@@ -101,7 +100,8 @@ render() {
                      onChange={this.handleChange} type="search" placeholder="Recherche.."/>
             </form>
 
-            <button className="btn btn-primary my-2 my-sm-0" data-toggle="modal" data-target="#fileModal">Nouveau fichier</button>
+            <button className="btn btn-primary my-2 mr-2 my-sm-0" data-toggle="modal" data-target="#fileModal">Nouveau fichier</button>
+            <button className="btn btn-secondary my-2 my-sm-0" onClick={this.props.changerTheme}>Thème {(this.props.theme.theme) ? "clair" : "sombre"} </button>
           </div>
         </nav>
       </header>
