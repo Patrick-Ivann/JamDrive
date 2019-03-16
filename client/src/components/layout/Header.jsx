@@ -99,7 +99,7 @@ class Header extends Component {
                        onChange={this.handleChange} type="search" placeholder="Recherche.."/>
               </form>
 
-              <button className="btn btn-primary my-2 mr-2 my-sm-0" data-toggle="modal" data-target="#fileModal">Nouveau fichier</button>
+              <button className="btn btn-primary my-2 mr-2 my-sm-0" data-toggle="modal" data-target="#fileModal">Nouveau prosit</button>
               <button className="btn btn-secondary my-2 my-sm-0" onClick={this.props.changerTheme}>Thème {(this.props.theme.theme) ? "clair" : "sombre"} </button>
             </div>
           </nav>
