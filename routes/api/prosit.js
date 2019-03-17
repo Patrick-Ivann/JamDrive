@@ -15,7 +15,8 @@ import {
 import {
     telechargementProsit,
     telechargementRessource,
-    telechargementUe
+    telechargementUe,
+    telechargementProsits
 } from '../../controlleur/telechargement';
 
 
@@ -60,13 +61,19 @@ router.route('/telechargementue/:unite/:promo',passport.authenticate('jwt', {
     }))
     .get(telechargementUe)
 
+router.route('/telechargementprosits/:id', passport.authenticate('jwt', {
+        session: false
+    }))
+    .get(telechargementProsits)
+
+
 router.route('/ajouterFichier')
     .post(passport.authenticate('jwt', {
         session: false
     }) ,televerserProsit)
 
 router.route('/ajouterFichier')
-    .post(passport.authenticate('jwt', {
+    .put(passport.authenticate('jwt', {
         session: false
     }) ,televerserRessource)
 

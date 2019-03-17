@@ -31,6 +31,9 @@ class FormulaireFichier extends Component {
     if (this.props.prositID) {
 
       this.props.televerserRessource(this.state.file)
+      this.setState({
+        file : ""
+      })
 
 
     } else {

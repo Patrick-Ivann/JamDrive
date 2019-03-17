@@ -306,7 +306,7 @@ export const televerserProsit = (req, res) => {
 
 
 
-        
+
 
         }).catch((err) => {
 
@@ -463,6 +463,8 @@ export const televerserRessource = (req, res) => {
 
     const erreurs = {}
 
+    var duplicateCase;
+
 
 
 
@@ -476,62 +478,89 @@ export const televerserRessource = (req, res) => {
         console.log(path.join(__dirname, '../'))
 
 
-        if ((/^(\d{1,2})(_)(ressources)(_)(\w+)(\d{1,2})(\-)(\w+)/.test(file.name)) === false) {
-            erreurs.formatUnite = "Le titre du document ne respecte pas les convention xx_ressources_titre_x-ue."
+        if ((/^(\d{1,2})(_)(ressources)(_)(\w+)(_)(\w+)(_)(\w+)/.test(file.name)) === false) { // idProsit_ressources_nomProsit_nomRessource_ue
+            erreurs.formatUnite = "Le titre du document ne respecte pas les convention XX_ressources_nomProsit_nomRessource_ue xx_ressources_titreDocument_titreProsit-ue."
             return res.status(400).json(erreurs);
-        }
-
-        let unite = file.name.split("_")[file.name.split('_').length - 1]
-        unite = unite.split(".")[0]
-        let nomRessource = file.name.split("_")[2]
-        file.path = path.join(__dirname, '../fichiers/ressources/') + file.name;
+        } else {
 
 
 
-        Prosit.findOne({
-            "unite": unite
+            let unite = file.name.split("_")[file.name.split('_').length - 1]
+            unite = unite.split(".")[0]
 
-        }).then((result) => {
+            let prositId = file.name.split("_")[0]
+            let prositNom = file.name.split("_")[2]
 
-            if (!result) {
-
-                console.log("on a pas trouvÃ©")
-
-            }
+            let nomRessource = file.name.split("_")[3]
+            file.path = path.join(__dirname, '../fichiers/ressources/') + file.name;
 
 
-            result.ressources.forEach(ressource => {
-                console.log(nomRessource + ressource.nomRessource + ressource + "ggsdg")
-                if (ressource.nomRessource === nomRessource) {
-                    erreurs.ressourceExiste = "cette ressource existe dÃ©jÃ "
-                    return res.status(404).json(erreurs);
+            var regexUnite = new RegExp(unite, "i");
+            var regexProsit = new RegExp(prositId, "i");
+
+
+
+            Prosit.findOne({
+                // "unite": /unite/i,
+
+                'unite': {
+                    "$regex": regexUnite
+                },
+
+                'nomProsit': {
+                    "$regex": regexProsit
                 }
-            })
 
-            const nouvelleRessource = {
-                nomRessource: nomRessource,
-                urlRessource: file.path,
-            }
-            result.ressources.unshift(nouvelleRessource)
+            }).then((result) => {
 
-            result.save()
-                .then(result => console.log(result)) //res.json(result))
-                .catch(err => console.log(err)) //res.status(404).json(err));
+                if (!result) {
 
-        }).catch((err) => {
-            console.log(err)
-            //return res.status(404).json(err);
-        });
+                    console.log("aucun Prosit")
+
+                }
+
+
+                result.ressources.forEach(ressource => {
+                    if (ressource.nomRessource === nomRessource) {
+                        console.log("duplicate")
+
+                        duplicateCase = "true"
+
+                    }
+                })
+                if (duplicateCase === "true") {
+
+                    erreurs.ressourceExiste = "cette ressource existe dÃ©jÃ "
+                    return res.status(400).json(erreurs);
+
+                } else {
+
+
+
+                    const nouvelleRessource = {
+                        nomRessource: nomRessource,
+                        urlRessource: file.path,
+                    }
+                    result.ressources.unshift(nouvelleRessource)
+
+                    result.save()
+                        .then(result => {
+                            return res.json(result)
+                        })
+                        .catch(err => console.log(err)) //res.status(404).json(err));
+
+
+                }
+
+
+            }).catch((err) => {
+                console.log(err)
+                //return res.status(404).json(err);
+            });
+        }
     });
 
-    if (erreurs === {}) {
 
-        form.on('file', function (name, file) {
-            console.log('Uploaded ' + file.name);
-            return res.json(file.name);
-
-        });
-    }
 
 
 

@@ -55,7 +55,7 @@ class UniteItem extends Component {
                     <div className={"col-md-8"}>
                         <CardStyled className=" mb-4">
                             <div className="card-header bg-dark text-white">
-                                <h3>UE-{ueTitle}    <a href={`https://api.jampops.online/api/prosit/telechargementue/${ueTitleDl}/${promo}`}>
+                                <h3>{ueTitle}    <a href={`https://api.jampops.online/api/prosit/telechargementue/${ueTitleDl}/${promo}`}>
                                     <button type="button" className=" btn btn-primary float-right  text-truncate ">Telecharger Ue </button></a></h3>
                             
                             </div>
