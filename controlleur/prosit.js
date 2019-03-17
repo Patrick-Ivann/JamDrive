@@ -1,12 +1,15 @@
+import formidable from 'formidable';
 import mongoose from 'mongoose';
-import formidable from 'formidable'
+import {
+    move
+} from '../functionSheet';
 import Prosit from "../modeles/Prosit";
-mongoose.set('debug', true);
-mongoose.set('useFindAndModify', false)
-
 import {
     validatePrositInput
 } from '../validation/prosit';
+mongoose.set('debug', true);
+mongoose.set('useFindAndModify', false)
+
 
 
 
@@ -264,26 +267,12 @@ export const televerserProsit = (req, res) => {
 
     var path = require("path")
     const erreurs = {}
+    var fileEnd = {}
 
     var form = new formidable.IncomingForm();
     form.parse(req);
 
-    form.on('fileBegin', function (name, file) {
-
-
-
-        var titreProsit = ""
-        if (fields !== "files") {
-
-            const regex = /(_aller|_retour)/
-            nomProsit = fields.split(regex)[0].toString()
-
-            titreProsit = fields.split("_")[0] + "_" + fields.split("_")[1] + "_" + fields.split("_")[2]
-        }
-
-
-
-
+    const renameBdd = (titreProsit, file, callback) => {
 
 
 
@@ -293,68 +282,119 @@ export const televerserProsit = (req, res) => {
         }).then((result) => {
 
 
+
             if (!result || result.length === 0 || result === {}) {
                 erreurs.insertionFichier = "aucun prosit associé, vérifiez nom du fichier" + err
+
+                callback(erreurs, null);
+
 
                 return res.status(404).json(erreurs);
             } else {
 
-
-                console.log("hhgjgjdsghgd")
-
-
-                file.name = file.name.split(".")[0] + result._id + file.name.split(".")[1]
+                fileEnd.temp = file.path
+                file.name = file.name.split(".")[0] + result['_id'] + "." + file.name.split(".")[1]
                 file.path = path.join(__dirname, '../fichiers/') + file.name;
-                form.on('aborted', function () {
 
-                    console.log("erreur");
+                fileEnd.path = file.path
 
-                });
 
-                form.on('error', function (err) {
+                callback(null, file)
+                //return file
 
-                    console.log(err);
-
-                    erreurs.erreurTransfertFichier = "erreur lors du transfert de fichier, veuillez reÃ©ssayer ultÃ©rieurement.   "
-                    return res.status(404).json(erreurs);
-
-                })
-
-                form.on('file', function (name, file) {
-                    console.log('Uploaded ' + file.name);
-                    rajouterFicherAprosit(file, res)
-                    //return res.send();
-
-                });
             }
 
+
+
+        
 
         }).catch((err) => {
 
             console.log(err)
 
             erreurs.erreurTransfertFichier = "erreur lors du transfert de fichier, impossible de lui associer un prosit, veuillez reÃ©ssayer ultÃ©rieurement.   "
+            callback(err, null);
 
             return res.status(400).json(erreurs);
 
         });
 
 
+    }
+
+
+    form.on('fileBegin', function (name, file) {
+
+
+            if (name !== "files") {
+
+                const regex = /(_aller|_retour)/
+                var nomProsit = name.split(regex)[0].toString()
+
+                var typeProsit = name.split("_")[3]
+                fileEnd.prositType = typeProsit
+
+                renameBdd(nomProsit, file, function (err, fileToBDD) {
+
+                    if (err) {
+                        console.log(err);
+                    }
+
+                    fileEnd.file = fileToBDD
+
+                    if (fileEnd.path !== fileEnd.temp) {
+                        move(fileEnd.temp, fileEnd.path, function (err) {
+
+                            if (err) {
+                                console.log(err)
+                            } else {
+
+                                console.log('Uploaded ' + fileEnd.file.path);
+                                rajouterFicherAprosit(fileEnd.file, fileEnd.prositType, res)
+
+                            }
+                        })
+                    }
+                })
+            }
+
+
+        })
+
+        .on('aborted', function () {
+
+            console.log("erreur");
+
+        })
+        .on('error', function (err) {
+
+            console.log(err);
+
+            erreurs.erreurTransfertFichier = "erreur lors du transfert de fichier, veuillez reÃ©ssayer ultÃ©rieurement.   "
+            return res.status(404).json(erreurs);
+
+        })
 
 
 
 
-    })
+
+
+
+
 }
 
-export const rajouterFicherAprosit = (file, res) => {
+export const rajouterFicherAprosit = (file, typeProsit, res) => {
 
     console.log("rajouter prosit");
     const erreurs = {}
 
     const titreProsit = file.name.split("_")[0] + "_" + file.name.split("_")[1] + "_" + file.name.split("_")[2]
-    const typeFichier = file.name.split("_")[3].split(".")[0]
+    const typeFichier = typeProsit
     const addressFichier = file.path
+
+
+    console.log(file.path)
 
 
     /*
@@ -459,7 +499,6 @@ export const televerserRessource = (req, res) => {
 
             }
 
-            console.log(result)
 
             result.ressources.forEach(ressource => {
                 console.log(nomRessource + ressource.nomRessource + ressource + "ggsdg")
@@ -483,7 +522,6 @@ export const televerserRessource = (req, res) => {
             console.log(err)
             //return res.status(404).json(err);
         });
-        console.log(file.path)
     });
 
     if (erreurs === {}) {
