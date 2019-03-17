@@ -10,3 +10,7 @@ logs/access.log
 
 .vscode/settings.json
 client/.prettierrc
+.env
+client/src/keys.js
+client/src/actions/authAction.js
+client/src/actions/authAction.js
