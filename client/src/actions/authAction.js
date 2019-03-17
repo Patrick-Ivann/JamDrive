@@ -6,6 +6,7 @@ import {
 import setAuthToken, {} from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import axios from 'axios';
+import { secret } from "../keys";
 import db from "../indexDB2";
 
 
@@ -67,7 +68,7 @@ export const godModeActivation = (input) => dispatch => {
    connexionData.motDePasse = input
     
 
-    if (connexionData.motDePasse === "roadToUneThune") {
+    if (connexionData.motDePasse === secret) {
 
         
         dispatch({
