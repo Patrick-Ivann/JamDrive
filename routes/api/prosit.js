@@ -55,7 +55,9 @@ router.route('/testtelechargement/:nomProsit/:type')
 router.route('/testtelechargementRessources/:id')
     .get(telechargementRessource)
 
-router.route('/telechargementue/:unite/:promo')
+router.route('/telechargementue/:unite/:promo',passport.authenticate('jwt', {
+        session: false
+    }))
     .get(telechargementUe)
 
 router.route('/ajouterFichier')

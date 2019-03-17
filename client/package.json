@@ -6,6 +6,7 @@
     "axios": "^0.18.0",
     "classname": "0.0.0",
     "i": "^0.3.6",
+    "lodash.deburr": "^4.1.0",
     "moment": "^2.23.0",
     "npm": "^6.8.0",
     "react": "^16.6.3",
@@ -27,9 +28,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "gulp-scripts" : "./node_modules/.bin/gulp scripts",
+    "gulp-scripts": "./node_modules/.bin/gulp scripts",
     "gulp-debug": "./node_modules/.bin/gulp debug"
-
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -40,6 +40,5 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-
   "homepage": "."
 }

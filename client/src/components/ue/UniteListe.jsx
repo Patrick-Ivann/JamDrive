@@ -16,7 +16,8 @@ class UniteListe extends Component {
   render() {
 
 
-    const { ue } = this.props
+    const { ue,user } = this.props
+    
     console.log(ue)
     const uniteListe = Object.getOwnPropertyNames(ue).sort().map(row => {
   
@@ -24,7 +25,7 @@ class UniteListe extends Component {
       return (
 
 
-        <UniteItem unite={row} prosit={ue[row].sort()} key={row} ></UniteItem>
+        <UniteItem user={user} unite={row} prosit={ue[row].sort()} key={row} ></UniteItem>
       )
     });
     return (

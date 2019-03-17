@@ -92,6 +92,10 @@ export const telechargementUe = (req, res) => {
     var promo = decodeURIComponent(req.params.promo)
 
 
+    var date1 = new Date(Date.now());
+
+    var finish 
+
 
     var fichier = {}
     Prosit.find({
@@ -102,8 +106,14 @@ export const telechargementUe = (req, res) => {
         strength: 1
     }).then((result) => {
 
+        if (!result) {
+           
+            return    res.status(400).json("pas de fichier");
+            
+        }
+
         let dirIn2 = path.join(__dirname, "..", "/fichiers")
-        let dirOut = path.join(__dirname, ".." + `/fichiers/zipUnite/unite${unite}_${Date.now()}.zip`)
+        let dirOut = path.join(__dirname, ".." + `/fichiers/zipUnite/unite${unite}_${promo}_${date1.getUTCDate()}.zip`)
 
 
         fichier.urlFichier = []
@@ -127,9 +137,10 @@ export const telechargementUe = (req, res) => {
 
 
                 }
-            } else {
-                res.status(400).json("pas de fichier");
-            }
+            } 
+
+
+             finish = "true"
 
 
 
@@ -138,6 +149,11 @@ export const telechargementUe = (req, res) => {
             console.log(fichier)
 
         });
+
+
+        if (fichier.urlFichier.length === 0 && finish==="true" )  {
+          return  res.status(400).json("pas de prosit aller ou retour");
+        }
 
         var fichierTelechargment = fichier.urlFichier;
 
@@ -154,6 +170,7 @@ export const telechargementUe = (req, res) => {
             } else {
                 console.log(err)
                 logToTxt(err, "fichiers")
+                console.log("erreur warning")
                 return res.status(404).json(err);
             }
         });
@@ -161,13 +178,14 @@ export const telechargementUe = (req, res) => {
         archive.on('error', function (err) {
             console.log(err)
             logToTxt(err, "fichiers")
+            console.log("error")
             return res.status(404).json(err);
         });
 
         sortie.on('close', function () {
             console.log(archive.pointer() + ' total bytes');
             console.log('archiver has been finalized and the output file descriptor has closed.');
-            res.download(dirOut)
+        res.download(dirOut)
 
         });
 
@@ -211,11 +229,15 @@ export const telechargementUe = (req, res) => {
             }
 
             console.log(bytes + ' total bytes');
-            return res.json(fichierTelechargment);
+            //return res.download(dirOut)
+
+            //return res.json(fichierTelechargment);
         });
 
 
     }).catch((err) => {
+
+        console.log(err)
 
         return res.status(404).json(err);
     });

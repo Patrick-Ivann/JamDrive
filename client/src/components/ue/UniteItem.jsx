@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 // import Prosit_container from '../Prosit_container';
+import deburr from 'lodash.deburr';
 import PrositFlux from '../prosits/PrositsFeed';
 
 import {CardStyled, UeStyled} from '../../styles/UeStyled';
@@ -24,7 +25,7 @@ class UniteItem extends Component {
        var ue
         Object.getOwnPropertyNames(this.props).forEach(element => {
 
-            if (element !== "key" && element !== "prosit" ) {
+            if (element !== "key" && element !== "prosit" && element !== "user" ) {
             console.log(element)   
             ue = element 
         }
@@ -33,7 +34,16 @@ class UniteItem extends Component {
     });
 
     const ueTitle = this.props[ue]
-    console.log(this.props[ue])
+    const ueTitleDl = deburr(ueTitle)
+    const user = this.props.user
+
+    for (const item in user.utilisateur) {
+
+        if (item === "promo") {
+            var promo = user.utilisateur[item]
+        }
+    }
+    
 
     
     
@@ -45,7 +55,9 @@ class UniteItem extends Component {
                     <div className={"col-md-8"}>
                         <CardStyled className=" mb-4">
                             <div className="card-header bg-dark text-white">
-                                <h3>UE-{ueTitle}</h3>
+                                <h3>UE-{ueTitle}    <a href={`https://api.jampops.online/api/prosit/telechargementue/${ueTitleDl}/${promo}`}>
+                                    <button type="button" className=" btn btn-primary float-right  text-truncate ">Telecharger Ue </button></a></h3>
+                            
                             </div>
 
                             <UeStyled className="card-body">

@@ -189,7 +189,7 @@ class Unite extends Component {
 
 
                 return (
-                    ueContenu = <UniteListe ue={uniteObj}></UniteListe>
+                    ueContenu = <UniteListe user={this.props.utilisateur} ue={uniteObj}></UniteListe>
 
                 )
 
@@ -248,7 +248,7 @@ class Unite extends Component {
 
 
                     return (
-                        ueContenu = <UniteListe ue={uniteObj}></UniteListe>
+                        ueContenu = <UniteListe user={this.props.utilisateur} ue={uniteObj}></UniteListe>
 
                     )
 
