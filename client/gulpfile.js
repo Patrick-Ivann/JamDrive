@@ -7,6 +7,8 @@ var uglify = require('gulp-uglify')
 //         .pipe(stripDebug())
 //         .pipe(gulp.dest('./build/static/js'));
 // });
+
+
 gulp.task('debug', function () {
     return gulp.src(['./src/**/.js', './src/**/.jsx', '!./node_modules/**'])
         .pipe(stripDebug())

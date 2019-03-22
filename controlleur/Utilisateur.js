@@ -135,7 +135,6 @@ export const connexion = (req, res) => {
  */
 export const generation = async (req, res) => {
 
-    console.log("fff");
 
     const utilisateurChamps = {}
 

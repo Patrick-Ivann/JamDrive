@@ -1,6 +1,6 @@
 {
   "name": "jamdrive_serveur",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "serveur pour l'application de gestion des prosit retour et aller pour la promo A2 de 2018",
   "main": "serveur.js",
   "scripts": {
