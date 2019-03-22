@@ -67,7 +67,6 @@ class Unite extends Component {
                     console.log(prosit);
                     console.log(prosit[prosit.length - 1]);
                     prositsOffline = prosit[prosit.length - 1]
-                    alert("tooou")
                 });
 
         }

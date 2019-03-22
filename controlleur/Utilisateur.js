@@ -3,7 +3,9 @@ import passport from 'passport';
 import
 bcrypt
 from 'bcryptjs'
-import { secretOrKey  } from "../config/keys";
+import {
+    secretOrKey
+} from "../config/keys";
 import fetch from 'node-fetch';
 
 import moment from 'moment'
@@ -14,8 +16,12 @@ import {
 import {
     createWriteStream
 } from 'fs';
-import { format } from 'util';
-import { validateLoginInput } from '../validation/utilisateur';
+import {
+    format
+} from 'util';
+import {
+    validateLoginInput
+} from '../validation/utilisateur';
 
 export const connexion = (req, res) => {
 
@@ -32,31 +38,29 @@ export const connexion = (req, res) => {
     }
 
     const motDePasse = req.body.motDePasse;
-    
-    
-    
+
+
+
     Utilisateur.find({
-        
+
     }).then(utilisateurs => {
         if (!utilisateurs) {
-            
+
             erreurs.Utilisateur = 'pas de Promo';
             return res.status(404).json(erreurs);
         }
-        
+
         utilisateurs.forEach(utilisateur => {
-            
-            console.log(motDePasse);
-            console.log(utilisateur.superMotDePasse);
+
         
-        
+
             bcrypt.compare(motDePasse, utilisateur.superMotDePasse).then((isSuperMatch) => {
-        
+
                 if (isSuperMatch) {
-        
-        
+
+
                     const payload = {
-                        id : utilisateur.id,
+                        id: utilisateur.id,
                         promo: utilisateur.promo,
                         godMode: true
                     }
@@ -68,25 +72,25 @@ export const connexion = (req, res) => {
                             token: "Bearer " + token
                         });
                     });
-        
+
                 } else {
                     /*erreurs.motDePasse = 'mauvais mot de passe';
                     return res.status(404).json(erreurs);
                 */
-        
+
                     bcrypt.compare(motDePasse, utilisateur.motDePasse).then(isMatch => {
-        
-                        console.log("object");
-        
+
+                            console.log("object");
+
                             if (isMatch) {
 
                                 console.log(utilisateur);
-        
-        
+
+
                                 const payload = {
-                                    id:utilisateur.id,
+                                    id: utilisateur.id,
                                     promo: utilisateur.promo,
-        
+
                                 }
                                 jwt.sign(payload, secretOrKey, {
                                     expiresIn: 3600
@@ -96,18 +100,18 @@ export const connexion = (req, res) => {
                                         token: "Bearer " + token
                                     });
                                 });
-        
+
                             } else {
                                 erreurs.motDePasse = 'mauvais mot de passe';
                                 return res.status(404).json(erreurs);
                             }
                         })
-        
+
                         .catch(err => console.log(err));
-        
-        
+
+
                 }
-        
+
             }).catch((err) => {
                 console.log(err);
             });
@@ -131,12 +135,11 @@ export const connexion = (req, res) => {
  */
 export const generation = async (req, res) => {
 
-    console.log("fff");
 
     const utilisateurChamps = {}
 
 
-    const listMot = ["computer", "cow", "maison", "table", "screen", "pills", "water", "sword", "music", "score", "paint"]
+    const listMot = ["computer", "cow", "maison", "table", "screen", "pills", "water", "sword", "music", "score", "paint","field","war"]
 
     let motRecherche = listMot[Math.floor(Math.random() * listMot.length)]
 
@@ -164,7 +167,7 @@ export const generation = async (req, res) => {
         .catch(err => console.log(err));
 
 
-    let promo = moment().format('YYYY') + "/" + moment().add(5, 'years').format("YYYY");
+    let promo = moment().format('YYYY') + "-" + moment().add(5, 'years').format("YYYY");
 
     utilisateurChamps.promo = promo
 
@@ -183,58 +186,66 @@ export const generation = async (req, res) => {
                     //! send un mail car si là on pete msk de nous + logToText
 
                     logToTxt("il existe déja une génération promo pour cette année", "generationMotDePasse")
-                  res.json("il existe déja une génération promo pour cette année");
+                    res.json("il existe déja une génération promo pour cette année");
                 } else {
 
 
-                    
-                                    bcrypt.genSalt(10, (err, salt) => {
-                                        bcrypt.hash(pourSuperPassword.mdp, salt, async (err, hash) => {
-                                            if (err) throw err;
-                                            utilisateurChamps.superMotDePasse =  await hash
+
+                    bcrypt.genSalt(10, (err, salt) => {
+                        bcrypt.hash(pourSuperPassword.mdp, salt, async (err, hash) => {
+                            if (err) throw err;
+                            utilisateurChamps.superMotDePasse = await hash
 
 
 
-                                        })
+                        })
 
-                                    })
+                    })
 
-                                    bcrypt.genSalt(10, (err, salt) => {
-                                        bcrypt.hash(motPourPassword.mdp, salt, async(err, hash) => {
-                                            if (err) throw err;
-                                            utilisateurChamps.motDePasse = await hash;
+                    bcrypt.genSalt(10, (err, salt) => {
+                        bcrypt.hash(motPourPassword.mdp, salt, async (err, hash) => {
+                            if (err) throw err;
+                            utilisateurChamps.motDePasse = await hash;
 
-                                          let  utilisateurNouveau = new Utilisateur(utilisateurChamps)
-                                          console.log(utilisateurNouveau);
-                                           utilisateurNouveau.save()
+                            let utilisateurNouveau = new Utilisateur(utilisateurChamps)
+                            console.log(utilisateurNouveau);
+                            utilisateurNouveau.save()
 
-                                                .then(utilisateurNew => {
-                                                    let date = new Date()
-                                                    var log_file = createWriteStream(__dirname + `/../motDePasse/motDePasse_${date.getFullYear()}.txt`, {
-                                                        flags: 'a'
-                                                    });
+                                .then(utilisateurNew => {
+                                    let date = new Date()
+                                    var log_file = createWriteStream(__dirname + `/../motDePasse/motDePasse_${date.getFullYear()}.txt`, {
+                                        flags: 'a'
+                                    });
 
-                                                    log_file.write(format(motPourPassword.mdp) + " " + format(pourSuperPassword.mdp) + '\n');
+                                    log_file.write(format(motPourPassword.mdp) + " " + format(pourSuperPassword.mdp) + " " + format(promo)  +  '\n' );
 
-                                                     res.json(utilisateurNew);
+                                    res.json(utilisateurNew);
 
-                                                    
-                                                })
-                                                .catch(err => {
-                                                    console.log(err);
-                                                    erreurs.erreurAjout = err.toString();
-                                                    logToTxt(erreurs, "insertion")
-                                                });
 
-                                        })
+                                })
+                                .catch(err => {
+                                    console.log(err);
+                                    erreurs.erreurAjout = err.toString();
+                                    logToTxt(erreurs, "insertion")
+                                });
 
-                                    })
+                        })
+
+                    })
                 }; //else
 
             }) // truc du find one
             .catch(err => console.log(err));
     }
 }
+
+
+export const ping = (req,res) => {
+  
+
+     res.status(200).send();
+}
+
 
 
 

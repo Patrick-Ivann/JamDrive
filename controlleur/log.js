@@ -1,15 +1,17 @@
 import fs from 'fs';
 import moment from 'moment';
 import util from 'util';
+import path from "path";
 export const ajouterLog = (req, res) => {
 
     const erreurs = {}
 
     moment.locale("fr")
     var date = new Date();
-    var log_file = fs.createWriteStream(__dirname + `../../logs/client-${date.getMonth()+1}.log`, {
+    var log_file = fs.createWriteStream(path.join(__dirname, `../logs/client-${date.getMonth()+1}.log`), {
         flags: 'a'
     });
+
     
     let texte = {};
     for (var key in req.body) {
@@ -18,7 +20,7 @@ export const ajouterLog = (req, res) => {
 
             texte[key] = req.body[key]
 
-            log_file.write(util.format(texte[key]) +
+            log_file.write(util.format(texte[key]) + " "+
                 moment().format('LTS') + " " + // hh:min:ss 
                 moment().format('L') + '\n'); // dd/mm/yyyy
 
@@ -34,16 +36,16 @@ export const ajouterLog = (req, res) => {
 
 
     log_file.on('error', function (err) {
-        console.log("erreur" + err + "errererere");
+        console.log("erreur " + err + " ");
+         res.json(err);
     });
 
+log_file.end(function () { res.status(200).send() });
 
 
 
-    log_file.on("close", (err) => {
-        res.end();
-    })
-    //var log_stdout = process.stdout
+
+       //var log_stdout = process.stdout
     //log_stdout.write(util.format(d) + '\n');
 
 };
@@ -51,7 +53,7 @@ export const ajouterLog = (req, res) => {
 
 export const lirelog = (req, res) => {
 
-    fs.readFile(__dirname + `../../logs/client-${date.getMonth()+1}.log`, (err, data) => {
+    fs.readFile(path.join(__dirname, `../logs/client-${date.getMonth()+1}.log`), (err, data) => {
         if (err) {
             console.log(err);
         }

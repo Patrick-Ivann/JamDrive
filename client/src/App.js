@@ -15,11 +15,18 @@ import Main from './components/Main';
 import ErreurApp from './components/common/ErreurApp';
 import  Login  from './components/auth/Login';
 import setAuthToken from './utils/setAuthToken';
-import { setCurrentUser, logoutUser } from './actions/authAction';
+import {  logoutUser } from './actions/authAction';
+import Wrapper from './styles/Wrapper';
+import PopUpSmartphone from './components/common/PopUpSmartphone';
 
 class App extends Component {
 
   componentDidMount = () => {
+
+
+
+
+
     //check si il y a un token
 
     if (localStorage.jwtToken) {
@@ -48,18 +55,23 @@ class App extends Component {
   
 
 
+
   
   
   render() {
+    
     return (
       <Provider store={store} >
       
       <Router>
       
-      <div>
+      <Wrapper id="back" black >
       
       <Header/>
       <ErreurApp></ErreurApp>
+      <PopUpSmartphone></PopUpSmartphone>
+
+      
 
       <Route exact path="/" component={Login} />
 
@@ -71,7 +83,7 @@ class App extends Component {
 
       </Switch>
 
-      </div>
+      </Wrapper>
       </Router>
       
       </Provider>

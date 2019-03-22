@@ -18,6 +18,10 @@
 .env.test.local
 .env.production.local
 
+/src/actions/authAction.js
+/src/actions/authAction.js
+
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

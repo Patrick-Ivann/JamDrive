@@ -1,12 +1,15 @@
+import formidable from 'formidable';
 import mongoose from 'mongoose';
-import formidable from 'formidable'
+import {
+    move
+} from '../functionSheet';
 import Prosit from "../modeles/Prosit";
-mongoose.set('debug', true);
-mongoose.set('useFindAndModify', false)
-
 import {
     validatePrositInput
 } from '../validation/prosit';
+mongoose.set('debug', true);
+mongoose.set('useFindAndModify', false)
+
 
 
 
@@ -63,7 +66,7 @@ export const recupererParId = (req, res) => {
 export const recupererParPromo = (req, res) => {
 
     const erreurs = {}
-    Prosit.findOne({
+    Prosit.find({
             promo: req.user.promo
         })
         .then((prosit) => {
@@ -143,7 +146,12 @@ export const ajouterProsit = (req, res) => {
             }
         }
 
-       prositChamps['promo'] =  req.user.promo
+        if (!req.user) {
+            return res.status(403).json("pas d'utilisateur")
+        } else {
+
+            prositChamps['promo'] = req.user.promo
+        }
 
 
 
@@ -156,7 +164,7 @@ export const ajouterProsit = (req, res) => {
             .then(prosit => {
                 if (prosit) {
 
-                    erreurs.PrositExiste = "Le prosit existe déjà"
+                    erreurs.PrositExiste = "Le prosit existe dÃ©jÃ "
                     return res.status(404).json(erreurs);
 
                 } else {
@@ -259,53 +267,134 @@ export const televerserProsit = (req, res) => {
 
     var path = require("path")
     const erreurs = {}
-
-
-
-
+    var fileEnd = {}
 
     var form = new formidable.IncomingForm();
     form.parse(req);
 
+    const renameBdd = (titreProsit, file, callback) => {
+
+
+
+        Prosit.findOne({
+            "nomProsit": titreProsit
+
+        }).then((result) => {
+
+
+
+            if (!result || result.length === 0 || result === {}) {
+                erreurs.insertionFichier = "aucun prosit associé, vérifiez nom du fichier" + err
+
+                callback(erreurs, null);
+
+
+                return res.status(404).json(erreurs);
+            } else {
+
+                fileEnd.temp = file.path
+                file.name = file.name.split(".")[0] + result['_id'] + "." + file.name.split(".")[1]
+                file.path = path.join(__dirname, '../fichiers/') + file.name;
+
+                fileEnd.path = file.path
+
+
+                callback(null, file)
+                //return file
+
+            }
+
+
+
+
+
+        }).catch((err) => {
+
+            console.log(err)
+
+            erreurs.erreurTransfertFichier = "erreur lors du transfert de fichier, impossible de lui associer un prosit, veuillez reÃ©ssayer ultÃ©rieurement.   "
+            callback(err, null);
+
+            return res.status(400).json(erreurs);
+
+        });
+
+
+    }
+
+
     form.on('fileBegin', function (name, file) {
-        file.path = path.join(__dirname, '../fichiers/') + file.name;
-        console.log(file.path)
-    });
-
-    form.on('aborted', function () {
-
-        console.log("erreur");
-
-        req.resume()
-    });
-
-    form.on('error', function (err) {
-
-        console.log(err);
-
-        erreurs.erreurTransfertFichier = "erreur lors du transfert de fichier, veuillez reéssayer ultérieurement.   "
-        return res.status(404).json(erreurs);
-
-    })
-
-    form.on('file', function (name, file) {
-        console.log('Uploaded ' + file.name);
-        rajouterFicherAprosit(file, res)
-        //return res.send();
-
-    });
 
 
-};
+            if (name !== "files") {
 
-export const rajouterFicherAprosit = (file, res) => {
+                const regex = /(_aller|_retour)/
+                var nomProsit = name.split(regex)[0].toString()
+
+                var typeProsit = name.split("_")[3]
+                fileEnd.prositType = typeProsit
+
+                renameBdd(nomProsit, file, function (err, fileToBDD) {
+
+                    if (err) {
+                        console.log(err);
+                    }
+
+                    fileEnd.file = fileToBDD
+
+                    if (fileEnd.path !== fileEnd.temp) {
+                        move(fileEnd.temp, fileEnd.path, function (err) {
+
+                            if (err) {
+                                console.log(err)
+                            } else {
+
+                                console.log('Uploaded ' + fileEnd.file.path);
+                                rajouterFicherAprosit(fileEnd.file, fileEnd.prositType, res)
+
+                            }
+                        })
+                    }
+                })
+            }
+
+
+        })
+
+        .on('aborted', function () {
+
+            console.log("erreur");
+
+        })
+        .on('error', function (err) {
+
+            console.log(err);
+
+            erreurs.erreurTransfertFichier = "erreur lors du transfert de fichier, veuillez reÃ©ssayer ultÃ©rieurement.   "
+            return res.status(404).json(erreurs);
+
+        })
+
+
+
+
+
+
+
+
+}
+
+export const rajouterFicherAprosit = (file, typeProsit, res) => {
 
     console.log("rajouter prosit");
     const erreurs = {}
 
     const titreProsit = file.name.split("_")[0] + "_" + file.name.split("_")[1] + "_" + file.name.split("_")[2]
-    const typeFichier = file.name.split("_")[3].split(".")[0]
+    const typeFichier = typeProsit
     const addressFichier = file.path
+
+
+    console.log(file.path)
 
 
     /*
@@ -348,19 +437,20 @@ export const rajouterFicherAprosit = (file, res) => {
         new: true
     }).then((prosit) => {
         //return  res.json(prosit)
-        return res.status(200).json(prosit);
-
         if (!prosit) {
-            erreurs.insertionFichier = "le fichier du prosit n'est pas intégré"
+            erreurs.insertionFichier = "le fichier du prosit n'est pas intÃ©grÃ©"
             return res.status(400).json(erreurs)
+        } else {
+
+            return res.status(200).json(prosit);
         }
 
-        return;
+
 
 
     }).catch((err) => {
         console.log(err)
-        erreurs.insertionFichier = "impossible de mettre à jour la BDD" + err
+        erreurs.insertionFichier = "impossible de mettre Ã  jour la BDD" + err
         return res.status(400).json(erreurs);
     });
 
@@ -372,6 +462,8 @@ export const televerserRessource = (req, res) => {
     var path = require("path")
 
     const erreurs = {}
+
+    var duplicateCase;
 
 
 
@@ -386,64 +478,89 @@ export const televerserRessource = (req, res) => {
         console.log(path.join(__dirname, '../'))
 
 
-        if ((/^(\d{1,2})(_)(ressources)(_)(\w+)(\d{1,2})(\-)(\w+)/.test(file.name)) === false) {
-            erreurs.formatUnite = "Le titre du document ne respecte pas les convention xx_ressources_titre_x-ue."
+        if ((/^(\d{1,2})(_)(ressources)(_)(\w+)(_)(\w+)(_)(\w+)/.test(file.name)) === false) { // idProsit_ressources_nomProsit_nomRessource_ue
+            erreurs.formatUnite = "Le titre du document ne respecte pas les convention XX_ressources_nomProsit_nomRessource_ue xx_ressources_titreDocument_titreProsit-ue."
             return res.status(400).json(erreurs);
-        }
-
-        let unite = file.name.split("_")[file.name.split('_').length - 1]
-        unite = unite.split(".")[0]
-        let nomRessource = file.name.split("_")[2]
-        file.path = path.join(__dirname, '../fichiers/ressources/') + file.name;
+        } else {
 
 
 
-        Prosit.findOne({
-            "unite": unite
+            let unite = file.name.split("_")[file.name.split('_').length - 1]
+            unite = unite.split(".")[0]
 
-        }).then((result) => {
+            let prositId = file.name.split("_")[0]
+            let prositNom = file.name.split("_")[2]
 
-            if (!result) {
+            let nomRessource = file.name.split("_")[3]
+            file.path = path.join(__dirname, '../fichiers/ressources/') + file.name;
 
-                console.log("on a pas trouvé")
 
-            }
+            var regexUnite = new RegExp(unite, "i");
+            var regexProsit = new RegExp(prositId, "i");
 
-            console.log(result)
 
-            result.ressources.forEach(ressource => {
-                console.log(nomRessource + ressource.nomRessource + ressource + "ggsdg")
-                if (ressource.nomRessource === nomRessource) {
-                    erreurs.ressourceExiste = "cette ressource existe déjà"
-                    return res.status(404).json(erreurs);
+
+            Prosit.findOne({
+                // "unite": /unite/i,
+
+                'unite': {
+                    "$regex": regexUnite
+                },
+
+                'nomProsit': {
+                    "$regex": regexProsit
                 }
-            })
 
-            const nouvelleRessource = {
-                nomRessource: nomRessource,
-                urlRessource: file.path,
-            }
-            result.ressources.unshift(nouvelleRessource)
+            }).then((result) => {
 
-            result.save()
-                .then(result => console.log(result)) //res.json(result))
-                .catch(err => console.log(err)) //res.status(404).json(err));
+                if (!result) {
 
-        }).catch((err) => {
-            console.log(err)
-            //return res.status(404).json(err);
-        });
-        console.log(file.path)
+                    console.log("aucun Prosit")
+
+                }
+
+
+                result.ressources.forEach(ressource => {
+                    if (ressource.nomRessource === nomRessource) {
+                        console.log("duplicate")
+
+                        duplicateCase = "true"
+
+                    }
+                })
+                if (duplicateCase === "true") {
+
+                    erreurs.ressourceExiste = "cette ressource existe dÃ©jÃ "
+                    return res.status(400).json(erreurs);
+
+                } else {
+
+
+
+                    const nouvelleRessource = {
+                        nomRessource: nomRessource,
+                        urlRessource: file.path,
+                    }
+                    result.ressources.unshift(nouvelleRessource)
+
+                    result.save()
+                        .then(result => {
+                            return res.json(result)
+                        })
+                        .catch(err => console.log(err)) //res.status(404).json(err));
+
+
+                }
+
+
+            }).catch((err) => {
+                console.log(err)
+                //return res.status(404).json(err);
+            });
+        }
     });
 
-    if (erreurs === {}) {
 
-        form.on('file', function (name, file) {
-            console.log('Uploaded ' + file.name);
-            return res.json(file.name);
-
-        });
-    }
 
 
 
@@ -453,13 +570,15 @@ export const televerserRessource = (req, res) => {
 
 export const supprimerRessource = (req, res) => {
 
+    /*
+
     Prosit.findOne(req.params.id)
         .then(prosit => {
 
             if (prosit.ressources.filter(comment => comment._id.toString() === req.params.comment_id).lenght === 0) {
 
                 res.status(404).json({
-                    commentnotexists: "Le commentaire n'existe pas."
+                    ressourceExist: "La ressource n'existre pas."
                 })
             }
 
@@ -476,6 +595,36 @@ export const supprimerRessource = (req, res) => {
 
         })
 
-        .catch(err => res.status(404).json(err));
+        .catch(err => res.status(404).json(err));*/
+
+
+    const erreurs = {}
+
+
+    let id = req.params.id.split("_")[0]
+    let typeFichier = req.params.id.split("_")[1]
+
+
+    Prosit.findOneAndUpdate({
+        "_id": id
+
+    }, {
+        $unset: {
+            [typeFichier]: ""
+        }
+    }, {
+        new: true
+    }).then((result) => {
+
+        if (!result) {
+            erreurs.PasDePrositId = "il n'y a pas de prosit avec cet ID"
+            return res.status(404).json(erreurs);
+        }
+
+        res.json(result);
+    }).catch((err) => {
+        res.status(404).json(err);
+    });
+
 
 }

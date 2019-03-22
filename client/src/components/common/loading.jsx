@@ -1,10 +1,9 @@
 import React from 'react'
-import loading from '../../static/image/jp_logo.png'
 
 
 export default function chargement() {
     return (
-        <div class="loader"></div>
+        <div className="loader"></div>
     )
 }
 

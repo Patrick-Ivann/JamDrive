@@ -7,6 +7,7 @@ import prositReducer from "./prositReducer";
 import ressourceReducer from "./ressourceReducer";
 import authReducer from "./authReducer";
 import navigationReducer from "./navigationReducer";
+import themeReducer from './themeReducer'
 
 
 export default combineReducers({
@@ -16,6 +17,7 @@ export default combineReducers({
   navigation: navigationReducer,
   prosit: prositReducer,
   ressources: ressourceReducer,
+  theme: themeReducer
 
 
 });

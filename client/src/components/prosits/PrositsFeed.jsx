@@ -10,12 +10,11 @@ import { InputValuesHc } from '../HOC/InputValues';
 
 class PrositFlux extends Component {
 
-    
+
 
     componentDidUpdate = (prevProps, prevState) => {
         if (prevProps.rechercheString !== this.props.rechercheString) {
 
-            var rechercheTest = this.props.rechercheString.rechercheString
         }
     }
 
@@ -27,16 +26,27 @@ class PrositFlux extends Component {
 
         const { prosits } = this.props
 
+        let godModeLight = false
+
+        if (this.props.auth.utilisateur) {
+            godModeLight = this.props.auth.utilisateur.godMode
+
+        }
+
+
 
         return (
 
 
             prosits.filter(prosit => prosit.nomProsit.toString().toLowerCase().indexOf(this.props.rechercheString) > -1 ||
                 prosit.motsClef.toString().toLowerCase().indexOf(this.props.rechercheString) > -1)
-                .map(prosit => (!this.props.auth.godMode) ?
+                .map(prosit => (this.props.auth.godMode === false && (godModeLight === false || godModeLight === undefined  )) ?
                     <PrositItem key={prosit._id} prosit={prosit}></PrositItem> :
-                    <PrositItemGODMODE key={prosit._id} prosit={prosit} />)
+                    <PrositItemGODMODE key={prosit._id} prosit={prosit} />
 
+
+
+                )
 
         )
     }

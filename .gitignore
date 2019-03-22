@@ -8,3 +8,12 @@ logs/access.log
 /motDePasse
 client/src/keys.js
 .vscode
+*.bat
+
+.vscode/settings.json
+client/.prettierrc
+.env
+client/src/keys.js
+client/src/actions/authAction.js
+client/src/actions/authAction.js
+client/src.1

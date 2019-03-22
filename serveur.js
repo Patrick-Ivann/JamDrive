@@ -23,18 +23,40 @@ import  log from "./routes/api/log";
 import utilisateur from './routes/api/utilisateur';
 import { logToTxt } from "./functionSheet";
 /********************************************Routage express****************************************/
+require('dotenv').config()
+
 const app = express();
+var cors = require('cors');
+
+
 
 
 
 
  app.use(helmet())
 
+var allowedOrigins = ['http://localhost:3000', 'http://drive.jampops.com',
+    'https://drive.jampops.com', 'http://104.248.167.41:3000', "https://104.248.167.41:3000"
+];
+app.use(cors({
+      credentials: true,
+    origin: function (origin, callback) {
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            var msg = "Ce site ne permet pas CORS depuis cette Origine";
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    }
+}));
+
 app.use(bodyParser.urlencoded({
     extended: false
 }))
 
 app.use('/pdf', express.static('fichiers/pdf'));
+app.use('/apk', express.static('fichiers/apk'));
+
 
 
 
@@ -47,10 +69,7 @@ app.use(morgan('common', {
 }));
 app.use(compression());
 
-/*app.all("*", (req,res) =>{
 
-console.log('nsm native');
-})*/
 
 app.get('/', (req, res) => {
 
@@ -155,6 +174,47 @@ mongoose.Promise = global.Promise;
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
+console.log(`                                      ....''''....                                            
+                                      ..,;:cloddxxxxdddolc:,..                                      
+                                  ..;codxxxxkkkkkkkkkkOOOOOOkdl;'.                                  
+                               .';lddxxxxxxxkkkkkkkkkkkOOOOOOOOOkd:'.                               
+                             .,coddddddxxxxxdooollloodxkkOOOOOOOOOOkc.                              
+                           .,coooddddddoc;,....     ....,;ldkOOOOOO0d'                              
+                          .:loooooddl;'.     .             .':oxOOOd;.                              
+                        .,clloooooc,.       ck:.              ..,,'.                                
+                       .,cllloool,.        'OMNk;.                     ..'.. ..,,,,,'''.....        
+                      .,cclllllc'          lNMMMNxc,                 .:xkOkl'.:kOOOOOOOOkkkxdoc:,.  
+                      ':ccllllc.          'OMMMMMMWXd,.''',,;:::.    ;k0OO0Oo..o0000000000000000Okc.
+                     .;cccclll,.          lNMMMMMMMMWNXXNNNWWWNx.    ,xOO0O0Oc.'lollllldO00000000Oo.
+                    .':ccccclc'       .':dKMMMMMMMMMMMMMMMMMMNd.     .lOOOO00x,..,;:cldkO000000ko;. 
+              ...'',;:ccccccc:.   .;lx0NWMMMMMMMMMMMMMMMMMMMXo.     ..ckOOOOOOkxkOO00000000Odl;..   
+         ...',;;:::::::ccccc:'. 'dKNMMMMMMMMMMMMMMMMMMMMMMMXc..;:clodxkOOOOOOOO000000Okxoc;..       
+     ...',;;;::::::::;;;,,'..   .'ckXWMMMMMMMMMMMMMMMMMMMMWd.'dkOOOOOOOOOOOOOOOOkxoc:,..            
+  ..',;;;;;;;,,''......    .........'cxKWMMMMMMMMMMMMMMMMMM0,.okkkkOOOOOOOOOOOo,..                  
+ .,,;;;;;;;;,'......''',,,;;:::cccc:,...:OWMMMMMMMMMMMMMMMMWk''oxdolccxOOOOOOk,                     
+..,,;;;;;;;;;;;:::::::::::ccccccclllllc'.cNMMMMMMMMMMMMMMMMMWd.....  ,xOOOOOOo.                     
+  ...'',,;;;;;;;:::::::::::ccccccccccc:,.;KMMMMMMWNKkkO0XNWMMNl.    'dOOOOOOx,                      
+       ................................  'OMMMMNkc,.  ...';:loc.   ,okOOOOOk:.                      
+                              ....       .xWWKd;.                .:xkkOOOOkc.                       
+                            .';::;,..     ckl.                 .;okkkkkOOx:.                        
+                            ':cccccc;'..  ..                .':oxkkkkkkko,                          
+                            .;ccccccccc:,'...          ..',coxxxxkkkkkd:.                           
+                             .';:ccccccllllc::;;;;;;::clodxxxxxxxkkxo:.                             
+                               ..,:cccccclllloooooooddddddxxxxxxxdc,.                               
+                                  ..,;:ccllllllooooooddddddxddl:,.                                  
+                                     ...',;:cclllooooolllc:,'..                                     
+                                           ..............                                           
+                           ...        .....     ..   ..       ..  .......                           
+                          ;OOxxo:.   ;OOxxxd,. .dd;..lx,     ;kc.,kOxxxxo'                          
+                          :Xd',lOk;  cXd..,xKl..OOc. ;0k.   'OO' :Kx'....                           
+                          :Ko   'k0, cKl   ,0k..OOc.  cKo. .xK:  :Kd.....                           
+                          cXo    lXc cXx,':k0: .OOc.  .dK:.lKl.  :KKxxxxo'                          
+                          cKo   .k0; cXKk0Nk'  .OOc.   'O0d0x.   :Kx'.....                          
+                          cXd.'ckO:. cXo.;OO;  .OOc.    :KW0,    :Kd.....                           
+                          ;0Oxxdc.   :Oc  .dk; .xx:.    .lO:     ;O0xxxxo'                          
+                          .','.      .'.   .'.  ....     ...     .',,,,,,. `);
+
+
     console.log("\x1b[45m"
         ,`Serveur demarré sur le port: ${port}`);
 });

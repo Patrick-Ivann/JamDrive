@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
-import CreatableSelect from 'react-select/lib/Creatable';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { ajouterProsit } from "../actions/prositActions";
 import FormulaireFichier from './ue/FormulaireFichier';
-import InputAutoSuggest from './common/InputAutoSuggest';
+import {ModalContent, ModalHeader} from '../styles/formStyled';
+//import InputAutoSuggest from './common/InputAutoSuggest';
 
+/**
+ *
+ */
 class FormFile extends Component {
 
+    /**
+     *
+     * @param props
+     */
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             unite: "",
@@ -21,14 +28,17 @@ class FormFile extends Component {
             motsClef: "",
             selectOption: []
             // errors : null
-
-        }
+        };
 
         this.input = React.createRef();
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    /**
+     *
+     * @param event
+     */
     handleChange(event) {
         event.preventDefault();
         const target = event.target;
@@ -40,10 +50,14 @@ class FormFile extends Component {
         });
     }
 
+    /**
+     *
+     * @param event
+     */
     handleSubmit(event) {
         event.preventDefault();
 
-        const prositData = {}
+        const prositData = {};
         Object.keys(this.state).forEach(element => {
             prositData[element] = this.state[element]
         });
@@ -56,54 +70,64 @@ class FormFile extends Component {
             prositData["unite"] = this.state["unite"]
         }*/
 
-
-        console.error(prositData)
-
-        this.props.ajouterProsit(prositData)
+        this.props.ajouterProsit(prositData);
 
         Object.keys(this.state).forEach(element => {
-
             this.setState({
                 [element]: ""
             })
         });
     }
 
+    /**
+     *
+     */
     componentDidUpdate(prevProps, prevState) {
 
         if (this.props.prosit.prosit !== prevProps.prosit.prosit) {
             this.setState({
                 retourAjoutProsit: this.props.prosit.prosit
-            },console.log(this.state.retourAjoutProsit))
+            }, console.log(this.state.retourAjoutProsit));
         }
+
         if (prevProps.prosit !== this.props.prosit) {
-            console.log(this.props.prosit.prosit._id)
+            if (this.props.prosit.prosit !== [] && this.props.prosit.prosit !== {} && this.props.prosit.prosit !== null) {
+                console.log(this.props.prosit.prosit)
+                const modal = document.getElementById("fileModal");
 
-            let id = this.props.prosit.prosit._id
-
-            if (prevProps.selectedOption != this.props.selectOption) {
-                this.setState({
-                    selectOption: this.props.selectOption
-                })
-                //alert(this.props.selectOption)
+                if (modal.classList.contains("show")) {
+                    const modalBackdrops = document.getElementsByClassName('modal-backdrop');
+                    modalBackdrops.item(0).parentNode.removeChild(modalBackdrops.item(0));
+                }
+                // change state like in hidden modal
+                modal.classList.remove('show');
+                modal.setAttribute('aria-hidden', 'true');
+                modal.setAttribute('style', 'display: none');
+                document.getElementById('fileModal');
+                if (prevProps.selectedOption !== this.props.selectOption) {
+                    this.setState({
+                        selectOption: this.props.selectOption
+                    })
+                    // alert(this.props.selectOption)
+                }
             }
         }
-
-
     }
 
+    /**
+     *
+     */
     render() {
         return (
-            <div className="modal fade" id="fileModal" tabIndex="-1" role="dialog"
-                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id="fileModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Ajouter un nouveau fichier</h5>
+                    <ModalContent>
+                        <ModalHeader>
+                            <h5 className="modal-title" id="exampleModalLabel">Créer un nouveau prosit</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                        </div>
+                        </ModalHeader>
                         <form onSubmit={this.handleSubmit}>
                             <div className="modal-body">
                                 <label>Unité d'enseignement</label>
@@ -114,9 +138,8 @@ class FormFile extends Component {
                                                 <option value={option}>{option}</option>
                                             )
                                         })}
-                                    </select> : <select name="unite" className="custom-select" id="unite" onChange={this.handleChange}>
-                                        <option>Bancal</option>
-                                    </select>}
+                                    </select> : <input type="text" name="unite" className="form-control" placeholder=""
+                                                       aria-label="Unite" aria-describedby="basic-addon1" onChange={this.handleChange} value={this.state.unite} />}
 
                                 </div>
 
@@ -137,7 +160,7 @@ class FormFile extends Component {
                                     <textarea name="motsClef" className="form-control" aria-label="With textarea" onChange={this.handleChange} value={this.state.motsClef}></textarea>
                                 </div>
 
-                                <label class="mt-2">Document validé par :</label><br />
+                                {/*<label className="mt-2">Document validé par :</label><br />
                                 <input
                                     type="radio"
                                     name="validation"
@@ -152,6 +175,7 @@ class FormFile extends Component {
                                     value="2"
                                     checked={this.state.validation === "2"}
                                 /> Le tuteur
+                                */}
 
                                 {/*
                                     (this.state.retourAjoutProsit === "") && <button type="submit" onSubmit={this.handleSubmit}>gsdg</button>
@@ -162,8 +186,8 @@ class FormFile extends Component {
                                 <button type="submit" onSubmit={this.handleSubmit} className="btn btn-primary">Ajouter</button>
                             </div>
                         </form>
-                        {(this.state.retourAjoutProsit !== "") && <FormulaireFichier></FormulaireFichier>}
-                    </div>
+                        {(this.state.retourAjoutProsit !== "") && <FormulaireFichier  prositType="aller" ></FormulaireFichier>}
+                    </ModalContent>
                 </div>
             </div>
         );
@@ -173,12 +197,12 @@ class FormFile extends Component {
 FormFile.propTypes = {
     ajouterProsit: PropTypes.func.isRequired,
     prosit: PropTypes.object.isRequired,
-}
+};
 
 const mapStateToProps = state => ({
     prosit: state.prosit,
     selectOption: state.prosit.uniteSansDoublon
     // errors: state.errors
-})
+});
 
 export default connect(mapStateToProps, { ajouterProsit })(FormFile);
