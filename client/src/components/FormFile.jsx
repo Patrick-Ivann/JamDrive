@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { ajouterProsit } from "../actions/prositActions";
-import {ModalContent, ModalHeader} from '../styles/formStyled';
+import { ModalContent, ModalHeader } from '../styles/formStyled';
 
 /**
  *
@@ -60,13 +60,13 @@ class FormFile extends Component {
             prositData[element] = this.state[element]
         });
 
-        if (this.input.current.inputSugg.current.state.value) {
-            this.setState({
-                unite: this.input.current.inputSugg.current.state.value
-            })
+        // if (this.input.current.inputSugg.current.state.value) {
+        //     this.setState({
+        //         unite: this.input.current.inputSugg.current.state.value
+        //     })
 
-            prositData["unite"] = this.state["unite"]
-        }
+        //     prositData["unite"] = this.state["unite"]
+        // }
 
         this.props.ajouterProsit(prositData);
 
@@ -131,27 +131,28 @@ class FormFile extends Component {
                                 <label>Unité d'enseignement</label>
                                 <div className="input-group mb-3">
 
-                                    {(this.props.prosit !== null) ? <select name="unite" className="custom-select" id="unite" onChange={this.handleChange}>
+                                    {/* {(this.props.prosit !== null) ? <select name="unite" className="custom-select" id="unite" onChange={this.handleChange}>
                                         {this.state.selectOption.map((option) =>{
                                             return(
                                                 <option value={option}>{option}</option>
                                             )
                                         })}
                                     </select> : <input type="text" name="unite" className="form-control" placeholder=""
-                                                       aria-label="Unite" aria-describedby="basic-addon1" onChange={this.handleChange} value={this.state.unite} />}
-
+                                                       aria-label="Unite" aria-describedby="basic-addon1" onChange={this.handleChange} value={this.state.unite} />} */}
+                                    <input type="text" name="unite" className="form-control" placeholder=""
+                                        aria-label="Unite" aria-describedby="basic-addon1" onChange={this.handleChange} value={this.state.unite} />
                                 </div>
 
                                 <label>Nom du prosit</label>
                                 <div className="input-group mb-3">
                                     <input type="text" name="nomProsit" className="form-control" placeholder=""
-                                           aria-label="Username" aria-describedby="basic-addon1" onChange={this.handleChange} value={this.state.nomProsit} />
+                                        aria-label="Username" aria-describedby="basic-addon1" onChange={this.handleChange} value={this.state.nomProsit} />
                                 </div>
 
                                 <label>Nom du scribe</label>
                                 <div className="input-group mb-3">
                                     <input type="text" name="nomScribe" className="form-control" placeholder=""
-                                           aria-label="Username" aria-describedby="basic-addon1" onChange={this.handleChange} value={this.state.nomScribe} />
+                                        aria-label="Username" aria-describedby="basic-addon1" onChange={this.handleChange} value={this.state.nomScribe} />
                                 </div>
 
                                 <label>Mot(s)-clé(s)</label>
@@ -185,7 +186,7 @@ class FormFile extends Component {
                                 <button type="submit" onSubmit={this.handleSubmit} className="btn btn-primary">Ajouter</button>
                             </div>
                         </form>
-{/*                         {(this.state.retourAjoutProsit !== "") && <FormulaireFichier  prositType="aller" ></FormulaireFichier>}
+                        {/*                         {(this.state.retourAjoutProsit !== "") && <FormulaireFichier  prositType="aller" ></FormulaireFichier>}
  */}                    </ModalContent>
                 </div>
             </div>

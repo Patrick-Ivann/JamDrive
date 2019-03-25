@@ -74,7 +74,7 @@ class FormulaireFichier extends Component {
                 ):(
                     <div className="row">
                       <div className="col-12">
-                        <label as="label" id={`lblFile${this.state.id}`} htmlFor={`fileInput${this.state.id}`} className="btn btn-secondary btn-lg btn-block text-left">Ajouter  {(this.props.prositID) ? "une ressource" : " un prosit " + this.props.prositType} </label>
+                        <label as="label" id={`lblFile${this.state.id}`} htmlFor={`fileInput${this.state.id}`} className="btn btn-secondary btn-lg btn-block text-left">Ajouter  {(this.props.prositID) ? "une ressource (XX_ressources_titreressource_titreProsit_UE)" : " un prosit " + this.props.prositType} </label>
                         <input type="file" style={{ display: "none" }} onChange={(event) => this.getFileName(event)} name="file" ref="getFile" id={`fileInput${this.state.id}`} accept=".doc,.docx,.txt,.pdf" />
                       </div>
                     </div>
