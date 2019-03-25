@@ -135,6 +135,8 @@ class Unite extends Component {
 
         let ueContenu;
 
+
+    
         if (((!prosits || prosits.length === 0) && chargement)) {
             ueContenu = <Chargement></Chargement>
 
@@ -146,6 +148,7 @@ class Unite extends Component {
 
             if (((this.props.errors["pasDeProsit"]) || (this.props.errors["pasDePrositPromo"])) && prosits.length === 0) {
 
+                
             return    ueContenu = <ErrorUe></ErrorUe>
 
 
@@ -243,7 +246,6 @@ class Unite extends Component {
                     });
 
 
-                    console.log(uniteSansDoublon)
 
 
 

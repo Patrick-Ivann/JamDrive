@@ -53,6 +53,9 @@ log_file.end(function () { res.status(200).send() });
 
 export const lirelog = (req, res) => {
 
+      moment.locale("fr")
+      var date = new Date();
+
     fs.readFile(path.join(__dirname, `../logs/client-${date.getMonth()+1}.log`), (err, data) => {
         if (err) {
             console.log(err);

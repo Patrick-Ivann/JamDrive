@@ -3,9 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { ajouterProsit } from "../actions/prositActions";
-import FormulaireFichier from './ue/FormulaireFichier';
 import {ModalContent, ModalHeader} from '../styles/formStyled';
-//import InputAutoSuggest from './common/InputAutoSuggest';
 
 /**
  *
@@ -62,13 +60,13 @@ class FormFile extends Component {
             prositData[element] = this.state[element]
         });
 
-        /*if (this.input.current.inputSugg.current.state.value) {
+        if (this.input.current.inputSugg.current.state.value) {
             this.setState({
                 unite: this.input.current.inputSugg.current.state.value
             })
 
             prositData["unite"] = this.state["unite"]
-        }*/
+        }
 
         this.props.ajouterProsit(prositData);
 
@@ -132,7 +130,8 @@ class FormFile extends Component {
                             <div className="modal-body">
                                 <label>Unité d'enseignement</label>
                                 <div className="input-group mb-3">
-                                    {(this.props.prosit == null) ? <select name="unite" className="custom-select" id="unite" onChange={this.handleChange}>
+
+                                    {(this.props.prosit !== null) ? <select name="unite" className="custom-select" id="unite" onChange={this.handleChange}>
                                         {this.state.selectOption.map((option) =>{
                                             return(
                                                 <option value={option}>{option}</option>
@@ -186,8 +185,8 @@ class FormFile extends Component {
                                 <button type="submit" onSubmit={this.handleSubmit} className="btn btn-primary">Ajouter</button>
                             </div>
                         </form>
-                        {(this.state.retourAjoutProsit !== "") && <FormulaireFichier  prositType="aller" ></FormulaireFichier>}
-                    </ModalContent>
+{/*                         {(this.state.retourAjoutProsit !== "") && <FormulaireFichier  prositType="aller" ></FormulaireFichier>}
+ */}                    </ModalContent>
                 </div>
             </div>
         );

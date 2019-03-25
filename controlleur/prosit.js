@@ -71,12 +71,12 @@ export const recupererParPromo = (req, res) => {
         })
         .then((prosit) => {
 
-            if (!prosit) {
+             if (!prosit || prosit.length === 0 ) {
                 erreurs.pasDePrositPromo = "il n'existe pas de prosit pour cette promo"
                 return res.status(404).json(erreurs);
             }
 
-            res.json(prosit);
+          return  res.json(prosit);
 
         }).catch((err) => {
 
@@ -284,7 +284,7 @@ export const televerserProsit = (req, res) => {
 
 
             if (!result || result.length === 0 || result === {}) {
-                erreurs.insertionFichier = "aucun prosit associé, vérifiez nom du fichier" + err
+                erreurs.insertionFichier = "aucun prosit associé, vérifiez nom du fichier"
 
                 callback(erreurs, null);
 
@@ -328,7 +328,7 @@ export const televerserProsit = (req, res) => {
 
             if (name !== "files") {
 
-                const regex = /(_aller|_retour)/
+                const regex = /(_aller|_retour|_RETOUR|_ALLER)/
                 var nomProsit = name.split(regex)[0].toString()
 
                 var typeProsit = name.split("_")[3]
@@ -390,8 +390,11 @@ export const rajouterFicherAprosit = (file, typeProsit, res) => {
     const erreurs = {}
 
     const titreProsit = file.name.split("_")[0] + "_" + file.name.split("_")[1] + "_" + file.name.split("_")[2]
-    const typeFichier = typeProsit
+    const typeFichier = typeProsit.toLowerCase()
     const addressFichier = file.path
+
+            var regexProsit = new RegExp(titreProsit, "i");
+
 
 
     console.log(file.path)
@@ -428,7 +431,9 @@ export const rajouterFicherAprosit = (file, typeProsit, res) => {
 
 
     Prosit.findOneAndUpdate({
-        "nomProsit": titreProsit
+        'nomProsit': {
+                    "$regex": regexProsit
+                }
     }, {
         $set: {
             [typeFichier]: addressFichier
