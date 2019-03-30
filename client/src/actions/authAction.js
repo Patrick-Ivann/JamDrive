@@ -88,7 +88,6 @@ export const godModeActivation = (input) => dispatch => {
 
             .then((res) => {
 
-                console.log(res)
 
                 const {
                     token
