@@ -12,7 +12,7 @@ export default function PopUpSmartphone() {
                 <p class="mb-0">
                     <span>Pour les systèmes Android seulement.</span>
                     <br/>
-                  <button class="btn btn-success" ><a href={`https://api.jampops.online/apk/JamDrive.apk`}>Télécharger </a></button>
+            <a href='http://play.google.com/store/apps/details?id=com.jamdriveviewer&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Disponible sur Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/fr_badge_web_generic.png' /></a>
                 </p>
 
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">

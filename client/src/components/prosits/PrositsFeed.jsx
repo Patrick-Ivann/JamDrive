@@ -38,7 +38,9 @@ class PrositFlux extends Component {
         return (
 
 
-            prosits.filter(prosit => prosit.nomProsit.toString().toLowerCase().indexOf(this.props.rechercheString) > -1 ||
+            prosits
+            .sort((a, b) =>  a - b)
+            .filter(prosit => prosit.nomProsit.toString().toLowerCase().indexOf(this.props.rechercheString) > -1 ||
                 prosit.motsClef.toString().toLowerCase().indexOf(this.props.rechercheString) > -1)
                 .map(prosit => (this.props.auth.godMode === false && (godModeLight === false || godModeLight === undefined  )) ?
                     <PrositItem key={prosit._id} prosit={prosit}></PrositItem> :

@@ -10,7 +10,8 @@ import {
     checkerPrositParId,
     televerserProsit,
     televerserRessource,
-    recupererParPromo
+    recupererParPromo,
+    supprimerRessource
 } from "../../controlleur/prosit";
 import {
     telechargementProsit,
@@ -43,7 +44,7 @@ router.route("/ajouter", passport.authenticate('jwt', {
     }))
     .post(passport.authenticate('jwt', {
         session: false
-    }) ,ajouterProsit)
+    }), ajouterProsit)
 
 router.route("/recuperer")
     .get(passport.authenticate('jwt', {
@@ -56,7 +57,7 @@ router.route('/testtelechargement/:nomProsit/:type')
 router.route('/testtelechargementRessources/:id')
     .get(telechargementRessource)
 
-router.route('/telechargementue/:unite/:promo',passport.authenticate('jwt', {
+router.route('/telechargementue/:unite/:promo', passport.authenticate('jwt', {
         session: false
     }))
     .get(telechargementUe)
@@ -70,12 +71,12 @@ router.route('/telechargementprosits/:id', passport.authenticate('jwt', {
 router.route('/ajouterFichier')
     .post(passport.authenticate('jwt', {
         session: false
-    }) ,televerserProsit)
+    }), televerserProsit)
 
 router.route('/ajouterFichier')
     .put(passport.authenticate('jwt', {
         session: false
-    }) ,televerserRessource)
+    }), televerserRessource)
 
 router.route('/test/:nom')
     .get(recupererParNom)
@@ -83,15 +84,21 @@ router.route('/test/:nom')
 router.route('/test/:id')
     .get(passport.authenticate('jwt', {
         session: false
-    }) ,recupererParId)
+    }), recupererParId)
     .put(passport.authenticate('jwt', {
         session: false
-    }) ,checkerPrositParId)
+    }), checkerPrositParId)
+    
+router.route('/supprimerallerretour/:id')
     .delete(passport.authenticate('jwt', {
         session: false
-    }) ,supprimerProsit)
+    }), supprimerRessource)
 
 
+router.route('/supprimer/:id')
+    .delete(passport.authenticate('jwt', {
+        session: false
+    }), supprimerProsit)
 
 
 export default router;
