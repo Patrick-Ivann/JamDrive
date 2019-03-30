@@ -42,7 +42,6 @@ class Unite extends Component {
 
 
         if (this.props.navigation.lastPath !== this.props) {
-            console.log("object");
 
             if (this.props.navigation.lastPath === "/") {
                 this.props.recupererProsits()
@@ -64,8 +63,6 @@ class Unite extends Component {
             db.table('prositsOffline')
                 .toArray()
                 .then((prosit) => {
-                    console.log(prosit);
-                    console.log(prosit[prosit.length - 1]);
                     prositsOffline = prosit[prosit.length - 1]
                 });
 
@@ -73,7 +70,6 @@ class Unite extends Component {
 
 
 
-        console.log(this.props)
 
 
     }
@@ -120,7 +116,6 @@ class Unite extends Component {
                     uniteSansDoublon.forEach(sansDoublon => {
                         if (element.unite === sansDoublon) {
                             uniteObj[sansDoublon].push(element)
-                            console.log(uniteObj[sansDoublon])
                         }
                     });
 
@@ -131,7 +126,6 @@ class Unite extends Component {
 
                 });
 
-                console.log(uniteSansDoublon)
 
 
 
@@ -142,7 +136,6 @@ class Unite extends Component {
 
             } else{
 
-                console.log("dans le offline");
 
                 let prositUnite = []
 
@@ -165,7 +158,6 @@ class Unite extends Component {
                     uniteSansDoublon.forEach(sansDoublon => {
                         if (element.unite === sansDoublon) {
                             uniteObj[sansDoublon].push(element)
-                            console.log(uniteObj[sansDoublon])
                         }
                     });
 
@@ -176,7 +168,6 @@ class Unite extends Component {
 
                 });
 
-                console.log(uniteSansDoublon)
 
 
 

@@ -21,7 +21,6 @@ request.onsuccess = () =>{
    
 
    db.onerror = (e) =>{
-       console.log("erreur" + e.target.errorCode);
    }
 
    tx.onComplte = () =>{
