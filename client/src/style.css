@@ -201,5 +201,37 @@ li:hover {
     bottom: 0;
     right: 1%;
     z-index:9999;
+}
 
+/** CUSTOM BUTTONS */
+.btn-primary {
+    color: #fff;
+    background-color: #891fe4;
+    border-color: #891fe4;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #6410ad;
+    border-color: #6410ad;
+}
+
+.btn-primary:focus, .btn-primary.focus {
+    box-shadow: 0 0 0 0.2rem rgba(137, 31, 228, 0.5);
+}
+
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
+.show > .btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: #545b62;
+    border-color: #4e555b;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
+.show > .btn-primary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(137, 31, 228, 0.5);
+}
+
+a {
+    text-decoration: none;
 }

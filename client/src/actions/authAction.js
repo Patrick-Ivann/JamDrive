@@ -70,7 +70,7 @@ export const godModeActivation = (input) => dispatch => {
 
     if (connexionData.motDePasse === secret) {
 
-        
+
         dispatch({
             type: CONNEXION,
             payload: true

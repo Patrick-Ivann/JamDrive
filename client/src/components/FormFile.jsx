@@ -129,7 +129,7 @@ class FormFile extends Component {
                         <form onSubmit={this.handleSubmit}>
                             <div className="modal-body">
                                 <label>Unité d'enseignement</label>
-                                <div className="input-group mb-3">
+                                <div className="input-group">
 
                                     {/* {(this.props.prosit !== null) ? <select name="unite" className="custom-select" id="unite" onChange={this.handleChange}>
                                         {this.state.selectOption.map((option) =>{
@@ -142,12 +142,18 @@ class FormFile extends Component {
                                     <input type="text" name="unite" className="form-control" placeholder=""
                                         aria-label="Unite" aria-describedby="basic-addon1" onChange={this.handleChange} value={this.state.unite} />
                                 </div>
+                                <small id="emailHelp" className="form-text text-muted pt-0 mb-3">
+                                    Syntaxe : X-nomDeLUE. Si l'unité d'enseignement n'existe pas, ce champ permet de la créer.
+                                </small>
 
                                 <label>Nom du prosit</label>
-                                <div className="input-group mb-3">
+                                <div className="input-group">
                                     <input type="text" name="nomProsit" className="form-control" placeholder=""
                                         aria-label="Username" aria-describedby="basic-addon1" onChange={this.handleChange} value={this.state.nomProsit} />
                                 </div>
+                                <small id="emailHelp" className="form-text text-muted pt-0 mb-3">
+                                    Syntaxe : X_Prosit_TitreDuProsit.
+                                </small>
 
                                 <label>Nom du scribe</label>
                                 <div className="input-group mb-3">
@@ -159,6 +165,9 @@ class FormFile extends Component {
                                 <div className="input-group">
                                     <textarea name="motsClef" className="form-control" aria-label="With textarea" onChange={this.handleChange} value={this.state.motsClef}></textarea>
                                 </div>
+                                <small id="emailHelp" className="form-text text-muted pt-0 mb-3">
+                                    Les mots-clés doivent être séparés d'une virgule.
+                                </small>
 
                                 {/*<label className="mt-2">Document validé par :</label><br />
                                 <input

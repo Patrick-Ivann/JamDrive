@@ -35,6 +35,7 @@ class UniteItem extends Component {
 
     const ueTitle = this.props[ue]
     const ueTitleDl = deburr(ueTitle)
+    //const ueTitleDl = ueTitle;
     const user = this.props.user
 
     for (const item in user.utilisateur) {
@@ -56,7 +57,7 @@ class UniteItem extends Component {
                         <CardStyled className=" mb-4">
                             <div className="card-header bg-dark text-white">
                                 <h3>{ueTitle}    <a href={`https://api.jampops.online/api/prosit/telechargementue/${ueTitleDl}/${promo}`}>
-                                    <button type="button" className=" btn btn-primary float-right  text-truncate ">Telecharger Ue </button></a></h3>
+                                    <button type="button" className=" btn btn-primary float-right  text-truncate ">Télécharger l'UE </button></a></h3>
                             
                             </div>
 

@@ -52,7 +52,7 @@ class PrositItem extends Component {
             <div className="card mt-2">
                 <PrositStyled className="card-body ">
                     <h4 className={"mb-4"}> {prosit.nomProsit.replace(/_/g, ' ')} <a href={`https://api.jampops.online/api/prosit/telechargementprosits/${prosit._id}`}>
-                                    <button type="button" className=" btn btn-primary float-right  text-truncate ">Telecharger Prosit </button></a> </h4>
+                                    <button type="button" className=" btn btn-primary float-right  text-truncate ">Télécharger le prosit </button></a> </h4>
                     <FormulaireFichier prositID={this.props.prosit.nomProsit} ></FormulaireFichier>
 
                     <ul className="list__item my-2" >
