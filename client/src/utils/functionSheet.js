@@ -45,7 +45,6 @@ export const concatValeurObjetToHTML = obj => {
 
         concatString += obj[element] + '\n'
 
-        console.log(obj);
     });
 
     return (concatString);
@@ -96,7 +95,6 @@ export const logToTxt = (texte) => {
 
 
    .then((result) => {
-       console.log(result);
    }).catch((err) => {
        console.log(err);
    });

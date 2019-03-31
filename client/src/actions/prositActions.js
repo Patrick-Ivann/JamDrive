@@ -112,7 +112,6 @@ export const recupererProsits = () => dispatch => {
             db.table('prositsOffline')
                 .add(res)
                 .then((id) => {
-                    console.log("DB");
                 });
 
 
@@ -164,7 +163,6 @@ export const recupererPrositsParPromo = () => dispatch => {
 
         .then((result) => {
 
-            console.log(result.data)
 
             if (Array.isArray(result.data) && result.data !== []) {
 
@@ -175,7 +173,6 @@ export const recupererPrositsParPromo = () => dispatch => {
 
                 db.table('prositsOffline').clear();
                 db.table('prositsOffline').add(res).then((id) => {
-                    console.log("DB vide");
                 }).catch();
 
                 dispatch({
@@ -190,12 +187,10 @@ export const recupererPrositsParPromo = () => dispatch => {
 
                     let res = result.data
 
-                    console.log("vide");
 
 
                     db.table('prositsOffline').clear();
                     db.table('prositsOffline').add(res).then((id) => {
-                        console.log("DB vide");
                     }).catch();
 
                     dispatch({
@@ -212,7 +207,6 @@ export const recupererPrositsParPromo = () => dispatch => {
 
                     db.table('prositsOffline').clear();
                     db.table('prositsOffline').add(res).then((id) => {
-                        console.log("DB vide");
                     }).catch();
 
                     dispatch({
@@ -223,13 +217,11 @@ export const recupererPrositsParPromo = () => dispatch => {
 
 
 
-                    console.log("object");
 
                 }
             }
 
 
-            console.log(result);
 
         });
     axios.get('https://api.jampops.online/api/prosit/recuperer').catch((errAxios) => {
@@ -239,7 +231,6 @@ export const recupererPrositsParPromo = () => dispatch => {
         //     payload: null
         // })
 
-        console.log(errAxios);
 
         dispatch({
             type: GET_ERRORS,
@@ -298,7 +289,6 @@ export const televerserProsit = (prosit) => dispatch => {
     formData.append(prosit.name.split(".")[0], prosit)
     //formData.append(prosit.name, prosit.name.split(".")[0])
 
-    console.log(prosit)
     axios.post(`https://api.jampops.online/api/prosit/ajouterfichier`, formData, config)
         .then((result) => {
             dispatch({

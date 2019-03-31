@@ -21,7 +21,6 @@ class PrositFlux extends Component {
 
     render() {
 
-        console.log(this.props.rt);
 
 
         const { prosits } = this.props
@@ -38,7 +37,8 @@ class PrositFlux extends Component {
         return (
 
 
-            prosits.filter(prosit => prosit.nomProsit.toString().toLowerCase().indexOf(this.props.rechercheString) > -1 ||
+            prosits
+            .filter(prosit => prosit.nomProsit.toString().toLowerCase().indexOf(this.props.rechercheString) > -1 ||
                 prosit.motsClef.toString().toLowerCase().indexOf(this.props.rechercheString) > -1)
                 .map(prosit => (this.props.auth.godMode === false && (godModeLight === false || godModeLight === undefined  )) ?
                     <PrositItem key={prosit._id} prosit={prosit}></PrositItem> :

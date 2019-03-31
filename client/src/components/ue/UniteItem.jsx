@@ -26,7 +26,6 @@ class UniteItem extends Component {
         Object.getOwnPropertyNames(this.props).forEach(element => {
 
             if (element !== "key" && element !== "prosit" && element !== "user" ) {
-            console.log(element)   
             ue = element 
         }
         

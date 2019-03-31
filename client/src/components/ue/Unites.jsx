@@ -60,16 +60,13 @@ class Unite extends Component {
 
                 if (this.props.utilisateur.utilisateur) {
 
-                    console.log("object");
 
                     this.props.ping(() => this.props.recupererPrositsParPromo())
 
                 } else {
 
-                    console.log(localStorage.getItem('godMode') + typeof localStorage.getItem('godMode'));
 
                     if (localStorage.getItem('godMode') === "true") {
-                        console.log("o  t");
 
                         this.props.recupererProsits()
                     }
@@ -89,7 +86,6 @@ class Unite extends Component {
             /*db.table('prositsOffline')
                 .toArray()
                 .then((prosit) => {
-                   console.log(prosit);alert("tooou")
                 });   */
 
              
@@ -102,8 +98,6 @@ class Unite extends Component {
                         this.props.setErreur("Aucun prosit en cache")
                     }else{
 
-                        console.log(prosit);
-                        console.log(prosit[prosit.length - 1]);
                         //prositsOffline = prosit[prosit.length - 1]
                         //prositsOffline.push(prosit[prosit.length])
                         this.setState({
@@ -117,7 +111,6 @@ class Unite extends Component {
 
 
 
-        console.log(this.props)
 
 
     }
@@ -180,14 +173,12 @@ class Unite extends Component {
                     uniteSansDoublon.forEach(sansDoublon => {
                         if (element.unite === sansDoublon) {
                             uniteObj[sansDoublon].push(element)
-                            console.log(uniteObj[sansDoublon])
                         }
                     });
 
                 });
 
 
-                console.log(uniteSansDoublon)
 
 
 
@@ -211,20 +202,17 @@ class Unite extends Component {
 
 
 
-                    console.log("dans le offline");
 
                     this.props.setErreur("Mode Hors ligne")
 
                     let prositUnite = []
 
-                    console.log(this.state.offline);
 
                     this.state.offline.forEach(element => {
                         prositUnite.push(element.unite)
 
                     });
 
-                    console.log(prositUnite);
 
 
                     let uniteSansDoublon = [...new Set(prositUnite)]; //contient toutes les valeurs d'ue possible 
@@ -239,7 +227,6 @@ class Unite extends Component {
                         uniteSansDoublon.forEach(sansDoublon => {
                             if (element.unite === sansDoublon) {
                                 uniteObj[sansDoublon].push(element)
-                                console.log(uniteObj[sansDoublon])
                             }
                         });
 

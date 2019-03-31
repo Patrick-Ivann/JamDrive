@@ -85,19 +85,17 @@ class FormFile extends Component {
         if (this.props.prosit.prosit !== prevProps.prosit.prosit) {
             this.setState({
                 retourAjoutProsit: this.props.prosit.prosit
-            }, console.log(this.state.retourAjoutProsit));
+            });
         }
 
         if (prevProps.prosit !== this.props.prosit) {
             if (this.props.prosit.prosit !== [] && this.props.prosit.prosit !== {} && this.props.prosit.prosit !== null) {
-                console.log(this.props.prosit.prosit)
                 const modal = document.getElementById("fileModal");
 
                 if (modal.classList.contains("show")) {
                     const modalBackdrops = document.getElementsByClassName('modal-backdrop');
                     modalBackdrops.item(0).parentNode.removeChild(modalBackdrops.item(0));
                 }
-                // change state like in hidden modal
                 modal.classList.remove('show');
                 modal.setAttribute('aria-hidden', 'true');
                 modal.setAttribute('style', 'display: none');
@@ -106,7 +104,6 @@ class FormFile extends Component {
                     this.setState({
                         selectOption: this.props.selectOption
                     })
-                    // alert(this.props.selectOption)
                 }
             }
         }

@@ -8,7 +8,6 @@ class UniteListe extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.ue)
   }
 
 
@@ -18,7 +17,6 @@ class UniteListe extends Component {
 
     const { ue,user } = this.props
     
-    console.log(ue)
     const uniteListe = Object.getOwnPropertyNames(ue).sort().map(row => {
   
      
